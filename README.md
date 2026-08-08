@@ -16,7 +16,7 @@ The interface follows the computer's language automatically (Hebrew → right-to
 
 **[➡️ Download the latest version](../../releases/latest)**
 
-> On the Releases page, download the file ending in **`-portable.exe`**, then just **double-click it** — there is nothing to install.
+> On the Releases page, download the **`.exe`** file (named `KindergardenHelper_v<version>.exe`), then just **double-click it** — there is nothing to install.
 > (Replace the link above with your own repository once pushed: `https://github.com/YOUR-USERNAME/kindergarten-helper/releases/latest`)
 
 ### No download needed — open in a browser
@@ -36,7 +36,7 @@ npm start
 ```bash
 npm install
 npm run dist
-# → dist/KindergartenHelper-<version>-portable.exe
+# → dist/KindergardenHelper_v<version>.exe
 ```
 (Build on Windows, or use the GitHub Action below.)
 
@@ -58,7 +58,9 @@ The app UI lives in **`app/index.html`** — a compiled, self-contained bundle. 
 kindergarten-helper/
 ├─ app/index.html        the app (self-contained, offline)
 ├─ main.js               Electron window
+├─ build/icon.png        app / .exe icon (source: build/icon.svg)
 ├─ package.json          Electron + electron-builder config
+├─ package-lock.json     locked dependency versions (used by `npm ci`)
 ├─ .github/workflows/
 │  └─ release.yml        builds the .exe and publishes a Release
 └─ README.md
