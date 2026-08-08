@@ -1,9 +1,9 @@
 {
   "name": "kindergarten-helper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A very simple bilingual (Hebrew/English) desktop helper for a kindergarten teacher: name cards, attendance sheets, and graduation photos.",
   "main": "main.js",
-  "author": "",
+  "author": "Ron Ariel",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
@@ -21,10 +21,12 @@
       "output": "dist"
     },
     "win": {
-      "target": "portable"
+      "target": "portable",
+      "publisherName": "Kindergarten Helper",
+      "icon": "build/icon.png"
     },
     "portable": {
-      "artifactName": "KindergartenHelper-${version}-portable.exe"
+      "artifactName": "KindergardenHelper_v${version}.exe"
     }
   },
   "devDependencies": {
