@@ -1,0 +1,34 @@
+{
+  "name": "kindergarten-helper",
+  "version": "1.0.0",
+  "description": "A very simple bilingual (Hebrew/English) desktop helper for a kindergarten teacher: name cards, attendance sheets, and graduation photos.",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable --publish never"
+  },
+  "build": {
+    "appId": "com.tamar.kindergartenhelper",
+    "productName": "Kindergarten Helper",
+    "files": [
+      "main.js",
+      "app/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "portable": {
+      "artifactName": "KindergartenHelper-${version}-portable.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  }
+}
