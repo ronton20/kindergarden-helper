@@ -34,19 +34,42 @@ jobs:
           v="${GITHUB_REF_NAME#v}"
           npm version "$v" --no-git-tag-version --allow-same-version
 
+      # electron-builder does the publishing itself on a tag. It is the only
+      # thing that knows the full set of files auto-update needs — the
+      # installer, `latest.yml` (the manifest electron-updater reads, with the
+      # sha512 it verifies the download against) and the `.blockmap` that lets
+      # it fetch only the changed parts. Uploading `dist/*.exe` alone, as this
+      # workflow used to, would leave the app unable to see its own releases.
       - name: Build Windows installer
-        run: npx electron-builder --win --publish never
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            npx electron-builder --win --publish always
+          else
+            npx electron-builder --win --publish never
+          fi
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: KindergartenHelper-installer
-          path: dist/*.exe
+          path: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml
 
-      - name: Publish to GitHub Release
+      # electron-builder publishes the release but writes no notes. Cosmetic
+      # only — the app updates itself and nobody has to read this page — so a
+      # failure here must not fail the release.
+      - name: Add generated release notes
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*.exe
-          name: ${{ github.ref_name }}
-          generate_release_notes: true
+        continue-on-error: true
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          notes=$(gh api "repos/$GITHUB_REPOSITORY/releases/generate-notes" \
+            -f tag_name="$GITHUB_REF_NAME" --jq .body)
+          gh release edit "$GITHUB_REF_NAME" --notes "$notes"

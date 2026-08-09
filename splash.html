@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Kindergarten Helper</title>
+<!--
+  The update splash. Owned entirely by the main process and deliberately
+  independent of the app in app/index.html: it has to be on screen before the
+  app has loaded, and it must not be something the renderer can break.
+
+  Self-contained by necessity — the app is offline-first, so no external fonts,
+  stylesheets or images. System fonts render Hebrew and Latin equally well.
+
+  It is bilingual rather than translated, because at this point nothing has
+  read the saved language yet, and both lines fit comfortably.
+-->
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  body {
+    background: #FAF7F2;
+    color: #2B2723;
+    font-family: "Segoe UI", Rubik, system-ui, -apple-system, Arial, sans-serif;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 14px; padding: 0 28px;
+    border: 1px solid #E7E0D6; box-sizing: border-box;
+    user-select: none; cursor: default;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .mark {
+    width: 40px; height: 40px; border-radius: 12px; background: #E07A4B; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 21px; font-weight: 800;
+  }
+  .name { font-size: 19px; font-weight: 800; }
+  .status { display: none; text-align: center; line-height: 1.45; }
+  .status .he { font-size: 15px; font-weight: 600; }
+  .status .en { font-size: 14px; font-weight: 500; color: #7A736B; }
+  .track {
+    display: none; width: 100%; max-width: 320px; height: 10px;
+    border-radius: 999px; background: #EDE6DC; overflow: hidden;
+  }
+  .fill {
+    height: 100%; width: 0%; border-radius: 999px; background: #E07A4B;
+    transition: width .25s ease;
+  }
+  /* Before the first byte arrives there is no percentage to show, so the bar
+     sweeps instead of sitting at a misleading zero. */
+  .track.indeterminate .fill {
+    width: 35%; animation: sweep 1.1s ease-in-out infinite; transition: none;
+  }
+  @keyframes sweep {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(320%); }
+  }
+  body.downloading .status, body.downloading .track { display: block; }
+</style>
+
+<div class="brand">
+  <div class="mark">ג</div>
+  <div class="name">עוזר הגן · Kindergarten Helper</div>
+</div>
+
+<div class="status">
+  <div class="he" dir="rtl">מוריד עדכון…</div>
+  <div class="en" dir="ltr">Downloading update…</div>
+</div>
+
+<div class="track indeterminate"><div class="fill"></div></div>
+
+<script>
+  window.khSplash = {
+    downloading() {
+      document.body.classList.add('downloading');
+    },
+    progress(percent) {
+      const track = document.querySelector('.track');
+      const fill = document.querySelector('.fill');
+      if (!(percent > 0)) return;
+      track.classList.remove('indeterminate');
+      fill.style.width = Math.min(100, percent).toFixed(1) + '%';
+    }
+  };
+</script>

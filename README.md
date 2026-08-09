@@ -24,6 +24,10 @@ There are two ways to run it. They are the same app; pick whichever suits you.
 > It installs into your own user account, so Windows does **not** ask for an administrator password, and it adds a
 > **עוזר הגן · Kindergarten Helper** shortcut to the Start Menu and the desktop. After that the app opens in a second or two.
 >
+> It also keeps itself up to date. When a new version is released, the app notices on startup, shows a small
+> progress bar while it downloads, and restarts into the new version by itself. There is nothing to click, and
+> nothing to download again. With no internet connection it simply opens as usual.
+>
 > (Replace the link above with your own repository once pushed: `https://github.com/YOUR-USERNAME/kindergarten-helper/releases/latest`)
 
 Windows may show a blue “Windows protected your PC” screen the first time, because the file is not
@@ -64,6 +68,34 @@ seconds each time; it has been retired.
 under `%APPDATA%\Kindergarten Helper`, keyed by those two values and by the `file://` origin — renaming
 either one would orphan every saved list.
 
+### Auto-update
+
+`updater.js` asks GitHub for the latest release on startup, and `splash.js` /
+`splash.html` are the small frameless window that carries the progress bar. The splash lives in the main
+process rather than in the app UI so that it can appear before the renderer has loaded anything, and so the
+planned renderer refactor cannot break it.
+
+The rule the code is built around is that **the update must never make the app slower to open, or stop it
+opening**:
+
+- The check is time-boxed to 3 seconds. If GitHub hasn't answered by then the app opens anyway. The download
+  is *not* cancelled — electron-updater keeps going in the background and `autoInstallOnAppQuit` installs it
+  when the app is closed, so a slow connection still gets the update, just one launch later.
+- A download that stalls for 45 seconds is abandoned and the app opens.
+- No network, GitHub down, a corrupt file, missing update metadata, or running from a checkout all resolve
+  quietly into a normal launch. None of it is ever shown to the user.
+
+**There is deliberately no code signing.** A certificate is ~$200–400/yr and buys only the removal of the
+SmartScreen warning on the *first* manual download. Auto-update itself works unsigned, because
+electron-updater verifies the sha512 recorded in `latest.yml`.
+
+That has one non-obvious consequence, and it is why `win.verifyUpdateCodeSignature` is `false`: when
+`publisherName` reaches `app-update.yml`, electron-updater runs `Get-AuthenticodeSignature` on the downloaded
+installer before running it. An unsigned installer comes back `NotSigned`, which it treats as a failed
+verification, and the update is refused. Turning the option off keeps `publisherName` out of
+`app-update.yml`, so that check is skipped while the sha512 check remains. **If a certificate is ever bought,
+remove that option** — signature verification is worth having once there is a signature to verify.
+
 ### Publish a release (auto-builds the installer)
 The workflow in `.github/workflows/release.yml` builds the installer and attaches it to a GitHub Release automatically. To cut a release:
 
@@ -72,7 +104,15 @@ git tag v2.0.0
 git push origin v2.0.0
 ```
 
-GitHub Actions then builds on `windows-latest` and publishes the installer to a Release named after the tag. You can also trigger it manually from the **Actions** tab (**Run workflow**).
+GitHub Actions then builds on `windows-latest` and publishes to a Release named after the tag. You can also
+trigger it manually from the **Actions** tab (**Run workflow**), which builds without publishing.
+
+electron-builder does the publishing itself (`--publish always`), because it is the only thing that knows the
+full set of files auto-update needs: the installer, `latest.yml` — the manifest the app reads, carrying the
+sha512 it checks the download against — and the `.blockmap` that lets it download only the parts that
+changed. A workflow that uploaded just the `.exe` would leave installed copies unable to see the release at
+all. The release must also be a real release rather than a draft (`releaseType: release`), since drafts are
+invisible to the updater.
 
 ### Editing the app
 `app/index.html` is a **generated** file: a small unpacker, a manifest of
@@ -101,7 +141,10 @@ kindergarten-helper/
 │  ├─ src/libheif.js     vendored HEIC decoder (packed into the bundle)
 │  ├─ rebundle.js        src -> app/index.html
 │  └─ unbundle.js        app/index.html -> src
-├─ main.js               Electron window
+├─ main.js               Electron window, and the launch / update sequence
+├─ updater.js            checks GitHub, downloads, relaunches — fails silently
+├─ splash.js             the frameless window that carries the progress bar
+├─ splash.html           its contents (self-contained, bilingual)
 ├─ build/icon.png        icon for the .exe and the installer (source: build/icon.svg)
 │                        — electron-builder's buildResources dir, not shipped inside the app
 ├─ package.json          Electron + electron-builder config

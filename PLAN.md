@@ -12,8 +12,13 @@ preview never rendered (data-URL semicolon broke the style-attribute parser),
 exported text was 2.24× the preview, and HEIC/iPhone photos are now supported
 via a vendored decoder.
 
-**Phase 1 — code complete, awaiting a check on a real Windows machine.** See
-the phase below for what still has to be confirmed there.
+**Phase 1 — merged.** Installer replaces the portable build; backup
+export/import landed as the storage escape hatch. Three checks still want a real
+Windows machine; see the phase below.
+
+**Phase 2 — code complete, awaiting the same machine.** Auto-update, splash and
+progress bar are in and tested against a stubbed updater. Nothing is released
+until a tag is pushed, so `main` carrying this is not yet in anyone's hands.
 
 **Also introduced:** `tools/src/app.html` + `tools/rebundle.js`. This was the
 minimum needed to edit a generated single-line file safely. Phase 4 replaces it
@@ -162,6 +167,30 @@ later without changing any of this.
 **Done when:** installing v2.0.0, then tagging v2.0.1, results in the app
 updating itself and relaunching on next start with no interaction — and with
 the network unplugged, it still starts normally.
+
+**Status — built and tested against a stubbed updater.** `updater.js`,
+`splash.js` and `splash.html` are in; the workflow publishes with
+`--publish always` so `latest.yml` and the `.blockmap` reach the release, as a
+full release rather than a draft. Every failure path is covered by tests: no
+network, GitHub down, a check that never answers, a download that stalls, a
+throwing handler, and running unpackaged all fall through to a normal launch,
+and only a completed download reaches `quitAndInstall(true, true)`.
+
+**One trap found and fixed, worth recording.** The plan says not to code-sign,
+and notes correctly that unsigned auto-update works because electron-updater
+verifies the sha512 from `latest.yml`. But electron-builder writes
+`publisherName` into `app-update.yml` by default, and when that key is present
+electron-updater *additionally* runs `Get-AuthenticodeSignature` on the
+downloaded installer before running it. An unsigned installer returns
+`NotSigned`, which it treats as a failed verification and refuses to install —
+so auto-update would have failed at the last step, on a real machine, at
+v2.0.1, with nothing visible to explain it. `win.verifyUpdateCodeSignature` is
+now `false`, which keeps `publisherName` out of `app-update.yml`; the sha512
+check is unaffected. If a certificate is ever bought, remove that option.
+
+The real check still needs Windows: install v2.0.0, tag v2.0.1, confirm the app
+updates itself and comes back on its own — and that it starts normally with the
+network unplugged.
 
 ---
 
