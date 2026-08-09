@@ -12,13 +12,24 @@ preview never rendered (data-URL semicolon broke the style-attribute parser),
 exported text was 2.24× the preview, and HEIC/iPhone photos are now supported
 via a vendored decoder.
 
-**Phase 1 — merged.** Installer replaces the portable build; backup
-export/import landed as the storage escape hatch. Three checks still want a real
-Windows machine; see the phase below.
+**Phases 1 and 2 — released as `v2.0.0`.** The installer replaces the portable
+build, backup export/import landed as the storage escape hatch, and the app can
+now update itself. `v2.0.1` follows it carrying no functional change at all: it
+exists so that v2.0.0, the first version able to update itself, has something
+newer to find. If an installed v2.0.0 comes back running 2.0.1 on its own,
+auto-update works and nothing else could account for the difference.
 
-**Phase 2 — code complete, awaiting the same machine.** Auto-update, splash and
-progress bar are in and tested against a stubbed updater. Nothing is released
-until a tag is pushed, so `main` carrying this is not yet in anyone's hands.
+Both releases carry the installer, `latest.yml` and the `.blockmap`, and
+`releases/latest/download/latest.yml` resolves to 2.0.1 — so the update is
+there to be found. What has *not* been confirmed is any of it running on
+Windows; see the checks listed under each phase.
+
+**This changes what ships when.** The table below has phases 1–3 shipping
+together as one manual install. Phases 1 and 2 have now gone out ahead of
+phase 3, so phase 3 ships on its own — and, being the first release after
+auto-update, it should arrive by itself rather than being installed by hand.
+That is the arrangement the phase order was designed to reach; it just happened
+one phase earlier than planned.
 
 **Also introduced:** `tools/src/app.html` + `tools/rebundle.js`. This was the
 minimum needed to edit a generated single-line file safely. Phase 4 replaces it
@@ -51,14 +62,15 @@ question. I'm proposing a different order. The reasoning:
 | 0 | Merge the graduation fixes | v1.2.0 | — |
 | 1 | Installer instead of portable (fixes startup) | v2.0.0 | 0 |
 | 2 | Auto-update | v2.0.0 | 1 |
-| 3 | Saved files: Documents folder, named per tab + year | v2.0.0 | 1 |
+| 3 | Saved files: Documents folder, named per tab + year | v2.0.2 | 1 |
 | 4 | Source refactor | internal | — |
 | 5 | Per-design sizes | v2.1.0 | 4 |
 | 6 | Medals tab | v2.2.0 | 4, 5 |
 
-Phases 1–3 ship together as one manual install — they're all main-process work
-riding the same release. Phase 4 has no user-visible change by design; that is
-how we'll know it worked.
+Phases 1 and 2 shipped together as `v2.0.0`, the one release that has to be
+installed by hand. Phase 3 was meant to ride along with them; it now follows as
+`v2.0.2` and should be the first phase to arrive on its own. Phase 4 has no
+user-visible change by design; that is how we'll know it worked.
 
 ---
 

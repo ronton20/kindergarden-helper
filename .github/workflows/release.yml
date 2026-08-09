@@ -60,10 +60,12 @@ jobs:
             dist/*.blockmap
             dist/latest.yml
 
-      # electron-builder publishes the release but writes no notes. Cosmetic
-      # only — the app updates itself and nobody has to read this page — so a
-      # failure here must not fail the release.
-      - name: Add generated release notes
+      # electron-builder publishes the release but writes no notes, and names it
+      # after the bare version ("2.0.1") rather than the tag ("v2.0.1"), which
+      # doesn't match the releases published before it. Both are cosmetic — the
+      # app updates itself and nobody has to read this page — so a failure here
+      # must not fail the release.
+      - name: Tidy the release — title and generated notes
         if: startsWith(github.ref, 'refs/tags/')
         continue-on-error: true
         shell: bash
@@ -72,4 +74,4 @@ jobs:
         run: |
           notes=$(gh api "repos/$GITHUB_REPOSITORY/releases/generate-notes" \
             -f tag_name="$GITHUB_REF_NAME" --jq .body)
-          gh release edit "$GITHUB_REF_NAME" --notes "$notes"
+          gh release edit "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes "$notes"
