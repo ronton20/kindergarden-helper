@@ -34,13 +34,13 @@ jobs:
           v="${GITHUB_REF_NAME#v}"
           npm version "$v" --no-git-tag-version --allow-same-version
 
-      - name: Build portable Windows .exe
-        run: npx electron-builder --win portable --publish never
+      - name: Build Windows installer
+        run: npx electron-builder --win --publish never
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: KindergartenHelper-portable
+          name: KindergartenHelper-installer
           path: dist/*.exe
 
       - name: Publish to GitHub Release

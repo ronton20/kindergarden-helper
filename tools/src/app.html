@@ -510,6 +510,21 @@
           <div style="font:600 16px Rubik,sans-serif;color:#6A994E">✓ {{ s.saved }} · {{ childCount }}</div>
         </div>
       </div>
+
+      <div style="background:#fff;border:2px solid #E7E0D6;border-radius:20px;padding:20px;max-width:720px;margin-top:18px">
+        <div style="font:700 20px Rubik,sans-serif;margin-bottom:6px">{{ s.backupTitle }}</div>
+        <div style="font:500 17px Rubik,sans-serif;color:#7A736B;margin-bottom:16px">{{ s.backupHelp }}</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <button sc-camel-on-click="{{ exportSettings }}" style="height:56px;padding:0 22px;border-radius:14px;border:2px solid #E7E0D6;background:#fff;color:#2B2723;font:700 18px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ s.backupSave }}</button>
+          <label style="height:56px;padding:0 22px;border-radius:14px;border:2px solid #E7E0D6;background:#fff;color:#2B2723;font:700 18px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">
+            ⤒ {{ s.backupLoad }}
+            <input type="file" accept="application/json,.json" sc-camel-on-change="{{ importSettings }}" style="display:none">
+          </label>
+        </div>
+        <sc-if value="{{ backupNote }}" hint-placeholder-val="{{ false }}">
+          <div style="font:600 16px Rubik,sans-serif;margin-top:14px;color:{{ backupNoteColor }}">{{ backupNote }}</div>
+        </sc-if>
+      </div>
     </div>
     </sc-if>
 
@@ -852,6 +867,7 @@ class Component extends DCLogic {
       history: ['#E07A4B','#2FA39B','#F2C14E','#6A994E'],
       grad: { img:null, title:'', subtitle:'', color:'#FFFFFF', font:'Suez One', size:44, x:50, y:78 },
       gradBusy: '', gradErr: '',
+      backupNote: '', backupErr: false,
       att: { cls:'', emptyRows:0 }
     };
   }
@@ -863,6 +879,10 @@ class Component extends DCLogic {
       childrenTitle:'The children', childrenHelp:'Type a first and last name for each child. The list is saved automatically and kept for next year — just change the names.',
       first:'First name', last:'Last name', addChild:'Add a child', remove:'Remove',
       noChildren:'No children yet. Press “Add a child” to start.', saved:'Saved automatically',
+      backupTitle:'Backup', backupHelp:'A backup file holds the children list and every setting. Keep one on a memory stick — it can be restored here, or on another computer.',
+      backupSave:'Save a backup file', backupLoad:'Restore from a backup file',
+      backupDone:'Backup saved.', backupRestored:'Restored from the backup file.',
+      backupBad:'That file is not a Kindergarten Helper backup.',
       colorAll:'Same colours for every card',
       editingAll:'Editing: all cards', editingOne:'Editing: ',
       bgLabel:'Background', textLabel:'Text', borderLabel:'Border',
@@ -890,6 +910,10 @@ class Component extends DCLogic {
       childrenTitle:'רשימת הילדים', childrenHelp:'הקלידו שם פרטי ושם משפחה לכל ילד. הרשימה נשמרת אוטומטית ונשארת לשנה הבאה — פשוט משנים את השמות.',
       first:'שם פרטי', last:'שם משפחה', addChild:'הוספת ילד', remove:'הסרה',
       noChildren:'עדיין אין ילדים. לחצו על ״הוספת ילד״ כדי להתחיל.', saved:'נשמר אוטומטית',
+      backupTitle:'גיבוי', backupHelp:'קובץ הגיבוי שומר את רשימת הילדים ואת כל ההגדרות. כדאי לשמור עותק על דיסק־און־קי — אפשר לשחזר ממנו כאן או במחשב אחר.',
+      backupSave:'שמירת קובץ גיבוי', backupLoad:'שחזור מקובץ גיבוי',
+      backupDone:'הגיבוי נשמר.', backupRestored:'שוחזר מקובץ הגיבוי.',
+      backupBad:'הקובץ הזה אינו קובץ גיבוי של עוזר הגן.',
       colorAll:'אותם צבעים לכל הכרטיסים',
       editingAll:'עריכה: כל הכרטיסים', editingOne:'עריכה: ',
       bgLabel:'רקע', textLabel:'טקסט', borderLabel:'מסגרת',
@@ -956,6 +980,59 @@ class Component extends DCLogic {
         if (grad.img && !this.state.gradErr) this.setState({gradErr:this.strings().photoTooBig});
       } catch(e2){}
     }
+  };
+
+  // ── backup ───────────────────────────────────────────────────────────────
+  // The children list is the only irreplaceable thing in the app, and it lives
+  // in localStorage, which is keyed by the app's identity and origin. Anything
+  // that touches packaging can in principle orphan it, so there is a way to
+  // carry it out of the app and back in by hand.
+
+  exportSettings = () => {
+    const {lang,children,large,small,history,grad,att} = this.state;
+    const payload = { kh:'kindergarten-helper', v:1, savedAt:new Date().toISOString(),
+                      data:{lang,children,large,small,history,grad,att} };
+    const blob = new Blob([JSON.stringify(payload)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const d = new Date(), p = (n)=>String(n).padStart(2,'0');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'kindergarten-helper ' + d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()) + '.json';
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    // The note is stored as a string key, not as text, so it stays correct if
+    // the language is switched while it is still on screen.
+    this.setState({backupNote:'backupDone', backupErr:false});
+  };
+
+  importSettings = (e) => {
+    const file = e.target.files && e.target.files[0];
+    // Clear it so picking the same file twice in a row still fires a change.
+    e.target.value = '';
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      let parsed = null;
+      try { parsed = JSON.parse(reader.result); } catch(err){}
+      // Accept our own wrapper, and also a bare kh_v1 payload, so a file copied
+      // straight out of localStorage still restores.
+      const d = parsed && (parsed.data || (Array.isArray(parsed.children) ? parsed : null));
+      if (!d || !Array.isArray(d.children)) {
+        this.setState({backupNote:'backupBad', backupErr:true});
+        return;
+      }
+      const patch = { children: d.children, backupNote:'backupRestored', backupErr:false };
+      if (d.lang === 'he' || d.lang === 'en') patch.lang = d.lang;
+      if (d.large) patch.large = {...this.state.large, ...d.large};
+      if (d.small) patch.small = {...this.state.small, ...d.small};
+      if (Array.isArray(d.history)) patch.history = d.history;
+      if (d.grad) patch.grad = {...this.state.grad, ...d.grad};
+      if (d.att) patch.att = {...this.state.att, ...d.att};
+      this._nid = d.children.reduce((m,c)=>Math.max(m, (c.id||0)),0)+1;
+      this.setState(patch, this.persist);
+    };
+    reader.onerror = () => { this.setState({backupNote:'backupBad', backupErr:true}); };
+    reader.readAsText(file);
   };
 
   setLang = (e) => { const lang = e.currentTarget.dataset.lang; this.setState({lang}, this.persist); };
@@ -1378,6 +1455,9 @@ class Component extends DCLogic {
       hasChildren: this.state.children.length>0,
       childCount: this.state.children.length + (lang==='he'?' ילדים':' children'),
       addChild:this.addChild, removeChild:this.removeChild, onChildInput:this.onChildInput, setLang:this.setLang, setTab:this.setTab,
+      exportSettings:this.exportSettings, importSettings:this.importSettings,
+      backupNote: this.state.backupNote ? (s[this.state.backupNote] || '') : '',
+      backupNoteColor: this.state.backupErr ? '#C0392B' : '#6A994E',
       palette:['#2B2723','#FFFFFF','#E4572E','#F4A259','#F2C14E','#6A994E','#2FA39B','#4C7FB8','#7B6CB0','#D65A8E','#FDECEC','#E3F0FB'],
       history:this.state.history,
       large:this.state.large, small:this.state.small,

@@ -7,10 +7,13 @@ the person actually using the app. Each phase is independently shippable.
 
 ## Where we are
 
-**Done, not yet merged** — graduation photo fixes (branch `feature/attendance-empty-rows`):
-photo preview never rendered (data-URL semicolon broke the style-attribute
-parser), exported text was 2.24× the preview, and HEIC/iPhone photos are now
-supported via a vendored decoder. See the commit body for detail.
+**Phase 0 — done, merged, tagged `v1.2.0`.** Graduation photo fixes: photo
+preview never rendered (data-URL semicolon broke the style-attribute parser),
+exported text was 2.24× the preview, and HEIC/iPhone photos are now supported
+via a vendored decoder.
+
+**Phase 1 — code complete, awaiting a check on a real Windows machine.** See
+the phase below for what still has to be confirmed there.
 
 **Also introduced:** `tools/src/app.html` + `tools/rebundle.js`. This was the
 minimum needed to edit a generated single-line file safely. Phase 4 replaces it
@@ -94,6 +97,19 @@ an export/import-settings button as a safety valve.
 
 **Done when:** installer runs without an admin prompt; app starts in under 2 s;
 an existing `kh_v1` list is intact after upgrading from v1.2.0.
+
+**Status — built and verified as far as a Mac can verify it.** The installer
+builds (`KindergardenHelper_Setup_v2.0.0.exe`, one-click, per-user, x64-pinned so
+the runner's architecture can't change what ships); `appId` and `productName` are
+unchanged, so the storage location is untouched; the Hebrew shortcut name
+survives into the NSIS defines; the `build/icon.png` reference is gone from the
+packaged app (confirmed: the asar holds only `main.js`, `package.json`,
+`app/index.html`); and the backup export/restore round-trips against the real
+bundle in both languages, rejecting a non-backup file without touching the list.
+
+Three things need a real Windows machine and cannot be checked here:
+no admin prompt, the sub-2-second launch, and an existing `kh_v1` list surviving
+the upgrade from v1.2.0. Do the upgrade check with a backup file saved first.
 
 **Decided — the portable `.exe` is retired.** Adding it back to the build is a
 one-word change, but the upkeep isn't free: it is *by construction* the slow
