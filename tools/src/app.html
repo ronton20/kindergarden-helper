@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="kh-libheif" content="eb34bd46-caa6-4519-8d8b-6cc0ef5c7db2">
+<script src="27f06bab-83d4-4b50-aa95-109e355175ec"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<style>/* hebrew */
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("23199a1c-77b5-4afc-8e54-b78b1eb66306") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("0e150399-bbc3-4492-90f2-cfeca29fec39") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("cf888786-2ae0-4d15-81c4-251d351c5d96") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("23199a1c-77b5-4afc-8e54-b78b1eb66306") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("0e150399-bbc3-4492-90f2-cfeca29fec39") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("cf888786-2ae0-4d15-81c4-251d351c5d96") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("098688e3-ae50-4fd8-bab6-4d6105b64670") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* math */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("df525a57-c141-4b04-9e23-1e730f618b4a") format('woff2');
+  unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
+}
+/* symbols */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("7f5e6b96-fc23-4920-ba30-26f617230862") format('woff2');
+  unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("bd64475f-db0d-4d25-9d7e-9eec0173e3dc") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("2395515d-ea5f-484a-82f4-656c5c1652e8") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("098688e3-ae50-4fd8-bab6-4d6105b64670") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* math */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("df525a57-c141-4b04-9e23-1e730f618b4a") format('woff2');
+  unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
+}
+/* symbols */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("7f5e6b96-fc23-4920-ba30-26f617230862") format('woff2');
+  unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("bd64475f-db0d-4d25-9d7e-9eec0173e3dc") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("2395515d-ea5f-484a-82f4-656c5c1652e8") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("098688e3-ae50-4fd8-bab6-4d6105b64670") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* math */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("df525a57-c141-4b04-9e23-1e730f618b4a") format('woff2');
+  unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
+}
+/* symbols */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("7f5e6b96-fc23-4920-ba30-26f617230862") format('woff2');
+  unicode-range: U+0001-000C, U+000E-001F, U+007F-009F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8BB, U+1F8C0-1F8C1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA89, U+1FA8F-1FAC6, U+1FACE-1FADC, U+1FADF-1FAE9, U+1FAF0-1FAF8, U+1FB00-1FBFF;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("bd64475f-db0d-4d25-9d7e-9eec0173e3dc") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("2395515d-ea5f-484a-82f4-656c5c1652e8") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* arabic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("356b196d-d094-4265-8ef9-52fe23799f51") format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("3da539c1-e4ac-42f1-aa97-2456aee08c33") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("6ce61d71-91d3-4a09-9289-7ef90f2656fe") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("e58c05e2-b60b-4497-ae38-fb9533b921ca") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("d31fb0da-9fbe-4f63-b16a-7227038f6c28") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("a55192f4-81d6-44a7-bdd6-bb7f42d4f1da") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* arabic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("356b196d-d094-4265-8ef9-52fe23799f51") format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("3da539c1-e4ac-42f1-aa97-2456aee08c33") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("6ce61d71-91d3-4a09-9289-7ef90f2656fe") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("e58c05e2-b60b-4497-ae38-fb9533b921ca") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("d31fb0da-9fbe-4f63-b16a-7227038f6c28") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("a55192f4-81d6-44a7-bdd6-bb7f42d4f1da") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* arabic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("356b196d-d094-4265-8ef9-52fe23799f51") format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("3da539c1-e4ac-42f1-aa97-2456aee08c33") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("6ce61d71-91d3-4a09-9289-7ef90f2656fe") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("e58c05e2-b60b-4497-ae38-fb9533b921ca") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("d31fb0da-9fbe-4f63-b16a-7227038f6c28") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("a55192f4-81d6-44a7-bdd6-bb7f42d4f1da") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* arabic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("356b196d-d094-4265-8ef9-52fe23799f51") format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("3da539c1-e4ac-42f1-aa97-2456aee08c33") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("6ce61d71-91d3-4a09-9289-7ef90f2656fe") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("e58c05e2-b60b-4497-ae38-fb9533b921ca") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("d31fb0da-9fbe-4f63-b16a-7227038f6c28") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("a55192f4-81d6-44a7-bdd6-bb7f42d4f1da") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* hebrew */
+@font-face {
+  font-family: 'Suez One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("ff1ef965-903f-4c5d-b2be-d453617cd08b") format('woff2');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Suez One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("f7af80ff-b05c-48dd-8835-ac048b2cff3a") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Suez One';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("c0fe706a-b165-42c1-92f0-c8aedc385b6c") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style id="kh-print-page"></style>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{-webkit-font-smoothing:antialiased;font-family:Rubik,"Heebo",sans-serif}
+  a{color:#E07A4B}
+  a:hover{color:#c5643a}
+  input,select,button{font-family:Rubik,"Heebo",sans-serif}
+  input[type=color]{-webkit-appearance:none;appearance:none;border:none;padding:0;background:none;cursor:pointer}
+  input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+  input[type=color]::-webkit-color-swatch{border:2px solid #E7E0D6;border-radius:12px}
+  @media print{
+    html, body, body[data-print] .kh-root{background:#fff !important}
+    body[data-print] .kh-screen{display:none !important}
+    body[data-print="large"] [data-print-area="large"],
+    body[data-print="small"] [data-print-area="small"],
+    body[data-print="grad"] [data-print-area="grad"]{display:flex !important}
+  }
+</style>
+</helmet>
+<div class="kh-root" dir="{{ dir }}" style="min-height:100vh;background:#FAF7F2;color:#2B2723">
+  <div class="kh-screen" style="max-width:1120px;margin:0 auto;padding:24px 20px 80px">
+
+    <!-- top bar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:52px;height:52px;border-radius:16px;background:#E07A4B;display:flex;align-items:center;justify-content:center;color:#fff;font:900 26px Rubik,sans-serif">ג</div>
+        <div style="font:900 30px Rubik,sans-serif">{{ s.appTitle }}</div>
+      </div>
+      <div style="display:flex;gap:8px;background:#fff;border:2px solid #E7E0D6;border-radius:999px;padding:5px">
+        <button data-lang="en" sc-camel-on-click="{{ setLang }}" style="border:none;cursor:pointer;height:44px;padding:0 20px;border-radius:999px;font:700 18px Rubik,sans-serif;background:{{ enBg }};color:{{ enColor }}">English</button>
+        <button data-lang="he" sc-camel-on-click="{{ setLang }}" style="border:none;cursor:pointer;height:44px;padding:0 20px;border-radius:999px;font:700 18px Rubik,sans-serif;background:{{ heBg }};color:{{ heColor }}">עברית</button>
+      </div>
+    </div>
+
+    <!-- tabs -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 26px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+        <button data-tab="{{ t.key }}" sc-camel-on-click="{{ setTab }}" style="border:2px solid {{ t.border }};background:{{ t.bg }};color:{{ t.color }};cursor:pointer;height:60px;padding:0 26px;border-radius:16px;font:700 19px Rubik,sans-serif;display:flex;align-items:center;gap:10px">{{ t.label }}</button>
+      </sc-for>
+    </div>
+
+    <!-- CHILDREN -->
+    <sc-if value="{{ isChildren }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <div style="font:900 26px Rubik,sans-serif;margin-bottom:6px">{{ s.childrenTitle }}</div>
+      <div style="font:500 19px Rubik,sans-serif;color:#7A736B;margin-bottom:22px;max-width:640px">{{ s.childrenHelp }}</div>
+      <div style="background:#fff;border:2px solid #E7E0D6;border-radius:20px;padding:20px;max-width:720px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ children }}" as="c" hint-placeholder-count="3">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div style="width:34px;height:34px;flex:none;border-radius:10px;background:#FAF7F2;display:flex;align-items:center;justify-content:center;font:700 16px Rubik,sans-serif;color:#7A736B">{{ c.num }}</div>
+              <input value="{{ c.first }}" data-id="{{ c.id }}" data-field="first" sc-camel-on-input="{{ onChildInput }}" placeholder="{{ s.first }}" style="flex:1;min-width:0;height:54px;border:2px solid #E7E0D6;border-radius:12px;padding:0 14px;font:500 20px Rubik,sans-serif;background:#fff;color:#2B2723">
+              <input value="{{ c.last }}" data-id="{{ c.id }}" data-field="last" sc-camel-on-input="{{ onChildInput }}" placeholder="{{ s.last }}" style="flex:1;min-width:0;height:54px;border:2px solid #E7E0D6;border-radius:12px;padding:0 14px;font:500 20px Rubik,sans-serif;background:#fff;color:#2B2723">
+              <input value="{{ c.tz }}" data-id="{{ c.id }}" data-field="tz" sc-camel-on-input="{{ onChildInput }}" placeholder="{{ s.idCol }}" inputmode="numeric" style="flex:0.75;min-width:0;height:54px;border:2px solid #E7E0D6;border-radius:12px;padding:0 14px;font:500 20px Rubik,sans-serif;background:#fff;color:#2B2723">
+              <button data-id="{{ c.id }}" sc-camel-on-click="{{ removeChild }}" title="{{ s.remove }}" style="flex:none;width:54px;height:54px;border:2px solid #EED9D9;background:#fff;color:#B23A48;border-radius:12px;cursor:pointer;font:700 24px Rubik,sans-serif">×</button>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noChildren }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:18px 4px;color:#7A736B;font:500 19px Rubik,sans-serif">{{ s.noChildren }}</div>
+        </sc-if>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px">
+          <button sc-camel-on-click="{{ addChild }}" style="height:56px;padding:0 24px;border-radius:14px;border:none;background:#E07A4B;color:#fff;font:700 20px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">＋ {{ s.addChild }}</button>
+          <div style="font:600 16px Rubik,sans-serif;color:#6A994E">✓ {{ s.saved }} · {{ childCount }}</div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- LARGE CARDS -->
+    <sc-if value="{{ isLarge }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="font:900 26px Rubik,sans-serif;margin-bottom:6px">{{ s.largeTitle }}</div>
+      <div style="font:500 19px Rubik,sans-serif;color:#7A736B;margin-bottom:22px;max-width:660px">{{ s.largeHelp }}</div>
+      <sc-if value="{{ hasChildren }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:1fr;gap:24px">
+          <div style="background:#fff;border:2px solid #E7E0D6;border-radius:20px;padding:20px">
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px">
+              <label style="display:flex;align-items:center;gap:12px;cursor:pointer;font:700 19px Rubik,sans-serif">
+                <input type="checkbox" checked="{{ large.uniform }}" data-studio="large" sc-camel-on-change="{{ toggleUniform }}" style="width:26px;height:26px;accent-color:#E07A4B;cursor:pointer">
+                {{ s.colorAll }}
+              </label>
+              <div style="font:700 17px Rubik,sans-serif;color:#E07A4B;background:#FDEEE6;padding:8px 14px;border-radius:999px">{{ largeEditing }}</div>
+            </div>
+            <sc-for list="{{ largeTargets }}" as="t" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 0;border-top:1px solid #F0EAE0">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ t.label }}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1">
+                  <sc-for list="{{ palette }}" as="p" hint-placeholder-count="8">
+                    <button data-studio="{{ t.studio }}" data-target="{{ t.key }}" data-color="{{ p }}" sc-camel-on-click="{{ onSwatch }}" style="width:38px;height:38px;border-radius:10px;border:2px solid #E7E0D6;cursor:pointer;background:{{ p }}"></button>
+                  </sc-for>
+                </div>
+                <label title="{{ moreColours }}" style="position:relative;width:44px;height:44px;flex:none;border-radius:50%;cursor:pointer;background:conic-gradient(from 0deg,#ff2d2d,#ffd23f,#5ac85a,#39c0c0,#4c7fb8,#a06cd5,#ff2d2d);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.2)">
+                  <span style="width:22px;height:22px;border-radius:50%;background:{{ t.current }};border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,0.15)"></span>
+                  <input type="color" value="{{ t.current }}" data-studio="{{ t.studio }}" data-target="{{ t.key }}" sc-camel-on-input="{{ onNative }}" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer">
+                </label>
+              </div>
+            </sc-for>
+            <div style="padding:14px 0;border-top:1px solid #F0EAE0;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.font }}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ largeFonts }}" as="f" hint-placeholder-count="4">
+                    <button data-studio="large" data-font="{{ f.family }}" sc-camel-on-click="{{ onStudioFont }}" style="cursor:pointer;height:48px;padding:0 18px;border-radius:12px;border:2px solid {{ f.border }};background:{{ f.bg }};color:#2B2723;font-size:19px;font-weight:700;font-family:{{ f.family }},sans-serif">{{ f.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.borderStyle }}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ largeBorders }}" as="b" hint-placeholder-count="5">
+                    <button data-studio="large" data-style="{{ b.key }}" sc-camel-on-click="{{ onStudioBorder }}" style="cursor:pointer;height:48px;padding:0 18px;border-radius:12px;border:2px solid {{ b.border }};background:{{ b.bg }};color:#2B2723;font:700 16px Rubik,sans-serif">{{ b.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.borderWidth }}</div>
+                <input type="range" min="0" max="16" value="{{ large.borderWidth }}" data-studio="large" sc-camel-on-input="{{ onStudioBorderWidth }}" style="flex:1;min-width:200px;accent-color:#E07A4B">
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.cornerRadius }}</div>
+                <input type="range" min="0" max="25" value="{{ large.cornerRadius }}" data-studio="large" sc-camel-on-input="{{ onStudioCorner }}" style="flex:1;min-width:200px;accent-color:#E07A4B">
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.size }}</div>
+                <input type="range" min="60" max="300" value="{{ large.size }}" data-studio="large" sc-camel-on-input="{{ onStudioSize }}" style="flex:1;min-width:200px;accent-color:#E07A4B">
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #F0EAE0">
+              <div style="font:600 15px Rubik,sans-serif;color:#7A736B">{{ s.recentColors }}</div>
+              <sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+                <button data-studio="large" data-target="bg" data-color="{{ h }}" sc-camel-on-click="{{ onSwatch }}" title="{{ h }}" style="width:34px;height:34px;border-radius:9px;border:2px solid #E7E0D6;cursor:pointer;background:{{ h }}"></button>
+              </sc-for>
+            </div>
+            <div style="font:500 14px Rubik,sans-serif;color:#B0A79B;margin-top:6px">{{ s.recentHint }}</div>
+          </div>
+
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+              <div style="font:600 16px Rubik,sans-serif;color:#7A736B">{{ s.actualSize }}: 6 × 4 cm · {{ s.clickToColor }}</div>
+              <button data-studio="large" sc-camel-on-click="{{ exportCards }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ s.exportPdf }}</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px">
+              <sc-for list="{{ largeCards }}" as="c" hint-placeholder-count="6">
+                <div data-studio="large" data-id="{{ c.id }}" sc-camel-on-click="{{ selectCard }}" style="cursor:pointer;aspect-ratio:3/2;container-type:size;border-radius:{{ c.radiusCq }};box-shadow:{{ c.outline }}">
+                  <div style="width:100%;height:100%;box-sizing:border-box;border-radius:{{ c.radiusCq }};display:flex;align-items:center;justify-content:center;text-align:center;padding:6cqw;overflow:hidden;font-weight:900;font-family:{{ c.font }},sans-serif;background:{{ c.bg }};color:{{ c.text }};border:{{ c.borderCss }}"><span style="font-size:{{ c.fontCqh }};line-height:1.05;white-space:normal">{{ c.name }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noChildren }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FFF6ED;border:2px dashed #E9C9AE;border-radius:18px;padding:26px;font:600 19px Rubik,sans-serif;color:#B77B4A">{{ s.addFirst }}</div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <!-- SMALL CARDS -->
+    <sc-if value="{{ isSmall }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="font:900 26px Rubik,sans-serif;margin-bottom:6px">{{ s.smallTitle }}</div>
+      <div style="font:500 19px Rubik,sans-serif;color:#7A736B;margin-bottom:22px;max-width:660px">{{ s.smallHelp }}</div>
+      <sc-if value="{{ hasChildren }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:1fr;gap:24px">
+          <div style="background:#fff;border:2px solid #E7E0D6;border-radius:20px;padding:20px">
+            <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px">
+              <label style="display:flex;align-items:center;gap:12px;cursor:pointer;font:700 19px Rubik,sans-serif">
+                <input type="checkbox" checked="{{ small.uniform }}" data-studio="small" sc-camel-on-change="{{ toggleUniform }}" style="width:26px;height:26px;accent-color:#E07A4B;cursor:pointer">
+                {{ s.colorAll }}
+              </label>
+              <div style="font:700 17px Rubik,sans-serif;color:#E07A4B;background:#FDEEE6;padding:8px 14px;border-radius:999px">{{ smallEditing }}</div>
+            </div>
+            <sc-for list="{{ smallTargets }}" as="t" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 0;border-top:1px solid #F0EAE0">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ t.label }}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1">
+                  <sc-for list="{{ palette }}" as="p" hint-placeholder-count="8">
+                    <button data-studio="{{ t.studio }}" data-target="{{ t.key }}" data-color="{{ p }}" sc-camel-on-click="{{ onSwatch }}" style="width:38px;height:38px;border-radius:10px;border:2px solid #E7E0D6;cursor:pointer;background:{{ p }}"></button>
+                  </sc-for>
+                </div>
+                <label title="{{ moreColours }}" style="position:relative;width:44px;height:44px;flex:none;border-radius:50%;cursor:pointer;background:conic-gradient(from 0deg,#ff2d2d,#ffd23f,#5ac85a,#39c0c0,#4c7fb8,#a06cd5,#ff2d2d);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.2)">
+                  <span style="width:22px;height:22px;border-radius:50%;background:{{ t.current }};border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,0.15)"></span>
+                  <input type="color" value="{{ t.current }}" data-studio="{{ t.studio }}" data-target="{{ t.key }}" sc-camel-on-input="{{ onNative }}" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer">
+                </label>
+              </div>
+            </sc-for>
+            <div style="padding:14px 0;border-top:1px solid #F0EAE0;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.font }}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ smallFonts }}" as="f" hint-placeholder-count="4">
+                    <button data-studio="small" data-font="{{ f.family }}" sc-camel-on-click="{{ onStudioFont }}" style="cursor:pointer;height:48px;padding:0 18px;border-radius:12px;border:2px solid {{ f.border }};background:{{ f.bg }};color:#2B2723;font-size:19px;font-weight:700;font-family:{{ f.family }},sans-serif">{{ f.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.borderStyle }}</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ smallBorders }}" as="b" hint-placeholder-count="5">
+                    <button data-studio="small" data-style="{{ b.key }}" sc-camel-on-click="{{ onStudioBorder }}" style="cursor:pointer;height:48px;padding:0 18px;border-radius:12px;border:2px solid {{ b.border }};background:{{ b.bg }};color:#2B2723;font:700 16px Rubik,sans-serif">{{ b.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.borderWidth }}</div>
+                <input type="range" min="0" max="16" value="{{ small.borderWidth }}" data-studio="small" sc-camel-on-input="{{ onStudioBorderWidth }}" style="flex:1;min-width:200px;accent-color:#E07A4B">
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.cornerRadius }}</div>
+                <input type="range" min="0" max="25" value="{{ small.cornerRadius }}" data-studio="small" sc-camel-on-input="{{ onStudioCorner }}" style="flex:1;min-width:200px;accent-color:#E07A4B">
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <div style="width:110px;font:700 18px Rubik,sans-serif">{{ s.size }}</div>
+                <input type="range" min="60" max="300" value="{{ small.size }}" data-studio="small" sc-camel-on-input="{{ onStudioSize }}" style="flex:1;min-width:200px;accent-color:#E07A4B">
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:1px solid #F0EAE0">
+              <div style="font:600 15px Rubik,sans-serif;color:#7A736B">{{ s.recentColors }}</div>
+              <sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+                <button data-studio="small" data-target="bg" data-color="{{ h }}" sc-camel-on-click="{{ onSwatch }}" title="{{ h }}" style="width:34px;height:34px;border-radius:9px;border:2px solid #E7E0D6;cursor:pointer;background:{{ h }}"></button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+              <div style="font:600 16px Rubik,sans-serif;color:#7A736B">{{ s.actualSize }}: 4 × 2 cm · {{ s.clickToColor }}</div>
+              <button data-studio="small" sc-camel-on-click="{{ exportCards }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ s.exportPdf }}</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px">
+              <sc-for list="{{ smallCards }}" as="c" hint-placeholder-count="8">
+                <div data-studio="small" data-id="{{ c.id }}" sc-camel-on-click="{{ selectCard }}" style="cursor:pointer;aspect-ratio:2/1;container-type:size;border-radius:{{ c.radiusCq }};box-shadow:{{ c.outline }}">
+                  <div style="width:100%;height:100%;box-sizing:border-box;border-radius:{{ c.radiusCq }};display:flex;align-items:center;justify-content:center;text-align:center;padding:6cqw;overflow:hidden;font-weight:900;font-family:{{ c.font }},sans-serif;background:{{ c.bg }};color:{{ c.text }};border:{{ c.borderCss }}"><span style="font-size:{{ c.fontCqh }};line-height:1.05;white-space:normal">{{ c.name }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noChildren }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#FFF6ED;border:2px dashed #E9C9AE;border-radius:18px;padding:26px;font:600 19px Rubik,sans-serif;color:#B77B4A">{{ s.addFirst }}</div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <!-- ATTENDANCE -->
+    <sc-if value="{{ isAtt }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="font:900 26px Rubik,sans-serif;margin-bottom:6px">{{ s.attTitle }}</div>
+      <div style="font:500 19px Rubik,sans-serif;color:#7A736B;margin-bottom:22px;max-width:720px">{{ s.attHelp }}</div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px">
+        <label style="display:inline-flex;align-items:center;gap:10px;font:600 18px Rubik,sans-serif;color:#4A443E">{{ s.emptyRowsLabel }}
+          <input type="number" min="0" max="100" value="{{ att.emptyRows }}" sc-camel-on-input="{{ onEmptyRows }}" style="width:88px;height:48px;border:2px solid #E7E0D6;border-radius:12px;padding:0 12px;font:600 18px Rubik,sans-serif;background:#fff;color:#2B2723">
+        </label>
+        <button sc-camel-on-click="{{ exportAttendance }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px;margin-inline-start:auto">⤓ {{ s.downloadXlsx }}</button>
+      </div>
+      <div style="background:#fff;border:2px solid #E7E0D6;border-radius:16px;padding:16px;overflow-x:auto;overflow-y:hidden;max-width:100%" data-comment-anchor="548e09a71f-div">
+        <div style="display:flex;gap:26px;margin-bottom:12px;font:700 18px Rubik,sans-serif">
+          <div>{{ s.className }}: <span style="display:inline-block;min-width:120px;border-bottom:2px solid #C9C1B6">&nbsp;</span></div>
+          <div>{{ s.month }}: <span style="display:inline-block;min-width:120px;border-bottom:2px solid #C9C1B6">&nbsp;</span></div>
+          <div>{{ s.year }}: <span style="display:inline-block;min-width:90px;border-bottom:2px solid #C9C1B6">&nbsp;</span></div>
+        </div>
+        <sc-raw-table style="border-collapse:collapse;font:500 14px Rubik,sans-serif;width:max-content;max-width:none">
+          <sc-raw-thead>
+            <sc-raw-tr>
+              <sc-raw-th style="border:1px solid #D9D2C7;padding:6px 8px;background:#FAF7F2">#</sc-raw-th>
+              <sc-raw-th style="border:1px solid #D9D2C7;padding:6px 10px;background:#FAF7F2;text-align:start;white-space:nowrap">{{ s.first }}</sc-raw-th>
+              <sc-raw-th style="border:1px solid #D9D2C7;padding:6px 10px;background:#FAF7F2;text-align:start;white-space:nowrap">{{ s.last }}</sc-raw-th>
+              <sc-raw-th style="border:1px solid #D9D2C7;padding:6px 10px;background:#FAF7F2;text-align:start;white-space:nowrap">{{ s.idCol }}</sc-raw-th>
+              <sc-for list="{{ days }}" as="d" hint-placeholder-count="31">
+                <sc-raw-th style="border:1px solid #D9D2C7;padding:6px 0;background:#FAF7F2;width:30px;min-width:30px;text-align:center">{{ d }}</sc-raw-th>
+              </sc-for>
+            </sc-raw-tr>
+          </sc-raw-thead>
+          <sc-raw-tbody>
+            <sc-for list="{{ attRows }}" as="r" hint-placeholder-count="10">
+              <sc-raw-tr>
+                <sc-raw-td style="border:1px solid #E4DED3;padding:6px 8px;text-align:center;color:#7A736B">{{ r.num }}</sc-raw-td>
+                <sc-raw-td style="border:1px solid #E4DED3;padding:6px 10px;white-space:nowrap">{{ r.first }}</sc-raw-td>
+                <sc-raw-td style="border:1px solid #E4DED3;padding:6px 10px;white-space:nowrap">{{ r.last }}</sc-raw-td>
+                <sc-raw-td style="border:1px solid #E4DED3;padding:6px 10px;white-space:nowrap">{{ r.tz }}</sc-raw-td>
+                <sc-for list="{{ days }}" as="d" hint-placeholder-count="31">
+                  <sc-raw-td style="border:1px solid #E4DED3;height:30px;width:30px;min-width:30px"></sc-raw-td>
+                </sc-for>
+              </sc-raw-tr>
+            </sc-for>
+          </sc-raw-tbody>
+        </sc-raw-table>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- GRADUATION PHOTO -->
+    <sc-if value="{{ isGrad }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <div style="font:900 26px Rubik,sans-serif;margin-bottom:6px">{{ s.gradTitle }}</div>
+      <div style="font:500 19px Rubik,sans-serif;color:#7A736B;margin-bottom:22px;max-width:660px">{{ s.gradHelp }}</div>
+      <div style="display:grid;grid-template-columns:320px 1fr;gap:26px;align-items:start">
+        <div style="background:#fff;border:2px solid #E7E0D6;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:16px" data-comment-anchor="5fd1f69893-div">
+          <label style="height:56px;border-radius:14px;background:#E07A4B;color:#fff;font:700 19px Rubik,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px">
+            📷 {{ gradUploadLabel }}
+            <input type="file" accept="image/*,.heic,.heif,.hif,.HEIC,.HEIF,.HIF" sc-camel-on-change="{{ onUpload }}" style="display:none">
+          </label>
+          <sc-if value="{{ gradNote }}" hint-placeholder-val="{{ false }}">
+            <div style="font:600 15px Rubik,sans-serif;line-height:1.35;color:{{ gradNoteColor }}">{{ gradNote }}</div>
+          </sc-if>
+          <div>
+            <div style="font:700 16px Rubik,sans-serif;margin-bottom:6px">{{ s.gTitle }}</div>
+            <input value="{{ grad.title }}" data-field="title" sc-camel-on-input="{{ onGradText }}" style="height:52px;border:2px solid #E7E0D6;border-radius:12px;padding:0 14px;font:500 19px Rubik,sans-serif;width:100%;background:#fff;color:#2B2723">
+          </div>
+          <div>
+            <div style="font:700 16px Rubik,sans-serif;margin-bottom:6px">{{ s.gSubtitle }}</div>
+            <input value="{{ grad.subtitle }}" data-field="subtitle" sc-camel-on-input="{{ onGradText }}" style="height:52px;border:2px solid #E7E0D6;border-radius:12px;padding:0 14px;font:500 19px Rubik,sans-serif;width:100%;background:#fff;color:#2B2723">
+          </div>
+          <div>
+            <div style="font:700 16px Rubik,sans-serif;margin-bottom:6px">{{ s.font }}</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-for list="{{ fonts }}" as="f" hint-placeholder-count="4">
+                <button data-font="{{ f.family }}" sc-camel-on-click="{{ onGradFont }}" style="cursor:pointer;height:48px;padding:0 16px;border-radius:12px;border:2px solid {{ f.border }};background:{{ f.bg }};color:{{ f.color }};font-size:18px;font-weight:700;font-family:{{ f.family }},serif">{{ f.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <div style="font:700 16px Rubik,sans-serif">{{ s.textColor }}</div>
+            <label title="{{ moreColours }}" style="position:relative;width:44px;height:44px;flex:none;border-radius:50%;cursor:pointer;background:conic-gradient(from 0deg,#ff2d2d,#ffd23f,#5ac85a,#39c0c0,#4c7fb8,#a06cd5,#ff2d2d);display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.2)">
+              <span style="width:22px;height:22px;border-radius:50%;background:{{ grad.color }};border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,0.15)"></span>
+              <input type="color" value="{{ grad.color }}" sc-camel-on-input="{{ onGradColor }}" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer">
+            </label>
+            <div style="display:flex;gap:6px">
+              <button data-color="#FFFFFF" sc-camel-on-click="{{ onGradSwatch }}" style="width:34px;height:34px;border-radius:9px;border:2px solid #E7E0D6;cursor:pointer;background:#FFFFFF"></button>
+              <button data-color="#2B2723" sc-camel-on-click="{{ onGradSwatch }}" style="width:34px;height:34px;border-radius:9px;border:2px solid #E7E0D6;cursor:pointer;background:#2B2723"></button>
+              <button data-color="#F2C14E" sc-camel-on-click="{{ onGradSwatch }}" style="width:34px;height:34px;border-radius:9px;border:2px solid #E7E0D6;cursor:pointer;background:#F2C14E"></button>
+              <button data-color="#E07A4B" sc-camel-on-click="{{ onGradSwatch }}" style="width:34px;height:34px;border-radius:9px;border:2px solid #E7E0D6;cursor:pointer;background:#E07A4B"></button>
+            </div>
+          </div>
+          <div>
+            <div style="font:700 16px Rubik,sans-serif;margin-bottom:6px">{{ s.size }}</div>
+            <input type="range" min="18" max="80" value="{{ grad.size }}" sc-camel-on-input="{{ onGradSize }}" style="width:100%;accent-color:#E07A4B">
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+            <div style="font:600 16px Rubik,sans-serif;color:#7A736B">{{ s.dragHint }} · 18 × 13 cm</div>
+            <button sc-camel-on-click="{{ exportGrad }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ s.savePng }}</button>
+          </div>
+          <div data-gradbox="" style="position:relative;width:100%;max-width:600px;aspect-ratio:18/13;container-type:inline-size;border-radius:14px;overflow:hidden;background:{{ gradBoxBg }};border:2px solid #E7E0D6;display:flex;align-items:center;justify-content:center">
+            <sc-if value="{{ hasPhoto }}" hint-placeholder-val="{{ false }}">
+              <img sc-camel-src="{{ grad.img }}" alt="" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover">
+            </sc-if>
+            <sc-if value="{{ noPhoto }}" hint-placeholder-val="{{ true }}">
+              <div style="color:#B0A79B;font:600 18px Rubik,sans-serif;text-align:center;padding:20px">{{ s.noPhoto }}</div>
+            </sc-if>
+            <div sc-camel-on-pointer-down="{{ onGradPointerDown }}" style="position:absolute;left:{{ gradXpct }};top:{{ gradYpct }};transform:translate(-50%,-50%);cursor:grab;user-select:none;touch-action:none;text-align:center;text-shadow:0 0.333cqw 1.333cqw rgba(0,0,0,0.35);color:{{ grad.color }};font-family:{{ grad.font }},serif;white-space:nowrap;display:{{ gradTextDisplay }}">
+              <div style="font-size:{{ gradTitleCqw }};font-weight:700;line-height:1.15">{{ grad.title }}</div>
+              <div style="font-size:{{ gradSubCqw }};font-weight:700;line-height:1.15">{{ grad.subtitle }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+
+  <!-- PRINT AREAS (hidden on screen) -->
+  <div class="kh-print" data-print-area="large" style="display:none;flex-wrap:wrap;gap:0.5cm;align-content:flex-start;padding:0">
+    <sc-for list="{{ largeCards }}" as="c" hint-placeholder-count="6">
+      <div style="width:6cm;height:4cm;container-type:size;break-inside:avoid;page-break-inside:avoid">
+        <div style="width:100%;height:100%;box-sizing:border-box;border-radius:{{ c.radiusCq }};display:flex;align-items:center;justify-content:center;text-align:center;padding:6cqw;overflow:hidden;font-weight:900;font-family:{{ c.font }},sans-serif;background:{{ c.bg }};color:{{ c.text }};border:{{ c.printBorderCss }}"><span style="font-size:{{ c.fontCqh }};line-height:1.05;white-space:normal">{{ c.name }}</span></div>
+      </div>
+    </sc-for>
+  </div>
+  <div class="kh-print" data-print-area="small" style="display:none;flex-wrap:wrap;gap:0.5cm;align-content:flex-start;padding:0">
+    <sc-for list="{{ smallCards }}" as="c" hint-placeholder-count="8">
+      <div style="width:4cm;height:2cm;container-type:size;break-inside:avoid;page-break-inside:avoid">
+        <div style="width:100%;height:100%;box-sizing:border-box;border-radius:{{ c.radiusCq }};display:flex;align-items:center;justify-content:center;text-align:center;padding:6cqw;overflow:hidden;font-weight:900;font-family:{{ c.font }},sans-serif;background:{{ c.bg }};color:{{ c.text }};border:{{ c.printBorderCss }}"><span style="font-size:{{ c.fontCqh }};line-height:1.05;white-space:normal">{{ c.name }}</span></div>
+      </div>
+    </sc-for>
+  </div>
+  <div class="kh-print" data-print-area="grad" style="display:none;align-items:flex-start;justify-content:flex-start">
+    <div style="position:relative;width:18cm;height:13cm;container-type:inline-size;overflow:hidden;background:{{ gradBoxBg }}">
+      <sc-if value="{{ hasPhoto }}" hint-placeholder-val="{{ false }}">
+        <img sc-camel-src="{{ grad.img }}" alt="" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover">
+      </sc-if>
+      <div style="position:absolute;left:{{ gradXpct }};top:{{ gradYpct }};transform:translate(-50%,-50%);text-align:center;color:{{ grad.color }};font-family:{{ grad.font }},serif;white-space:nowrap;text-shadow:0 0.333cqw 1.333cqw rgba(0,0,0,0.35)">
+        <div style="font-size:{{ gradTitleCqw }};font-weight:700;line-height:1.15">{{ grad.title }}</div>
+        <div style="font-size:{{ gradSubCqw }};font-weight:700;line-height:1.15">{{ grad.subtitle }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script="">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this._nid = 1;
+    this.state = {
+      lang: 'en',
+      activeTab: 'children',
+      children: [],
+      large: { uniform:true, bg:'#FEF3D8', text:'#2B2723', border:'#E07A4B', font:'Rubik', size:100, borderStyle:'solid', borderWidth:4, cornerRadius:6, overrides:{}, selectedId:null },
+      small: { uniform:true, bg:'#E3F0FB', text:'#2B2723', border:'#2FA39B', font:'Rubik', size:100, borderStyle:'solid', borderWidth:3, cornerRadius:6, overrides:{}, selectedId:null },
+      history: ['#E07A4B','#2FA39B','#F2C14E','#6A994E'],
+      grad: { img:null, title:'', subtitle:'', color:'#FFFFFF', font:'Suez One', size:44, x:50, y:78 },
+      gradBusy: '', gradErr: '',
+      att: { cls:'', emptyRows:0 }
+    };
+  }
+
+  STR = {
+    en: {
+      appTitle:'Kindergarten Helper',
+      tabChildren:'Children', tabLarge:'Drawer names', tabSmall:'Basket names', tabAtt:'Attendance', tabGrad:'Graduation photo',
+      childrenTitle:'The children', childrenHelp:'Type a first and last name for each child. The list is saved automatically and kept for next year — just change the names.',
+      first:'First name', last:'Last name', addChild:'Add a child', remove:'Remove',
+      noChildren:'No children yet. Press “Add a child” to start.', saved:'Saved automatically',
+      colorAll:'Same colours for every card',
+      editingAll:'Editing: all cards', editingOne:'Editing: ',
+      bgLabel:'Background', textLabel:'Text', borderLabel:'Border',
+      recentColors:'Recently used:', recentHint:'Your recent colours appear here so you can reuse them.',
+      largeTitle:'Drawer names — 6 × 4 cm', largeHelp:'Pick colours, then print. Several cards fit on one page — cut them apart.',
+      smallTitle:'Basket names — 4 × 2 cm', smallHelp:'Pick colours, then print. Several cards fit on one page — cut them apart.',
+      actualSize:'Actual size', clickToColor:'tick off “same colours” to colour one card at a time',
+      exportPdf:'Print / Save as PDF', addFirst:'First add the children in the “Children” tab.',
+      attTitle:'Attendance sheet', attHelp:'A blank monthly sheet — 31 day columns. Write the month by hand. Download it as an Excel file and print one for each month.',
+      className:'Class', month:'Month', year:'Year', downloadXlsx:'Download Excel file', idCol:'ID', emptyRowsLabel:'Blank rows to add',
+      gradTitle:'Graduation photo — 18 × 13 cm', gradHelp:'Upload a photo, type the title and subtitle, drag the text where you like, then save the picture.',
+      uploadPhoto:'Upload a photo', changePhoto:'Change photo', savePng:'Save picture (PNG)',
+      gTitle:'Title', gSubtitle:'Subtitle', textColor:'Text colour', font:'Font style', size:'Text size',
+      dragHint:'Drag the text to move it', noPhoto:'Upload a photo to begin',
+      photoWorking:'Preparing the photo…', photoHeic:'Converting the iPhone photo (HEIC) — this can take a few seconds…',
+      photoError:'Sorry, this photo could not be opened. Try a JPEG or PNG file.',
+      photoTooBig:'The photo was added, but it is too large to be remembered for next time.',
+      gradHeading:'Graduate 2026',
+      fontRounded:'Rounded', fontBold:'Bold', fontSerif:'Serif', fontClean:'Clean',
+      borderStyle:'Border style', bSolid:'Solid', bDashed:'Dashed', bDotted:'Dotted', bDouble:'Double', bNone:'None', moreColours:'More colours', borderWidth:'Border thickness', cornerRadius:'Corner roundness'
+    },
+    he: {
+      appTitle:'עוזר הגן',
+      tabChildren:'ילדים', tabLarge:'שמות למגירות', tabSmall:'שמות לסלסלאות', tabAtt:'טבלת נוכחות', tabGrad:'תמונת סיום',
+      childrenTitle:'רשימת הילדים', childrenHelp:'הקלידו שם פרטי ושם משפחה לכל ילד. הרשימה נשמרת אוטומטית ונשארת לשנה הבאה — פשוט משנים את השמות.',
+      first:'שם פרטי', last:'שם משפחה', addChild:'הוספת ילד', remove:'הסרה',
+      noChildren:'עדיין אין ילדים. לחצו על ״הוספת ילד״ כדי להתחיל.', saved:'נשמר אוטומטית',
+      colorAll:'אותם צבעים לכל הכרטיסים',
+      editingAll:'עריכה: כל הכרטיסים', editingOne:'עריכה: ',
+      bgLabel:'רקע', textLabel:'טקסט', borderLabel:'מסגרת',
+      recentColors:'צבעים אחרונים:', recentHint:'הצבעים שהשתמשתם בהם מופיעים כאן לשימוש חוזר.',
+      largeTitle:'שמות למגירות — 6 × 4 ס״מ', largeHelp:'בחרו צבעים והדפיסו. כמה כרטיסים בכל דף — גוזרים ומפרידים.',
+      smallTitle:'שמות לסלסלאות — 4 × 2 ס״מ', smallHelp:'בחרו צבעים והדפיסו. כמה כרטיסים בכל דף — גוזרים ומפרידים.',
+      actualSize:'גודל אמיתי', clickToColor:'בטלו ״אותם צבעים״ כדי לצבוע כרטיס אחד בכל פעם',
+      exportPdf:'הדפסה / שמירה כ־PDF', addFirst:'קודם הוסיפו את הילדים בלשונית ״ילדים״.',
+      attTitle:'טבלת נוכחות', attHelp:'טבלה חודשית ריקה — 31 עמודות ימים. מלאו את החודש בכתב יד. הורידו כקובץ Excel והדפיסו אחת לכל חודש.',
+      className:'כיתה', month:'חודש', year:'שנה', downloadXlsx:'הורדת קובץ Excel', idCol:'ת״ז', emptyRowsLabel:'שורות ריקות להוספה',
+      gradTitle:'תמונת סיום — 18 × 13 ס״מ', gradHelp:'העלו תמונה, הקלידו כותרת וכותרת משנה, גררו את הטקסט למקום הרצוי ושמרו את התמונה.',
+      uploadPhoto:'העלאת תמונה', changePhoto:'החלפת תמונה', savePng:'שמירת תמונה (PNG)',
+      gTitle:'כותרת', gSubtitle:'כותרת משנה', textColor:'צבע הטקסט', font:'סגנון גופן', size:'גודל הטקסט',
+      dragHint:'גררו את הטקסט כדי להזיז אותו', noPhoto:'העלו תמונה כדי להתחיל',
+      photoWorking:'מכינים את התמונה…', photoHeic:'ממירים את תמונת האייפון (HEIC) — זה עשוי לקחת כמה שניות…',
+      photoError:'לא הצלחנו לפתוח את התמונה הזו. נסו קובץ JPEG או PNG.',
+      photoTooBig:'התמונה נוספה, אך היא גדולה מדי כדי להישמר לפעם הבאה.',
+      gradHeading:'בוגר/ת 2026',
+      fontRounded:'מעוגל', fontBold:'מודגש', fontSerif:'סריף', fontClean:'נקי',
+      borderStyle:'סגנון מסגרת', bSolid:'מלא', bDashed:'מקווקו', bDotted:'נקודות', bDouble:'כפול', bNone:'ללא', moreColours:'עוד צבעים', borderWidth:'עובי מסגרת', cornerRadius:'עיגול פינות'
+    }
+  };
+
+  strings(){ return this.STR[this.state.lang] || this.STR.en; }
+
+  defaultSubtitle(){
+    const now=new Date(); const y=now.getFullYear(), m=now.getMonth();
+    const start = m>=7 ? y : y-1;
+    const greg = start+'–'+(start+1);
+    let heb=''; try{ heb=new Intl.DateTimeFormat('he-u-ca-hebrew-nu-hebr',{year:'numeric'}).format(new Date(start,9,1)); }catch(e){}
+    return (heb? heb+' ':'')+greg;
+  }
+
+  componentDidMount(){
+    let loaded = null;
+    try { loaded = JSON.parse(localStorage.getItem('kh_v1')||'null'); } catch(e){}
+    const nav = (navigator.language||'en').toLowerCase();
+    let lang = nav.startsWith('he') ? 'he' : 'en';
+    if (loaded && loaded.lang) lang = loaded.lang;
+    const patch = { lang };
+    if (loaded){
+      if (Array.isArray(loaded.children)) { patch.children = loaded.children; this._nid = loaded.children.reduce((m,c)=>Math.max(m, (c.id||0)),0)+1; }
+      if (loaded.large) patch.large = {...this.state.large, ...loaded.large};
+      if (loaded.small) patch.small = {...this.state.small, ...loaded.small};
+      if (loaded.history) patch.history = loaded.history;
+      if (loaded.grad) patch.grad = {...this.state.grad, ...loaded.grad};
+      if (loaded.att) patch.att = {...this.state.att, ...loaded.att};
+    }
+    if (!patch.grad) patch.grad = {...this.state.grad};
+    if (!patch.grad.title) patch.grad.title = 'פעוטון תמר';
+    if (!patch.grad.subtitle) patch.grad.subtitle = this.defaultSubtitle();
+    this.setState(patch);
+  }
+
+  persist = () => {
+    const {lang,children,large,small,history,grad,att} = this.state;
+    const save = (g) => localStorage.setItem('kh_v1', JSON.stringify({lang,children,large,small,history,grad:g,att}));
+    try { save(grad); }
+    catch(e){
+      // A big photo can blow the ~5 MB localStorage quota. Keep the names and
+      // settings rather than losing everything, and say so once.
+      try {
+        save({...grad, img:null});
+        if (grad.img && !this.state.gradErr) this.setState({gradErr:this.strings().photoTooBig});
+      } catch(e2){}
+    }
+  };
+
+  setLang = (e) => { const lang = e.currentTarget.dataset.lang; this.setState({lang}, this.persist); };
+  setTab = (e) => { this.setState({activeTab:e.currentTarget.dataset.tab}); };
+
+  addChild = () => { const id=this._nid++; this.setState(st=>({children:[...st.children,{id,first:'',last:'',tz:''}]}), this.persist); };
+  removeChild = (e) => { const id=Number(e.currentTarget.dataset.id); this.setState(st=>({children:st.children.filter(c=>c.id!==id)}), this.persist); };
+  onChildInput = (e) => { const id=Number(e.currentTarget.dataset.id), field=e.currentTarget.dataset.field, v=e.target.value; this.setState(st=>({children:st.children.map(c=>c.id===id?{...c,[field]:v}:c)}), this.persist); };
+
+  setStudioColor(studio, target, color){
+    this.setState(st=>{
+      const S = {...st[studio]};
+      if (S.uniform || !S.selectedId){ S[target]=color; }
+      else { S.overrides = {...S.overrides, [S.selectedId]: {...(S.overrides[S.selectedId]||{}), [target]:color}}; }
+      const history = [color, ...st.history.filter(c=>c.toLowerCase()!==color.toLowerCase())].slice(0,10);
+      return {[studio]:S, history};
+    }, this.persist);
+  }
+  onSwatch = (e) => { const d=e.currentTarget.dataset; this.setStudioColor(d.studio, d.target, d.color); };
+  onNative = (e) => { const d=e.currentTarget.dataset; this.setStudioColor(d.studio, d.target, e.target.value); };
+  toggleUniform = (e) => { const studio=e.currentTarget.dataset.studio; this.setState(st=>({[studio]:{...st[studio], uniform:!st[studio].uniform, selectedId:null}}), this.persist); };
+  onStudioFont = (e) => { const d=e.currentTarget.dataset; this.setState(st=>({[d.studio]:{...st[d.studio], font:d.font}}), this.persist); };
+  onStudioBorder = (e) => { const d=e.currentTarget.dataset; this.setState(st=>({[d.studio]:{...st[d.studio], borderStyle:d.style}}), this.persist); };
+  onStudioSize = (e) => { const studio=e.currentTarget.dataset.studio; const v=Number(e.target.value); this.setState(st=>({[studio]:{...st[studio], size:v}}), this.persist); };
+  onStudioBorderWidth = (e) => { const studio=e.currentTarget.dataset.studio; const v=Number(e.target.value); this.setState(st=>({[studio]:{...st[studio], borderWidth:v}}), this.persist); };
+  onStudioCorner = (e) => { const studio=e.currentTarget.dataset.studio; const v=Number(e.target.value); this.setState(st=>({[studio]:{...st[studio], cornerRadius:v}}), this.persist); };
+  selectCard = (e) => { const studio=e.currentTarget.dataset.studio, id=Number(e.currentTarget.dataset.id); this.setState(st=>{ const S=st[studio]; if(S.uniform) return null; return {[studio]:{...S, selectedId: S.selectedId===id?null:id}}; }); };
+
+  activeColors(studio){ const S=this.state[studio]; if(S.uniform||!S.selectedId) return {bg:S.bg,text:S.text,border:S.border}; const o=S.overrides[S.selectedId]||{}; return {bg:o.bg||S.bg,text:o.text||S.text,border:o.border||S.border}; }
+  cards(studio){
+    const S=this.state[studio];
+    const fr = studio==='large'?26:34;
+    const bs = S.borderStyle, bw = S.borderWidth;
+    const counts={};
+    this.state.children.forEach(x=>{ const k=(x.first||'').trim().toLowerCase(); if(k) counts[k]=(counts[k]||0)+1; });
+    return this.state.children.map(c=>{
+      const o=(!S.uniform&&S.overrides[c.id])||{};
+      const first=(c.first||'').trim();
+      let name=first||'—';
+      if(first && counts[first.toLowerCase()]>1){ const li=(c.last||'').trim().charAt(0); if(li) name=first+' '+li+'.'; }
+      const border=o.border||S.border;
+      return {
+        id:c.id, name, bg:o.bg||S.bg, text:o.text||S.text, border,
+        font:S.font,
+        fontCqh: (fr*S.size/100).toFixed(1)+'cqh',
+        radiusCq: S.cornerRadius+'cqmin',
+        borderCss: bs==='none'?'none':(bw+'px '+bs+' '+border),
+        printBorderCss: bs==='none'?'none':(bw+'px '+bs+' '+border),
+        outline:(!S.uniform&&S.selectedId===c.id)?'0 0 0 4px #E07A4B':'none'
+      };
+    });
+  }
+  targets(studio, s){ const a=this.activeColors(studio); return [ {key:'bg',label:s.bgLabel,current:a.bg,studio}, {key:'text',label:s.textLabel,current:a.text,studio}, {key:'border',label:s.borderLabel,current:a.border,studio} ]; }
+  editingLabel(studio, s){ const S=this.state[studio]; if(S.uniform||!S.selectedId) return s.editingAll; const c=this.state.children.find(x=>x.id===S.selectedId); return s.editingOne + ((c&&c.first)||'—'); }
+
+
+  doPrint(area, pageRule){
+    const st=document.getElementById('kh-print-page');
+    if(st) st.textContent = '@media print{ @page{ '+pageRule+' } }';
+    document.body.setAttribute('data-print', area);
+    setTimeout(()=>{ window.print(); setTimeout(()=>document.body.removeAttribute('data-print'), 400); }, 60);
+  }
+  exportCards = (e) => { const studio=e.currentTarget.dataset.studio; if(!this.state.children.length) return; this.doPrint(studio, 'size:A4; margin:1cm;'); };
+  exportGrad = () => {
+    const g=this.state.grad;
+    if(!g.img){ alert(this.strings().noPhoto); return; }
+    const W=2126, H=1535; // 18×13 cm @ ~300dpi
+    const canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H;
+    const ctx=canvas.getContext('2d');
+    const img=new Image();
+    img.onload=async ()=>{
+      const ir=img.width/img.height, cr=W/H; let dw,dh,dx,dy;
+      if(ir>cr){ dh=H; dw=H*ir; dx=(W-dw)/2; dy=0; } else { dw=W; dh=W/ir; dx=0; dy=(H-dh)/2; }
+      ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H);
+      ctx.drawImage(img,dx,dy,dw,dh);
+      // The preview sizes its text against a 600 px-wide box (PREVIEW_W), so
+      // every length below is that same length multiplied by S. Getting this
+      // wrong is what made exported titles bigger than the preview's.
+      const PREVIEW_W = 600, S = W/PREVIEW_W, LH = 1.15;
+      const titlePx = g.size*S, subPx = titlePx*0.52;
+      const fam='"'+g.font+'"';
+      const titleFont='700 '+titlePx+'px '+fam+',sans-serif';
+      const subFont='700 '+subPx+'px '+fam+',sans-serif';
+      // Load the exact faces this picture uses — document.fonts.ready alone can
+      // resolve before a Hebrew subset the canvas is about to need has arrived.
+      try{
+        await Promise.all([
+          g.title? document.fonts.load(titleFont, g.title) : null,
+          g.subtitle? document.fonts.load(subFont, g.subtitle) : null
+        ].filter(Boolean));
+        await document.fonts.ready;
+      }catch(e){}
+      const titleH = g.title? titlePx*LH : 0;
+      const subH = g.subtitle? subPx*LH : 0;
+      const totalH = titleH + subH;
+      const cx=W*g.x/100, cy=H*g.y/100;
+      let top=cy - totalH/2;                  // CSS translate(-50%,-50%)
+      ctx.textAlign='center'; ctx.textBaseline='alphabetic'; ctx.fillStyle=g.color;
+      ctx.shadowColor='rgba(0,0,0,0.35)'; ctx.shadowBlur=8*S; ctx.shadowOffsetY=2*S;
+      // A CSS line box puts the glyphs at lineTop + halfLeading + ascent; match
+      // that instead of guessing, so the text lands where the preview shows it.
+      const baselineIn=(fontPx)=>{
+        const m=ctx.measureText('M');
+        const a=m.fontBoundingBoxAscent, d=m.fontBoundingBoxDescent;
+        const asc=(a==null||isNaN(a))? fontPx*0.8 : a;
+        const desc=(d==null||isNaN(d))? fontPx*0.2 : d;
+        return (LH*fontPx-(asc+desc))/2 + asc;
+      };
+      if(g.title){ ctx.font=titleFont; ctx.fillText(g.title, cx, top+baselineIn(titlePx)); top+=titleH; }
+      if(g.subtitle){ ctx.font=subFont; ctx.fillText(g.subtitle, cx, top+baselineIn(subPx)); }
+      canvas.toBlob(b=>{ const url=URL.createObjectURL(b); const a=document.createElement('a'); a.href=url; a.download='graduation.png'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1500); }, 'image/png');
+    };
+    img.src=g.img;
+  };
+
+  // Builds a genuine .xlsx (OOXML) file — no "file format may not be
+  // supported" warning, real fonts, and a landscape-A4 fit-to-width print
+  // setup. FONT_PT is the on-screen point size; the whole 35-column table is
+  // scaled to one landscape A4 page wide on print via fitToWidth.
+  exportAttendance = () => {
+    const s=this.strings();
+    const rtl=this.state.lang==='he';
+    const FONT_PT=11;                 // readable base font size (was ~6 before)
+    const NCOLS=4+31;                 // #, first, last, ID + 31 day columns
+    const X=(v)=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const colName=(n)=>{ let o=''; while(n>0){ const m=(n-1)%26; o=String.fromCharCode(65+m)+o; n=Math.floor((n-1)/26); } return o; };
+    const lastCol=colName(NCOLS);
+
+    // --- cell helpers (s = style index into cellXfs below) ---
+    const cNum=(ref,st,v)=>`<c r="${ref}" s="${st}"><v>${v}</v></c>`;
+    const cStr=(ref,st,v)=>`<c r="${ref}" s="${st}" t="inlineStr"><is><t xml:space="preserve">${X(v)}</t></is></c>`;
+    const cEmpty=(ref,st)=>`<c r="${ref}" s="${st}"/>`;
+
+    // --- rows: info line, header, then children (+ optional empty rows) ---
+    const kids=this.state.children;
+    const extra=Math.max(0, parseInt(this.state.att.emptyRows,10)||0);
+    const rowCount=kids.length+extra;
+    let rowsXml='';
+
+    // Row 1: class / month / year, merged across the whole width.
+    rowsXml+=`<row r="1" ht="24" customHeight="1">`+
+      cStr('A1',4,`${s.className}: __________     ${s.month}: __________     ${s.year}: __________`)+
+      `</row>`;
+
+    // Row 2: header.
+    let h=`<row r="2" ht="22" customHeight="1">`;
+    h+=cStr('A2',1,'#')+cStr('B2',1,s.first)+cStr('C2',1,s.last)+cStr('D2',1,s.idCol);
+    for(let d=1;d<=31;d++) h+=cNum(colName(4+d)+'2',1,d);
+    rowsXml+=h+`</row>`;
+
+    // Data rows.
+    for(let i=0;i<rowCount;i++){
+      const c=kids[i]||{};
+      const r=i+3;
+      let row=`<row r="${r}" ht="26" customHeight="1">`;
+      row+=cNum('A'+r,3,i+1)+cStr('B'+r,2,c.first||'')+cStr('C'+r,2,c.last||'')+cStr('D'+r,3,c.tz||'');
+      for(let d=1;d<=31;d++) row+=cEmpty(colName(4+d)+r,3);
+      rowsXml+=row+`</row>`;
+    }
+
+    let sheetName=String(s.attTitle||'Sheet1').replace(/[\\/?*\[\]:]/g,' ').slice(0,31)||'Sheet1';
+
+    const styles=
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
+      `<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">`+
+      `<fonts count="2">`+
+        `<font><sz val="${FONT_PT}"/><name val="Arial"/></font>`+
+        `<font><b/><sz val="${FONT_PT}"/><name val="Arial"/></font>`+
+      `</fonts>`+
+      `<fills count="3">`+
+        `<fill><patternFill patternType="none"/></fill>`+
+        `<fill><patternFill patternType="gray125"/></fill>`+
+        `<fill><patternFill patternType="solid"><fgColor rgb="FFF2E7D5"/><bgColor indexed="64"/></patternFill></fill>`+
+      `</fills>`+
+      `<borders count="2">`+
+        `<border><left/><right/><top/><bottom/><diagonal/></border>`+
+        `<border><left style="thin"><color rgb="FF333333"/></left><right style="thin"><color rgb="FF333333"/></right><top style="thin"><color rgb="FF333333"/></top><bottom style="thin"><color rgb="FF333333"/></bottom><diagonal/></border>`+
+      `</borders>`+
+      `<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>`+
+      `<cellXfs count="5">`+
+        `<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>`+
+        `<xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>`+
+        `<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1"><alignment horizontal="${rtl?'right':'left'}" vertical="center"/></xf>`+
+        `<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center"/></xf>`+
+        `<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1" applyAlignment="1"><alignment horizontal="${rtl?'right':'left'}" vertical="center"/></xf>`+
+      `</cellXfs>`+
+      `<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>`+
+      `</styleSheet>`;
+
+    const sheet=
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
+      `<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">`+
+      `<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr>`+
+      `<dimension ref="A1:${lastCol}${rowCount+2}"/>`+
+      `<sheetViews><sheetView ${rtl?'rightToLeft="1" ':''}workbookViewId="0"/></sheetViews>`+
+      `<sheetFormatPr defaultRowHeight="15"/>`+
+      `<cols>`+
+        `<col min="1" max="1" width="4" customWidth="1"/>`+
+        `<col min="2" max="2" width="14" customWidth="1"/>`+
+        `<col min="3" max="3" width="14" customWidth="1"/>`+
+        `<col min="4" max="4" width="12" customWidth="1"/>`+
+        `<col min="5" max="${NCOLS}" width="3" customWidth="1"/>`+
+      `</cols>`+
+      `<sheetData>${rowsXml}</sheetData>`+
+      `<mergeCells count="1"><mergeCell ref="A1:${lastCol}1"/></mergeCells>`+
+      `<pageMargins left="0.3" right="0.3" top="0.5" bottom="0.5" header="0.3" footer="0.3"/>`+
+      `<pageSetup paperSize="9" orientation="landscape" fitToWidth="1" fitToHeight="0" horizontalDpi="300" verticalDpi="300"/>`+
+      `</worksheet>`;
+
+    const contentTypes=
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
+      `<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">`+
+      `<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>`+
+      `<Default Extension="xml" ContentType="application/xml"/>`+
+      `<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>`+
+      `<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`+
+      `<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>`+
+      `</Types>`;
+
+    const rootRels=
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
+      `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">`+
+      `<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>`+
+      `</Relationships>`;
+
+    const workbook=
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
+      `<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">`+
+      `<sheets><sheet name="${X(sheetName)}" sheetId="1" r:id="rId1"/></sheets>`+
+      `</workbook>`;
+
+    const wbRels=
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
+      `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">`+
+      `<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>`+
+      `<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>`+
+      `</Relationships>`;
+
+    const enc=new TextEncoder();
+    const files=[
+      ['[Content_Types].xml', enc.encode(contentTypes)],
+      ['_rels/.rels', enc.encode(rootRels)],
+      ['xl/workbook.xml', enc.encode(workbook)],
+      ['xl/_rels/workbook.xml.rels', enc.encode(wbRels)],
+      ['xl/styles.xml', enc.encode(styles)],
+      ['xl/worksheets/sheet1.xml', enc.encode(sheet)],
+    ];
+
+    const blob=new Blob([this.zipStore(files)], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='attendance.xlsx'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+  };
+
+  // Minimal STORED (uncompressed) ZIP writer — enough to package an .xlsx.
+  zipStore(files){
+    const table=(()=>{ const t=new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++){ c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1); } t[n]=c>>>0; } return t; })();
+    const crc32=(buf)=>{ let c=0xFFFFFFFF; for(let i=0;i<buf.length;i++){ c=table[(c^buf[i])&0xFF]^(c>>>8); } return (c^0xFFFFFFFF)>>>0; };
+    const u16=(n)=>[n&0xFF,(n>>>8)&0xFF];
+    const u32=(n)=>[n&0xFF,(n>>>8)&0xFF,(n>>>16)&0xFF,(n>>>24)&0xFF];
+    const nameEnc=new TextEncoder();
+    const local=[], central=[]; let offset=0;
+    for(const [name,data] of files){
+      const nb=nameEnc.encode(name);
+      const crc=crc32(data);
+      const lh=[].concat(u32(0x04034b50),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(nb.length),u16(0));
+      local.push(new Uint8Array(lh),nb,data);
+      const ch=[].concat(u32(0x02014b50),u16(20),u16(20),u16(0),u16(0),u16(0),u16(0),u32(crc),u32(data.length),u32(data.length),u16(nb.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset));
+      central.push(new Uint8Array(ch),nb);
+      offset+=lh.length+nb.length+data.length;
+    }
+    let cenSize=0; for(const c of central) cenSize+=c.length;
+    const eocd=new Uint8Array([].concat(u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(cenSize),u32(offset),u16(0)));
+    const parts=[...local,...central,eocd];
+    let total=0; for(const p of parts) total+=p.length;
+    const out=new Uint8Array(total); let o=0; for(const p of parts){ out.set(p,o); o+=p.length; }
+    return out;
+  }
+
+  onAttInput = (e) => { const f=e.currentTarget.dataset.field; const v=e.target.value; this.setState(st=>({att:{...st.att,[f]:v}}), this.persist); };
+  onEmptyRows = (e) => { let n=parseInt(e.target.value,10); if(!Number.isFinite(n)||n<0) n=0; if(n>100) n=100; this.setState(st=>({att:{...st.att,emptyRows:n}}), this.persist); };
+
+  // Looks like HEIC/HEIF? Apple's ISO-BMFF brands live at bytes 8..12, right
+  // after the 'ftyp' marker. The extension is only a hint — the brand decides.
+  isHeic(name, head){
+    if (head.length >= 12 && String.fromCharCode(head[4],head[5],head[6],head[7]) === 'ftyp'){
+      const brand = String.fromCharCode(head[8],head[9],head[10],head[11]).toLowerCase();
+      return ['heic','heix','heim','heis','hevc','hevx','hevm','hevs','mif1','msf1'].indexOf(brand) >= 0;
+    }
+    return /\.(heic|heif|hif)$/i.test(name||'');
+  }
+
+  // libheif is a 2 MB script, so it is only pulled out of the bundle the
+  // first time someone actually picks a HEIC file.
+  async heifLib(){
+    if (this._heif) return this._heif;
+    if (typeof libheif === 'undefined'){
+      const meta = document.querySelector('meta[name="kh-libheif"]');
+      const src = meta && meta.getAttribute('content');
+      if (!src) throw new Error('no-heic-decoder');
+      await new Promise((res,rej)=>{
+        const s=document.createElement('script');
+        s.src=src; s.onload=res; s.onerror=()=>rej(new Error('no-heic-decoder'));
+        document.head.appendChild(s);
+      });
+    }
+    // The pure-JS build exposes a factory; call it once and keep the module.
+    this._heif = (typeof libheif === 'function') ? libheif() : libheif;
+    return this._heif;
+  }
+
+  async decodeHeic(bytes){
+    const lib = await this.heifLib();
+    const images = new lib.HeifDecoder().decode(bytes);
+    if (!images || !images.length) throw new Error('empty-heic');
+    const im = images[0];
+    const w = im.get_width(), h = im.get_height();
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    const data = ctx.createImageData(w, h);
+    await new Promise((res,rej)=>im.display(data, r=>r?res(r):rej(new Error('heic-display'))));
+    ctx.putImageData(data, 0, 0);
+    try { im.free && im.free(); } catch(err){}
+    return canvas;
+  }
+
+  // Anything the browser can decode itself goes through createImageBitmap,
+  // which also applies the EXIF rotation iPhone photos carry.
+  async decodeNative(file){
+    try {
+      return await createImageBitmap(file, {imageOrientation:'from-image'});
+    } catch(err){
+      // Older engines reject the options argument rather than the image.
+      return await createImageBitmap(file);
+    }
+  }
+
+  // → a normalised, downscaled JPEG data URL, whatever came in.
+  async readPhoto(file){
+    const head = new Uint8Array(await file.slice(0, 16).arrayBuffer());
+    const heic = this.isHeic(file.name, head);
+    this.setState({gradBusy: heic ? this.strings().photoHeic : this.strings().photoWorking, gradErr:''});
+    let src;
+    if (heic){
+      src = await this.decodeHeic(new Uint8Array(await file.arrayBuffer()));
+    } else {
+      try { src = await this.decodeNative(file); }
+      catch(err){
+        // Some builds of Chromium refuse HEIC without a recognisable brand;
+        // fall back to libheif before giving up.
+        src = await this.decodeHeic(new Uint8Array(await file.arrayBuffer()));
+      }
+    }
+    const sw = src.width, sh = src.height;
+    if (!sw || !sh) throw new Error('empty-image');
+    // The export canvas is 2126 × 1535, so capping the longest side here keeps
+    // full print detail while staying small enough to sit in localStorage.
+    const MAX_PHOTO_PX = 2600;
+    const scale = Math.min(1, MAX_PHOTO_PX / Math.max(sw, sh));
+    const w = Math.max(1, Math.round(sw*scale)), h = Math.max(1, Math.round(sh*scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h);   // PNGs may be transparent
+    ctx.drawImage(src, 0, 0, w, h);
+    if (src.close) { try { src.close(); } catch(err){} }
+    return canvas.toDataURL('image/jpeg', 0.92);
+  }
+
+  onUpload = async (e) => {
+    const input = e.target;
+    const file = input.files && input.files[0];
+    input.value = '';                       // let the same file be picked again
+    if (!file) return;
+    try {
+      const img = await this.readPhoto(file);
+      this.setState(st=>({grad:{...st.grad, img}, gradBusy:'', gradErr:''}), this.persist);
+    } catch(err){
+      console.error('photo import failed', err);
+      this.setState({gradBusy:'', gradErr:this.strings().photoError});
+    }
+  };
+  onGradText = (e) => { const f=e.currentTarget.dataset.field, v=e.target.value; this.setState(st=>({grad:{...st.grad,[f]:v}}), this.persist); };
+  onGradFont = (e) => { const family=e.currentTarget.dataset.font; this.setState(st=>({grad:{...st.grad,font:family}}), this.persist); };
+  onGradColor = (e) => { const v=e.target.value; this.setState(st=>({grad:{...st.grad,color:v}}), this.persist); };
+  onGradSwatch = (e) => { const v=e.currentTarget.dataset.color; this.setState(st=>({grad:{...st.grad,color:v}}), this.persist); };
+  onGradSize = (e) => { const v=Number(e.target.value); this.setState(st=>({grad:{...st.grad,size:v}}), this.persist); };
+  onGradPointerDown = (e) => {
+    e.preventDefault();
+    const box=e.currentTarget.closest('[data-gradbox]'); if(!box) return;
+    const move=(ev)=>{ const r=box.getBoundingClientRect(); let x=((ev.clientX-r.left)/r.width)*100; let y=((ev.clientY-r.top)/r.height)*100; x=Math.max(4,Math.min(96,x)); y=Math.max(6,Math.min(94,y)); this.setState(st=>({grad:{...st.grad,x,y}})); };
+    const up=()=>{ document.removeEventListener('pointermove',move); document.removeEventListener('pointerup',up); this.persist(); };
+    document.addEventListener('pointermove',move); document.addEventListener('pointerup',up);
+  };
+
+  renderVals(){
+    const s=this.strings();
+    const lang=this.state.lang;
+    const dir = lang==='he' ? 'rtl' : 'ltr';
+    const order=[['children',s.tabChildren],['large',s.tabLarge],['small',s.tabSmall],['att',s.tabAtt],['grad',s.tabGrad]];
+    const active=this.state.activeTab;
+    const tabs=order.map(([key,label],i)=>{ const on=key===active; return {key,label,num:i+1, bg:on?'#E07A4B':'#fff', color:on?'#fff':'#2B2723', border:on?'#E07A4B':'#E7E0D6', dot:on?'rgba(255,255,255,0.25)':'#FAF7F2', dotText:on?'#fff':'#B0A79B'}; });
+    const g=this.state.grad;
+    const fontDefs=[{family:'Rubik',label:s.fontRounded},{family:'Suez One',label:s.fontBold},{family:'Frank Ruhl Libre',label:s.fontSerif},{family:'Heebo',label:s.fontClean}];
+    const fonts=fontDefs.map(f=>({...f, on:f.family===g.font, bg:f.family===g.font?'#FDEEE6':'#fff', color:'#2B2723', border:f.family===g.font?'#E07A4B':'#E7E0D6'}));
+    const mkFonts=(fam)=>fontDefs.map(f=>({...f, on:f.family===fam, bg:f.family===fam?'#FDEEE6':'#fff', border:f.family===fam?'#E07A4B':'#E7E0D6'}));
+    const mkBorders=(cur)=>[['solid',s.bSolid],['dashed',s.bDashed],['dotted',s.bDotted],['double',s.bDouble],['none',s.bNone]].map(([key,label])=>({key,label, on:key===cur, bg:key===cur?'#FDEEE6':'#fff', border:key===cur?'#E07A4B':'#E7E0D6'}));
+    const attExtra=Math.max(0, parseInt(this.state.att.emptyRows,10)||0);
+    const attRows=this.state.children.map((c,i)=>({num:i+1, first:c.first||'', last:c.last||'', tz:c.tz||''}))
+      .concat(Array.from({length:attExtra},(_,i)=>({num:this.state.children.length+i+1, first:'', last:'', tz:''})));
+    return {
+      s, dir, lang, tabs,
+      enBg: lang==='en'?'#E07A4B':'transparent', enColor: lang==='en'?'#fff':'#2B2723',
+      heBg: lang==='he'?'#E07A4B':'transparent', heColor: lang==='he'?'#fff':'#2B2723',
+      isChildren: active==='children', isLarge: active==='large', isSmall: active==='small', isAtt: active==='att', isGrad: active==='grad',
+      children: this.state.children.map((c,i)=>({...c, num:i+1})),
+      noChildren: this.state.children.length===0,
+      hasChildren: this.state.children.length>0,
+      childCount: this.state.children.length + (lang==='he'?' ילדים':' children'),
+      addChild:this.addChild, removeChild:this.removeChild, onChildInput:this.onChildInput, setLang:this.setLang, setTab:this.setTab,
+      palette:['#2B2723','#FFFFFF','#E4572E','#F4A259','#F2C14E','#6A994E','#2FA39B','#4C7FB8','#7B6CB0','#D65A8E','#FDECEC','#E3F0FB'],
+      history:this.state.history,
+      large:this.state.large, small:this.state.small,
+      largeTargets:this.targets('large',s), smallTargets:this.targets('small',s),
+      largeFonts:mkFonts(this.state.large.font), smallFonts:mkFonts(this.state.small.font),
+      largeBorders:mkBorders(this.state.large.borderStyle), smallBorders:mkBorders(this.state.small.borderStyle),
+      onStudioFont:this.onStudioFont, onStudioBorder:this.onStudioBorder, onStudioSize:this.onStudioSize, onStudioBorderWidth:this.onStudioBorderWidth, onStudioCorner:this.onStudioCorner, moreColours:s.moreColours,
+      largeCards:this.cards('large'), smallCards:this.cards('small'),
+      largeEditing:this.editingLabel('large',s), smallEditing:this.editingLabel('small',s),
+      onSwatch:this.onSwatch, onNative:this.onNative, toggleUniform:this.toggleUniform, selectCard:this.selectCard,
+      exportCards:this.exportCards, exportAttendance:this.exportAttendance,
+      days:Array.from({length:31},(_,i)=>i+1), attRows, att:this.state.att, onAttInput:this.onAttInput, onEmptyRows:this.onEmptyRows,
+      stickyStart: dir==='rtl'?'right':'left',
+      grad:g, fonts,
+      gradUploadLabel: g.img? s.changePhoto : s.uploadPhoto,
+      onUpload:this.onUpload, onGradText:this.onGradText, onGradFont:this.onGradFont, onGradColor:this.onGradColor, onGradSwatch:this.onGradSwatch, onGradSize:this.onGradSize, onGradPointerDown:this.onGradPointerDown, exportGrad:this.exportGrad,
+      noPhoto: !g.img,
+      hasPhoto: !!g.img,
+      gradNote: this.state.gradErr || this.state.gradBusy || '',
+      gradNoteColor: this.state.gradErr? '#C0392B' : '#7A736B',
+      gradBoxBg: g.img? '#000' : '#F4EFE7',
+      gradTextDisplay: (g.title||g.subtitle)? 'block':'none',
+      gradXpct: g.x+'%', gradYpct: g.y+'%',
+      // Text size is a fraction of the picture's width, so the preview, the
+      // print sheet and the exported PNG all agree at any rendered size.
+      // g.size is calibrated against a 600 px-wide preview: 1cqw = 6 px there.
+      gradTitleCqw: (g.size/6).toFixed(3)+'cqw',
+      gradSubCqw: (g.size*0.52/6).toFixed(3)+'cqw'
+    };
+  }
+}
+</script>
+
+
+</body></html>
