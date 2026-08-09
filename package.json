@@ -1,6 +1,6 @@
 {
   "name": "kindergarten-helper",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A very simple bilingual (Hebrew/English) desktop helper for a kindergarten teacher: name cards, attendance sheets, and graduation photos.",
   "main": "main.js",
   "author": "Ron Ariel",
