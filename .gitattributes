@@ -1,0 +1,21 @@
+# Check every text file out with LF, on every platform.
+#
+# Without this, a Windows checkout converts these to CRLF, a build there writes
+# LF, and `app/index.html` looks changed on every single line — which is what
+# the "committed app must match the sources" check in CI first caught. It also
+# means the built file is identical whoever builds it, which is the only thing
+# that makes that check meaningful.
+* text=auto eol=lf
+
+# Binary, and must never be touched by line-ending conversion. The fonts are
+# already detected as binary by content, but saying so costs nothing and a
+# silently corrupted woff2 is a miserable thing to debug.
+*.woff2 binary
+*.png   binary
+*.ico   binary
+*.exe   binary
+*.7z    binary
+
+# Generated. Big, one-line-ish, and reviewing its diff is never useful — the
+# change to look at is in src/.
+app/index.html linguist-generated=true -diff
