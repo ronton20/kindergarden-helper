@@ -28,8 +28,14 @@ const u16 = (n: number): number[] => [n & 0xFF, (n >>> 8) & 0xFF];
 const u32 = (n: number): number[] =>
   [n & 0xFF, (n >>> 8) & 0xFF, (n >>> 16) & 0xFF, (n >>> 24) & 0xFF];
 
-/** Pack entries into a ZIP archive with no compression. */
-export function zipStore(files: ZipEntry[]): Uint8Array {
+/**
+ * Pack entries into a ZIP archive with no compression.
+ *
+ * The return type names `ArrayBuffer` rather than the looser `ArrayBufferLike`
+ * so the result can go straight into a `Blob`: a Uint8Array over a
+ * SharedArrayBuffer is not a valid BlobPart, and this one never is.
+ */
+export function zipStore(files: ZipEntry[]): Uint8Array<ArrayBuffer> {
   const nameEnc = new TextEncoder();
   const local: Uint8Array[] = [];
   const central: Uint8Array[] = [];

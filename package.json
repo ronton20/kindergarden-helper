@@ -6,8 +6,10 @@
   "author": "Ron Ariel",
   "license": "MIT",
   "scripts": {
-    "start": "electron .",
-    "dist": "electron-builder --win --publish never",
+    "dev": "node scripts/dev.js",
+    "build": "vite build",
+    "start": "npm run build && electron .",
+    "dist": "npm run build && electron-builder --win --publish never",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "test:characterization": "electron tests/characterization/run.js"
@@ -62,9 +64,16 @@
     }
   },
   "devDependencies": {
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
     "electron": "^31.0.0",
     "electron-builder": "^24.13.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "typescript": "^5.9.3",
+    "vite": "^5.4.21",
+    "vite-plugin-singlefile": "^2.3.3",
     "vitest": "^2.1.9"
   },
   "dependencies": {

@@ -28,6 +28,11 @@ const REPO = path.join(__dirname, '..', '..');
 const GOLDEN = path.join(__dirname, 'golden.json');
 const UPDATE = process.argv.includes('--update');
 
+// Which build to check. Defaults to the one that ships; during the refactor
+// KH_APP points it at the new output, so the same recording can be replayed
+// against the port before anything is switched over.
+const APP_HTML = path.join(REPO, process.env.KH_APP || 'app/index.html');
+
 // Fixed window size: container-query units resolve against the layout, so the
 // font sizes below are only reproducible at a known width.
 const WIDTH = 1400;
@@ -377,7 +382,7 @@ app.whenReady().then(async () => {
     width: WIDTH, height: HEIGHT, show: false,
     webPreferences: { contextIsolation: true }
   });
-  await win.loadFile(path.join(REPO, 'app', 'index.html'));
+  await win.loadFile(APP_HTML);
   await sleep(2000);
 
   let snapshot;

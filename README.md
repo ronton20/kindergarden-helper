@@ -108,15 +108,14 @@ npm test          # unit tests (Vitest, no browser)
 npm run typecheck # tsc --noEmit
 ```
 
-`src/renderer/lib/` is the app's logic, being lifted out of the generated bundle a piece at a time as the
-refactor proceeds — the spreadsheet writer, the ZIP writer, the card naming and geometry rules, the export
-filenames — plus `src/renderer/i18n/`, where `Strings` is derived from the English table so a **missing
-Hebrew string is a compile error** rather than a blank label someone finds in use.
+`src/renderer/lib/` holds the app's logic — the spreadsheet writer, the ZIP writer, the card naming and
+geometry rules, the export filenames — so it can be tested without a browser.
 
-The extraction is checked against the app that ships, not against itself. `tests/unit/xlsx.test.ts` rebuilds
-the attendance spreadsheet through the extracted TypeScript and asserts its sha256 equals the one
-`tests/characterization/golden.json` recorded from the real bundle. Same hash, same file — the port is
-faithful rather than merely similar. The card tests do the same against the recorded names and proportions.
+It is checked against the app that shipped *before* the refactor, not against itself.
+`tests/unit/xlsx.test.ts` builds the attendance spreadsheet and asserts its sha256 equals the one
+`tests/characterization/golden.json` recorded from the old bundle. Same hash, same file — faithful rather
+than merely similar. The card tests do the same against the recorded names and proportions, and the i18n
+tests against the recorded tab labels.
 
 ### Characterization tests
 
@@ -195,32 +194,39 @@ all. The release must also be a real release rather than a draft (`releaseType: 
 invisible to the updater.
 
 ### Editing the app
-`app/index.html` is a **generated** file: a small unpacker, a manifest of
-gzipped assets, and the whole app squeezed onto one JSON-encoded line. Don't
-edit it by hand — edit `tools/src/app.html` and repack:
+
+The app is React and TypeScript under `src/renderer/`, built by Vite.
 
 ```bash
-node tools/rebundle.js     # tools/src/app.html -> app/index.html
+npm run dev      # dev server with hot reload, in an Electron window
+npm run build    # -> app/index.html
 ```
 
-`node tools/unbundle.js` goes the other way, and regenerates `tools/src/app.html`
-from the bundle if the two ever drift apart.
+`npm run dev` serves the renderer over `http://localhost` and points Electron at it, so the dev app has its
+own children list and cannot see or damage the real one — localStorage is keyed by origin. Everything else
+loads from a file, which is what keeps that origin `file://`. **Never serve the real app over http**: every
+saved list would vanish.
 
-`tools/src/libheif.js` is vendored [libheif-js](https://github.com/catdad-experiments/libheif-js)
-(the pure-JavaScript build, LGPL — see `tools/src/libheif.LICENSE`). It decodes
-the HEIC photos iPhones produce, which Chromium cannot open on its own. It is
-packed into the bundle as an asset and only fetched out of it the first time
-someone actually picks a HEIC file, so it costs nothing at startup.
+A new feature is a new folder under `src/renderer/features/`. Shared logic lives in `lib/`, shared controls in
+`ui/`, and strings in `i18n/` — where `Strings` is derived from the English table, so a missing Hebrew string
+is a compile error.
+
+**`app/index.html` is a build artefact, and it is committed anyway.** The README promises you can save that
+one file anywhere and open it in a browser, so a clone has to carry a working copy without anyone running a
+build first. Run `npm run build` and commit the result whenever you change `src/`; CI fails if the committed
+file has drifted from the sources.
+
+The build inlines everything — 17 self-hosted woff2 subsets and the HEIC decoder — into that single file. The
+decoder is [libheif-js](https://github.com/catdad-experiments/libheif-js) (the pure-JavaScript build, LGPL —
+see `src/renderer/assets/libheif.LICENSE`), which decodes the photos iPhones produce and Chromium cannot open
+on its own. It is 2.1 MB, so it is gzipped at build time and only inflated the first time someone actually
+picks a HEIC file: see the `?gzip-base64` plugin in `vite.config.ts`. The fonts are not gzipped, because woff2
+already is.
 
 ## Project layout
 ```
 kindergarten-helper/
-├─ app/index.html        the app (GENERATED — see tools/, self-contained, offline)
-├─ tools/
-│  ├─ src/app.html       the app source you edit
-│  ├─ src/libheif.js     vendored HEIC decoder (packed into the bundle)
-│  ├─ rebundle.js        src -> app/index.html
-│  └─ unbundle.js        app/index.html -> src
+├─ app/index.html        BUILT from src/ by Vite — one file, offline, committed
 ├─ main.js               Electron window, and the launch / update sequence
 ├─ preload.js            the only main↔renderer door (contextBridge)
 ├─ downloads.js          saves every export into Documents, named and numbered
@@ -231,9 +237,16 @@ kindergarten-helper/
 │                        — electron-builder's buildResources dir, not shipped inside the app
 ├─ package.json          Electron + electron-builder config
 ├─ package-lock.json     locked dependency versions (used by `npm ci`)
+├─ vite.config.ts        renderer build: single file, inlined assets
 ├─ src/renderer/
-│  ├─ lib/               the logic, in TypeScript, as it is lifted out
-│  └─ i18n/              en.ts / he.ts — a missing string is a type error
+│  ├─ App.tsx            shell: language switch, tabs, print sheets
+│  ├─ state.ts           the one place state changes and is persisted
+│  ├─ features/          children/ cards/ attendance/ graduation/
+│  ├─ lib/               logic: xlsx, zip, cards, filename, photo, print…
+│  ├─ ui/                shared controls
+│  ├─ i18n/              en.ts / he.ts — a missing string is a type error
+│  └─ assets/            self-hosted fonts, vendored HEIC decoder
+├─ scripts/dev.js        vite + electron together, for `npm run dev`
 ├─ tests/
 │  ├─ unit/              Vitest, checked against the golden recording
 │  └─ characterization/
