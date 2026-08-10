@@ -24,12 +24,18 @@ Both releases carry the installer, `latest.yml` and the `.blockmap`, and
 there to be found. What has *not* been confirmed is any of it running on
 Windows; see the checks listed under each phase.
 
-**This changes what ships when.** The table below has phases 1–3 shipping
-together as one manual install. Phases 1 and 2 have now gone out ahead of
-phase 3, so phase 3 ships on its own — and, being the first release after
-auto-update, it should arrive by itself rather than being installed by hand.
-That is the arrangement the phase order was designed to reach; it just happened
-one phase earlier than planned.
+**Phase 1 and 2 confirmed on Windows** — installer, startup, the surviving
+children list, and the self-update all check out.
+
+**Phase 3 — code complete, shipping as `v2.0.2`.** Every tab now saves into
+Documents, named after its tab, in the current language, with the year. This is
+the first release that should arrive by itself rather than being installed by
+hand.
+
+**This changed what ships when.** The table below had phases 1–3 shipping
+together as one manual install. Phases 1 and 2 went out ahead of phase 3, so
+phase 3 ships on its own — which is the arrangement the phase order was designed
+to reach, just one phase earlier than planned.
 
 **Also introduced:** `tools/src/app.html` + `tools/rebundle.js`. This was the
 minimum needed to edit a generated single-line file safely. Phase 4 replaces it
@@ -286,6 +292,29 @@ names. Worth a line in the README so the two builds aren't confusing.
 Documents with no dialog, exporting twice doesn't overwrite, a printed card
 measures correctly with a ruler, and card background colours survive into the
 PDF.
+
+**Status — done, and every one of those checked by driving the real app.** All
+eight files land in Documents with the names in the table above; a second export
+becomes `… 2026 (2)`; the PDF is A4; a card measures **6.006 × 3.995 cm** in the
+produced PDF (measured by flattening the corner radius so the card is a plain
+rectangle in the content stream, then reading it back through the page
+transform); and the background and border colours are both present, which they
+would not be without `printBackground`.
+
+**Two things worth recording.**
+
+`printToPDF` takes `margins` in **inches**, not the pixels the shared `Margins`
+type in `electron.d.ts` documents — that comment describes the other print API.
+And `marginType: 'none'` does *not* mean zero; it leaves the default ~1 cm
+margin. Both were settled by measuring: render a box, binary-search the height
+at which the page spills to a second one, and the printable height falls out.
+
+The confirmation line deliberately does **not** name the file, though the plan's
+sketch implied it might. A name like `שמות למגירות 2026 (2).pdf` is inherently
+mixed-direction, and inside an RTL line the bidi algorithm reorders its neutral
+runs into `pdf.(2) 2026 …`. A direction isolate moves the problem rather than
+solving it — there is no single ordering that reads naturally. "Show the file"
+opens it in Explorer, which renders the name properly, so nothing is lost.
 
 ---
 

@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const splash = require('./splash');
 const updater = require('./updater');
+const downloads = require('./downloads');
 
 // Only present when running from the repo: `build/` is electron-builder's
 // buildResources directory and is deliberately not packaged. In the installed
@@ -47,9 +48,14 @@ if (!gotLock) {
       // never appears as a white rectangle while the bundle unpacks.
       show: false,
       ...(fs.existsSync(iconPath) ? { icon: iconPath } : {}),
-      webPreferences: { contextIsolation: true }
+      webPreferences: {
+        contextIsolation: true,
+        preload: path.join(__dirname, 'preload.js')
+      }
     });
     Menu.setApplicationMenu(null);
+    // Exports go to Documents rather than wherever a download would land.
+    downloads.install(mainWindow);
     mainWindow.once('ready-to-show', markMainReady);
     // Safety net: a window that is never shown is indistinguishable from an app
     // that failed to start. If `ready-to-show` hasn't fired by now, treat it as
