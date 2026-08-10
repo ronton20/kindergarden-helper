@@ -599,8 +599,14 @@
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
               <div style="font:600 16px Rubik,sans-serif;color:#7A736B">{{ s.actualSize }}: 6 × 4 cm · {{ s.clickToColor }}</div>
-              <button data-studio="large" sc-camel-on-click="{{ exportCards }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ s.exportPdf }}</button>
+              <button data-studio="large" sc-camel-on-click="{{ exportCards }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ cardsButtonLabel }}</button>
             </div>
+            <sc-if value="{{ savedNote }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-6px 0 14px;font:600 16px Rubik,sans-serif;color:{{ savedNoteColor }}">
+                <span>✓ {{ savedNote }}</span>
+                <button sc-camel-on-click="{{ revealSaved }}" style="display:{{ revealDisplay }};height:36px;padding:0 14px;border-radius:10px;border:2px solid #E7E0D6;background:#fff;color:#2B2723;font:700 15px Rubik,sans-serif;cursor:pointer">{{ showFileLabel }}</button>
+              </div>
+            </sc-if>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px">
               <sc-for list="{{ largeCards }}" as="c" hint-placeholder-count="6">
                 <div data-studio="large" data-id="{{ c.id }}" sc-camel-on-click="{{ selectCard }}" style="cursor:pointer;aspect-ratio:3/2;container-type:size;border-radius:{{ c.radiusCq }};box-shadow:{{ c.outline }}">
@@ -687,8 +693,14 @@
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
               <div style="font:600 16px Rubik,sans-serif;color:#7A736B">{{ s.actualSize }}: 4 × 2 cm · {{ s.clickToColor }}</div>
-              <button data-studio="small" sc-camel-on-click="{{ exportCards }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ s.exportPdf }}</button>
+              <button data-studio="small" sc-camel-on-click="{{ exportCards }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ cardsButtonLabel }}</button>
             </div>
+            <sc-if value="{{ savedNote }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-6px 0 14px;font:600 16px Rubik,sans-serif;color:{{ savedNoteColor }}">
+                <span>✓ {{ savedNote }}</span>
+                <button sc-camel-on-click="{{ revealSaved }}" style="display:{{ revealDisplay }};height:36px;padding:0 14px;border-radius:10px;border:2px solid #E7E0D6;background:#fff;color:#2B2723;font:700 15px Rubik,sans-serif;cursor:pointer">{{ showFileLabel }}</button>
+              </div>
+            </sc-if>
             <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px">
               <sc-for list="{{ smallCards }}" as="c" hint-placeholder-count="8">
                 <div data-studio="small" data-id="{{ c.id }}" sc-camel-on-click="{{ selectCard }}" style="cursor:pointer;aspect-ratio:2/1;container-type:size;border-radius:{{ c.radiusCq }};box-shadow:{{ c.outline }}">
@@ -716,6 +728,12 @@
         </label>
         <button sc-camel-on-click="{{ exportAttendance }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px;margin-inline-start:auto">⤓ {{ s.downloadXlsx }}</button>
       </div>
+            <sc-if value="{{ savedNote }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-6px 0 14px;font:600 16px Rubik,sans-serif;color:{{ savedNoteColor }}">
+                <span>✓ {{ savedNote }}</span>
+                <button sc-camel-on-click="{{ revealSaved }}" style="display:{{ revealDisplay }};height:36px;padding:0 14px;border-radius:10px;border:2px solid #E7E0D6;background:#fff;color:#2B2723;font:700 15px Rubik,sans-serif;cursor:pointer">{{ showFileLabel }}</button>
+              </div>
+            </sc-if>
       <div style="background:#fff;border:2px solid #E7E0D6;border-radius:16px;padding:16px;overflow-x:auto;overflow-y:hidden;max-width:100%" data-comment-anchor="548e09a71f-div">
         <div style="display:flex;gap:26px;margin-bottom:12px;font:700 18px Rubik,sans-serif">
           <div>{{ s.className }}: <span style="display:inline-block;min-width:120px;border-bottom:2px solid #C9C1B6">&nbsp;</span></div>
@@ -806,6 +824,12 @@
             <div style="font:600 16px Rubik,sans-serif;color:#7A736B">{{ s.dragHint }} · 18 × 13 cm</div>
             <button sc-camel-on-click="{{ exportGrad }}" style="height:60px;padding:0 28px;border-radius:16px;border:none;background:#2FA39B;color:#fff;font:700 21px Rubik,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:10px">⤓ {{ s.savePng }}</button>
           </div>
+            <sc-if value="{{ savedNote }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-6px 0 14px;font:600 16px Rubik,sans-serif;color:{{ savedNoteColor }}">
+                <span>✓ {{ savedNote }}</span>
+                <button sc-camel-on-click="{{ revealSaved }}" style="display:{{ revealDisplay }};height:36px;padding:0 14px;border-radius:10px;border:2px solid #E7E0D6;background:#fff;color:#2B2723;font:700 15px Rubik,sans-serif;cursor:pointer">{{ showFileLabel }}</button>
+              </div>
+            </sc-if>
           <div data-gradbox="" style="position:relative;width:100%;max-width:600px;aspect-ratio:18/13;container-type:inline-size;border-radius:14px;overflow:hidden;background:{{ gradBoxBg }};border:2px solid #E7E0D6;display:flex;align-items:center;justify-content:center">
             <sc-if value="{{ hasPhoto }}" hint-placeholder-val="{{ false }}">
               <img sc-camel-src="{{ grad.img }}" alt="" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover">
@@ -868,6 +892,7 @@ class Component extends DCLogic {
       grad: { img:null, title:'', subtitle:'', color:'#FFFFFF', font:'Suez One', size:44, x:50, y:78 },
       gradBusy: '', gradErr: '',
       backupNote: '', backupErr: false,
+      savedFile: null, saveError: false,
       att: { cls:'', emptyRows:0 }
     };
   }
@@ -890,7 +915,9 @@ class Component extends DCLogic {
       largeTitle:'Drawer names — 6 × 4 cm', largeHelp:'Pick colours, then print. Several cards fit on one page — cut them apart.',
       smallTitle:'Basket names — 4 × 2 cm', smallHelp:'Pick colours, then print. Several cards fit on one page — cut them apart.',
       actualSize:'Actual size', clickToColor:'tick off “same colours” to colour one card at a time',
-      exportPdf:'Print / Save as PDF', addFirst:'First add the children in the “Children” tab.',
+      exportPdf:'Print / Save as PDF', downloadPdf:'Download PDF file',
+      savedToDocuments:'Saved to Documents', showFile:'Show the file', saveFailed:'Sorry, the file could not be saved.',
+      addFirst:'First add the children in the “Children” tab.',
       attTitle:'Attendance sheet', attHelp:'A blank monthly sheet — 31 day columns. Write the month by hand. Download it as an Excel file and print one for each month.',
       className:'Class', month:'Month', year:'Year', downloadXlsx:'Download Excel file', idCol:'ID', emptyRowsLabel:'Blank rows to add',
       gradTitle:'Graduation photo — 18 × 13 cm', gradHelp:'Upload a photo, type the title and subtitle, drag the text where you like, then save the picture.',
@@ -921,7 +948,9 @@ class Component extends DCLogic {
       largeTitle:'שמות למגירות — 6 × 4 ס״מ', largeHelp:'בחרו צבעים והדפיסו. כמה כרטיסים בכל דף — גוזרים ומפרידים.',
       smallTitle:'שמות לסלסלאות — 4 × 2 ס״מ', smallHelp:'בחרו צבעים והדפיסו. כמה כרטיסים בכל דף — גוזרים ומפרידים.',
       actualSize:'גודל אמיתי', clickToColor:'בטלו ״אותם צבעים״ כדי לצבוע כרטיס אחד בכל פעם',
-      exportPdf:'הדפסה / שמירה כ־PDF', addFirst:'קודם הוסיפו את הילדים בלשונית ״ילדים״.',
+      exportPdf:'הדפסה / שמירה כ־PDF', downloadPdf:'הורדת קובץ PDF',
+      savedToDocuments:'נשמר במסמכים', showFile:'הצגת הקובץ', saveFailed:'לא הצלחנו לשמור את הקובץ.',
+      addFirst:'קודם הוסיפו את הילדים בלשונית ״ילדים״.',
       attTitle:'טבלת נוכחות', attHelp:'טבלה חודשית ריקה — 31 עמודות ימים. מלאו את החודש בכתב יד. הורידו כקובץ Excel והדפיסו אחת לכל חודש.',
       className:'כיתה', month:'חודש', year:'שנה', downloadXlsx:'הורדת קובץ Excel', idCol:'ת״ז', emptyRowsLabel:'שורות ריקות להוספה',
       gradTitle:'תמונת סיום — 18 × 13 ס״מ', gradHelp:'העלו תמונה, הקלידו כותרת וכותרת משנה, גררו את הטקסט למקום הרצוי ושמרו את התמונה.',
@@ -948,6 +977,10 @@ class Component extends DCLogic {
   }
 
   componentDidMount(){
+    // Desktop only: the main process tells us where a file actually landed,
+    // once it has landed. In a browser this simply doesn't exist.
+    if (window.kh && window.kh.onSaved) window.kh.onSaved(this.noteSaved);
+
     let loaded = null;
     try { loaded = JSON.parse(localStorage.getItem('kh_v1')||'null'); } catch(e){}
     const nav = (navigator.language||'en').toLowerCase();
@@ -1036,7 +1069,9 @@ class Component extends DCLogic {
   };
 
   setLang = (e) => { const lang = e.currentTarget.dataset.lang; this.setState({lang}, this.persist); };
-  setTab = (e) => { this.setState({activeTab:e.currentTarget.dataset.tab}); };
+  // The "saved" line belongs to the export that produced it, so it goes away
+  // when the tab does.
+  setTab = (e) => { this.setState({activeTab:e.currentTarget.dataset.tab, savedFile:null, saveError:false}); };
 
   addChild = () => { const id=this._nid++; this.setState(st=>({children:[...st.children,{id,first:'',last:'',tz:''}]}), this.persist); };
   removeChild = (e) => { const id=Number(e.currentTarget.dataset.id); this.setState(st=>({children:st.children.filter(c=>c.id!==id)}), this.persist); };
@@ -1089,16 +1124,86 @@ class Component extends DCLogic {
   editingLabel(studio, s){ const S=this.state[studio]; if(S.uniform||!S.selectedId) return s.editingAll; const c=this.state.children.find(x=>x.id===S.selectedId); return s.editingOne + ((c&&c.first)||'—'); }
 
 
+  // ── saving files ─────────────────────────────────────────────────────────
+  // Every tab produces a file named after the tab it came from, in the current
+  // language, with the calendar year — so a teacher exporting each year ends up
+  // with "טבלת נוכחות 2026.xlsx" rather than a Downloads folder full of
+  // "attendance (3).xlsx". Names come from the tab labels, so a new tab is named
+  // correctly for free.
+  //
+  // On the desktop the main process puts these in Documents. In a browser it
+  // cannot: a page may suggest a name but never a location, so the file lands
+  // wherever that browser downloads to — with the right name either way.
+
+  desktop(){ return !!(window.kh && window.kh.desktop); }
+
+  // Windows forbids \ / : * ? " < > | in filenames. Hebrew is fine. Defensive
+  // because these strings are user-facing text that may change, and the main
+  // process sanitises again on its side.
+  safeFilename(s){
+    return String(s == null ? '' : s)
+      .replace(/[\\/:*?"<>|]/g, ' ')
+      .replace(/[\u0000-\u001F\u007F]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .replace(/^\.+/, '')
+      .replace(/\.+$/, '')
+      .slice(0, 150)
+      .trim() || 'Kindergarten Helper';
+  }
+
+  exportName(label, ext){
+    return this.safeFilename(label + ' ' + new Date().getFullYear()) + '.' + ext;
+  }
+
+  noteSaved = (payload) => {
+    if (payload && payload.name) this.setState({ savedFile: payload, saveError: false });
+  };
+
+  revealSaved = () => {
+    const f = this.state.savedFile;
+    if (f && f.id && window.kh) window.kh.reveal(f.id);
+  };
+
+  // Only used by the browser build. On the desktop the page geometry is passed
+  // to printToPDF instead, so there is one source of truth for it per build
+  // rather than an injected @page rule competing with the PDF options.
   doPrint(area, pageRule){
     const st=document.getElementById('kh-print-page');
     if(st) st.textContent = '@media print{ @page{ '+pageRule+' } }';
     document.body.setAttribute('data-print', area);
     setTimeout(()=>{ window.print(); setTimeout(()=>document.body.removeAttribute('data-print'), 400); }, 60);
   }
-  exportCards = (e) => { const studio=e.currentTarget.dataset.studio; if(!this.state.children.length) return; this.doPrint(studio, 'size:A4; margin:1cm;'); };
+
+  exportCards = async (e) => {
+    const studio=e.currentTarget.dataset.studio;
+    if(!this.state.children.length) return;
+    const s=this.strings();
+    const name=this.exportName(studio==='large'? s.tabLarge : s.tabSmall, 'pdf');
+
+    if(!this.desktop()){ this.doPrint(studio, 'size:A4; margin:1cm;'); return; }
+
+    // The print areas are revealed by body[data-print="…"] under @media print.
+    // printToPDF renders in print mode, so that CSS applies — but the attribute
+    // has to be set before the call and cleared after, which is why this is an
+    // IPC round-trip rather than the old setTimeout dance. Nothing changes on
+    // screen: the reveal rules only exist inside @media print.
+    this.setState({ savedFile:null, saveError:false });
+    document.body.setAttribute('data-print', studio);
+    try {
+      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+      const res = await window.kh.savePdf(name);
+      if(!res || !res.ok) this.setState({ saveError:true });
+    } catch(err){
+      this.setState({ saveError:true });
+    } finally {
+      document.body.removeAttribute('data-print');
+    }
+  };
   exportGrad = () => {
     const g=this.state.grad;
     if(!g.img){ alert(this.strings().noPhoto); return; }
+    this.setState({savedFile:null, saveError:false});
     const W=2126, H=1535; // 18×13 cm @ ~300dpi
     const canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H;
     const ctx=canvas.getContext('2d');
@@ -1143,7 +1248,8 @@ class Component extends DCLogic {
       };
       if(g.title){ ctx.font=titleFont; ctx.fillText(g.title, cx, top+baselineIn(titlePx)); top+=titleH; }
       if(g.subtitle){ ctx.font=subFont; ctx.fillText(g.subtitle, cx, top+baselineIn(subPx)); }
-      canvas.toBlob(b=>{ const url=URL.createObjectURL(b); const a=document.createElement('a'); a.href=url; a.download='graduation.png'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1500); }, 'image/png');
+      const name=this.exportName(this.strings().tabGrad, 'png');
+      canvas.toBlob(b=>{ const url=URL.createObjectURL(b); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1500); }, 'image/png');
     };
     img.src=g.img;
   };
@@ -1154,6 +1260,7 @@ class Component extends DCLogic {
   // scaled to one landscape A4 page wide on print via fitToWidth.
   exportAttendance = () => {
     const s=this.strings();
+    this.setState({savedFile:null, saveError:false});
     const rtl=this.state.lang==='he';
     const FONT_PT=11;                 // readable base font size (was ~6 before)
     const NCOLS=4+31;                 // #, first, last, ID + 31 day columns
@@ -1283,7 +1390,7 @@ class Component extends DCLogic {
 
     const blob=new Blob([this.zipStore(files)], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download='attendance.xlsx'; a.click();
+    const a=document.createElement('a'); a.href=url; a.download=this.exportName(s.tabAtt, 'xlsx'); a.click();
     setTimeout(()=>URL.revokeObjectURL(url),1500);
   };
 
@@ -1469,6 +1576,24 @@ class Component extends DCLogic {
       largeEditing:this.editingLabel('large',s), smallEditing:this.editingLabel('small',s),
       onSwatch:this.onSwatch, onNative:this.onNative, toggleUniform:this.toggleUniform, selectCard:this.selectCard,
       exportCards:this.exportCards, exportAttendance:this.exportAttendance,
+      // On the desktop the button downloads a PDF; in a browser it still opens
+      // the print dialog, so the two builds say what they actually do.
+      cardsButtonLabel: this.desktop() ? s.downloadPdf : s.exportPdf,
+      // Deliberately just the message, with no filename in it. A name like
+      // "שמות למגירות 2026 (2).pdf" is inherently mixed-direction — Hebrew,
+      // digits, brackets and a Latin extension — and inside an RTL line the
+      // bidi algorithm reorders the neutral runs into "pdf.(2) 2026 …". A
+      // direction isolate moves the problem rather than solving it, because no
+      // single ordering reads naturally. "Show the file" opens it in Explorer,
+      // which renders the name properly, so nothing is lost.
+      savedNote: this.state.saveError ? s.saveFailed
+        : (this.state.savedFile ? s.savedToDocuments : ''),
+      savedNoteColor: this.state.saveError ? '#C0392B' : '#6A994E',
+      // Hidden rather than conditionally rendered: this runtime nests sc-for
+      // inside sc-if but never sc-if inside sc-if, and one style is cheaper
+      // than finding out whether that works.
+      revealDisplay: (this.state.savedFile && !this.state.saveError) ? 'inline-flex' : 'none',
+      revealSaved: this.revealSaved, showFileLabel: s.showFile,
       days:Array.from({length:31},(_,i)=>i+1), attRows, att:this.state.att, onAttInput:this.onAttInput, onEmptyRows:this.onEmptyRows,
       stickyStart: dir==='rtl'?'right':'left',
       grad:g, fonts,

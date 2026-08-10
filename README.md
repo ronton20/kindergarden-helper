@@ -8,6 +8,10 @@ Type the children's names once, and generate everything needed each year:
 - **טבלת נוכחות · Attendance sheet** — a blank monthly sheet (31 days + ת״ז/ID) exported to Excel, landscape-A4 friendly.
 - **תמונת סיום · Graduation photo** — upload a photo (including iPhone `.HEIC` photos), add a title + subtitle, drag the text, save an 18 × 13 cm PNG.
 
+Every tab produces a file, saved straight into **Documents** with no dialog, named after the tab it came from,
+in the current language, with the year — `שמות למגירות 2026.pdf`, `Attendance 2026.xlsx`, and so on. Exporting
+twice in a year doesn't overwrite: the second becomes `… 2026 (2)`.
+
 The interface follows the computer's language automatically (Hebrew → right-to-left) and has a visible language switch. The children list and all settings are saved automatically on the machine, so next year you just change the names. The **Children** tab can also save a backup file of the list and every setting, and restore it later or on another computer.
 
 ---
@@ -38,8 +42,9 @@ code-signed. Choose **More info → Run anyway**.
 Open **[`app/index.html`](app/index.html)** — it is a single self-contained file. Save it anywhere (e.g. the Desktop)
 and double-click to open it in any browser. Works fully offline; your lists are saved in that browser.
 
-Note that a page in a browser cannot choose where files are saved, so downloads go to the browser's own
-downloads folder.
+Note that a page in a browser cannot choose where files are saved and has no way to write a PDF directly, so
+there the name cards still open the print dialog and files go to the browser's own downloads folder — with
+the correct names either way. The installed app does both properly.
 
 ---
 
@@ -96,6 +101,38 @@ verification, and the update is refused. Turning the option off keeps `publisher
 `app-update.yml`, so that check is skipped while the sha512 check remains. **If a certificate is ever bought,
 remove that option** — signature verification is worth having once there is a signature to verify.
 
+### Saved files
+
+`preload.js` is the only door between the app and the main process — three calls and one event, no paths and
+no filesystem. It doubles as the signal for which build is running: `window.kh` exists in the installed app
+and does not exist in a browser, and the renderer branches on that.
+
+`downloads.js` owns everything that ends up on disk. Two routes arrive there, because the two kinds of export
+are made in different places:
+
+- The Excel sheet and the graduation picture are built in the renderer and handed over as ordinary downloads.
+  A page can suggest a *name* but never a location, so a `will-download` handler calling `setSavePath()` is
+  the only place the folder can be chosen.
+- The name cards exist only as a print stylesheet, so there is nothing to download. The renderer sets
+  `body[data-print]`, the main process renders the page with `printToPDF` — which renders in print mode, so
+  that stylesheet applies — and writes the file itself.
+
+Both routes share the sanitising, the collision numbering and the `kh:saved` message back to the app. Saved
+files are handed back as opaque ids rather than paths, so "show the file" can only ever reveal something just
+written.
+
+Two things worth knowing before touching the PDF options:
+
+- **`printBackground: true` is mandatory.** Without it every background colour silently disappears and the
+  cards print as outlines.
+- **`margins` are in inches**, and only `marginType: 'custom'` means what it says. The shared `Margins` type
+  in `electron.d.ts` documents pixels — that is what the *other* print API means — and `marginType: 'none'`
+  quietly leaves the default ~1 cm margin in place. Measured, not assumed: a card comes out of the PDF at
+  6.006 × 3.995 cm.
+
+Page geometry is passed to `printToPDF` rather than injected as an `@page` rule, so there is one source of
+truth for it. The browser build still injects the rule, because `window.print()` is all it has.
+
 ### Publish a release (auto-builds the installer)
 The workflow in `.github/workflows/release.yml` builds the installer and attaches it to a GitHub Release automatically. To cut a release:
 
@@ -142,6 +179,8 @@ kindergarten-helper/
 │  ├─ rebundle.js        src -> app/index.html
 │  └─ unbundle.js        app/index.html -> src
 ├─ main.js               Electron window, and the launch / update sequence
+├─ preload.js            the only main↔renderer door (contextBridge)
+├─ downloads.js          saves every export into Documents, named and numbered
 ├─ updater.js            checks GitHub, downloads, relaunches — fails silently
 ├─ splash.js             the frameless window that carries the progress bar
 ├─ splash.html           its contents (self-contained, bilingual)
