@@ -58,7 +58,14 @@ jobs:
           if ! git diff --quiet -- app/; then
             echo "app/index.html does not match a fresh build of src/."
             echo "Run 'npm run build' and commit the result."
-            git diff --stat -- app/
+            built=$(wc -c < app/index.html)
+            git stash push --quiet -- app/
+            committed=$(wc -c < app/index.html)
+            git stash pop --quiet
+            echo "committed: $committed bytes"
+            echo "built here: $built bytes"
+            git show HEAD:app/index.html > /tmp/committed.html
+            cmp /tmp/committed.html app/index.html || true
             exit 1
           fi
 
