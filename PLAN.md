@@ -402,11 +402,39 @@ the runner sets one. And the suite was checked by *breaking* the app on purpose
 — changing the large studio's font ratio from 26 to 27 — to confirm it fails and
 names the right field, because a suite that cannot fail is worse than no suite.
 
-**Still to do, and it is the bulk of the phase:** the electron-vite + React +
-TypeScript scaffold, the port itself feature by feature, the single-file browser
-build via `vite-plugin-singlefile` with self-hosted fonts, and lifting the
-OOXML/zip writer out into `lib/xlsx.ts` with unit tests. The suite above is what
-makes each of those checkable rather than hopeful.
+**Step two — the logic, extracted and typed.** TypeScript and Vitest are in, and
+`src/renderer/` now holds the parts of the app that are pure logic:
+
+- `lib/xlsx.ts` and `lib/zip.ts` — the OOXML and ZIP writers, still
+  dependency-free, now with unit tests as the plan asked,
+- `lib/cards.ts` — the naming rules and the card geometry,
+- `lib/filename.ts` — export names,
+- `lib/types.ts` — the saved state, typed,
+- `i18n/en.ts` and `i18n/he.ts` — the two string blobs, replaced. `Strings` is
+  derived from the English table, so a missing Hebrew string is now a compile
+  error rather than a blank label found in use.
+
+The extraction is checked against the app that ships, not against itself:
+`tests/unit/xlsx.test.ts` rebuilds the spreadsheet through the new TypeScript
+and asserts the sha256 matches the one the characterization suite recorded from
+the real bundle. Same hash, same file. The card tests do the same against the
+recorded names and proportions. 43 unit tests, and the string tables were
+lifted mechanically rather than by hand, because 79 keys in two languages is
+exactly where transcription goes wrong.
+
+**Still to do, and it is the bulk of the phase:** the Vite + React scaffold and
+the port of the 830-line template and its logic class, the single-file browser
+build with the 17 embedded fonts, and then switching `app/index.html` over to
+the new output. Until that switch, everything above is additive — the shipped
+app is untouched, which is deliberate: a half-ported app on `main` is worse than
+none.
+
+**A note on the tooling choice.** The plan says electron-vite. The main process
+here is four small files that are already clean, commented and covered, so
+rebuilding them buys nothing and risks the packaging, updater and download paths
+that phases 1–3 established. Plain Vite for the renderer reaches every goal the
+phase actually states — types, real components, hot reload, tests, the
+single-file build, and the `file://` origin — with a much smaller blast radius.
 
 **Decided:** TypeScript throughout. The state shape here — per-child colour
 overrides, studio settings, sizes — is exactly what types are good at, and the

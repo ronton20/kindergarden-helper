@@ -34,6 +34,14 @@ jobs:
           v="${GITHUB_REF_NAME#v}"
           npm version "$v" --no-git-tag-version --allow-same-version
 
+      # Types and unit tests are cheap and platform-independent, so they run
+      # everywhere including on a tag — unlike the characterization suite below.
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
       # The characterization suite drives the real bundle in a real Electron,
       # so it needs a window — hence running it here rather than anywhere
       # lighter. Deliberately skipped on tags: by then this exact code has

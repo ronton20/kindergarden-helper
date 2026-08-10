@@ -101,6 +101,23 @@ verification, and the update is refused. Turning the option off keeps `publisher
 `app-update.yml`, so that check is skipped while the sha512 check remains. **If a certificate is ever bought,
 remove that option** — signature verification is worth having once there is a signature to verify.
 
+### Tests
+
+```bash
+npm test          # unit tests (Vitest, no browser)
+npm run typecheck # tsc --noEmit
+```
+
+`src/renderer/lib/` is the app's logic, being lifted out of the generated bundle a piece at a time as the
+refactor proceeds — the spreadsheet writer, the ZIP writer, the card naming and geometry rules, the export
+filenames — plus `src/renderer/i18n/`, where `Strings` is derived from the English table so a **missing
+Hebrew string is a compile error** rather than a blank label someone finds in use.
+
+The extraction is checked against the app that ships, not against itself. `tests/unit/xlsx.test.ts` rebuilds
+the attendance spreadsheet through the extracted TypeScript and asserts its sha256 equals the one
+`tests/characterization/golden.json` recorded from the real bundle. Same hash, same file — the port is
+faithful rather than merely similar. The card tests do the same against the recorded names and proportions.
+
 ### Characterization tests
 
 ```bash
@@ -214,9 +231,14 @@ kindergarten-helper/
 │                        — electron-builder's buildResources dir, not shipped inside the app
 ├─ package.json          Electron + electron-builder config
 ├─ package-lock.json     locked dependency versions (used by `npm ci`)
-├─ tests/characterization/
-│  ├─ run.js             drives the real bundle and records what it does
-│  └─ golden.json        the recording — the definition of "unchanged"
+├─ src/renderer/
+│  ├─ lib/               the logic, in TypeScript, as it is lifted out
+│  └─ i18n/              en.ts / he.ts — a missing string is a type error
+├─ tests/
+│  ├─ unit/              Vitest, checked against the golden recording
+│  └─ characterization/
+│     ├─ run.js          drives the real bundle and records what it does
+│     └─ golden.json     the recording — the definition of "unchanged"
 ├─ .github/workflows/
 │  └─ release.yml        builds the .exe and publishes a Release
 └─ README.md
