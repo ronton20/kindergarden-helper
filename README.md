@@ -9,6 +9,8 @@ Type the children's names once, and generate everything needed each year:
 Both card sizes are settings, in centimetres, saved per design. The preview is laid out at that size and the
 studio says how many will fit on a page.
 - **טבלת נוכחות · Attendance sheet** — a blank monthly sheet (31 days + ת״ז/ID) exported to Excel, landscape-A4 friendly.
+- **מדליות · Medals** — a 6 cm circle for each child moving on to first grade, with their name and a send-off
+  ("בהצלחה!" / "Good luck!"), four ornaments, and a PDF sheet with cut guides.
 - **תמונת סיום · Graduation photo** — upload a photo (including iPhone `.HEIC` photos), add a title + subtitle, drag the text, save an 18 × 13 cm PNG.
 
 Every tab produces a file, saved straight into **Documents** with no dialog, named after the tab it came from,

@@ -9,9 +9,12 @@
 // anything unrecognised is ignored. A saved file from an older version must
 // still open.
 
-import type { AttSettings, Child, GradSettings, Lang, SavedState, StudioSettings } from './types';
+import type {
+  AttSettings, Child, GradSettings, Lang, MedalSettings, SavedState, StudioSettings
+} from './types';
 import { detectLang } from '../i18n';
 import { DEFAULT_CARD_SIZE, clampCardSize } from './cards';
+import { DEFAULT_MEDAL_CM, clampDiameter } from './medals';
 
 export const STORAGE_KEY = 'kh_v1';
 
@@ -32,6 +35,26 @@ export const DEFAULT_SMALL: StudioSettings = {
 export const DEFAULT_GRAD: GradSettings = {
   img: null, title: '', subtitle: '', color: '#FFFFFF',
   font: 'Suez One', size: 44, x: 50, y: 78
+};
+
+export const DEFAULT_MEDALS: MedalSettings = {
+  diameter: DEFAULT_MEDAL_CM,
+  ornament: 'border',
+  phrase: '',
+  uniform: true,
+  bg: '#F2C14E', text: '#2B2723', border: '#E07A4B',
+  font: 'Rubik', size: 100, borderWidth: 6,
+  overrides: {}, selectedId: null
+};
+
+/**
+ * The send-off, in the language the app started in. Deliberately "good luck"
+ * rather than "congratulations": the two languages should read as the same
+ * sentiment, and this is a send-off to first grade, not a prize.
+ */
+export const DEFAULT_PHRASE: Record<Lang, string> = {
+  he: 'בהצלחה!',
+  en: 'Good luck!'
 };
 
 export const DEFAULT_ATT: AttSettings = { cls: '', emptyRows: 0 };
@@ -68,6 +91,7 @@ export function defaultState(navigatorLanguage?: string): SavedState {
     small: { ...DEFAULT_SMALL },
     history: [...DEFAULT_HISTORY],
     grad: { ...DEFAULT_GRAD, title: DEFAULT_TITLE, subtitle: defaultSubtitle() },
+    medals: { ...DEFAULT_MEDALS, phrase: DEFAULT_PHRASE[detectLang(navigatorLanguage)] },
     att: { ...DEFAULT_ATT }
   };
 }
@@ -107,7 +131,18 @@ export function fromSaved(raw: unknown, navigatorLanguage?: string): LoadResult 
   state.small = mergeStudio(base.small, raw.small);
   if (Array.isArray(raw.history)) state.history = raw.history as string[];
   if (isObject(raw.grad)) state.grad = { ...base.grad, ...(raw.grad as Partial<GradSettings>) };
+  if (isObject(raw.medals)) state.medals = { ...base.medals, ...(raw.medals as Partial<MedalSettings>) };
   if (isObject(raw.att)) state.att = { ...base.att, ...(raw.att as Partial<AttSettings>) };
+
+  // Saved before medals existed, or hand-edited: a diameter that cannot print
+  // is no more use than a card that cannot.
+  state.medals.diameter = clampDiameter(state.medals.diameter, DEFAULT_MEDAL_CM);
+
+  // The send-off follows the *saved* language, not the machine's. Resolving it
+  // from the default state would pick the machine language, which is not the
+  // one this teacher chose — a Hebrew save would open saying "Good luck!".
+  const savedPhrase = isObject(raw.medals) ? (raw.medals as { phrase?: unknown }).phrase : undefined;
+  state.medals.phrase = (typeof savedPhrase === 'string' && savedPhrase) || DEFAULT_PHRASE[state.lang];
 
   // A saved state from before these had defaults still gets them.
   if (!state.grad.title) state.grad.title = DEFAULT_TITLE;
@@ -136,8 +171,8 @@ export type SaveOutcome = 'saved' | 'saved-without-photo' | 'failed';
  */
 export function save(state: SavedState): SaveOutcome {
   const write = (grad: GradSettings) => {
-    const { lang, children, large, small, history, att } = state;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ lang, children, large, small, history, grad, att }));
+    const { lang, children, large, small, history, medals, att } = state;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ lang, children, large, small, history, grad, medals, att }));
   };
 
   try {

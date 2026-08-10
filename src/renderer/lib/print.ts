@@ -16,6 +16,9 @@
 import { bridge } from './desktop';
 import type { StudioName } from './types';
 
+/** Every sheet the print stylesheet knows how to reveal. */
+export type PrintArea = StudioName | 'medals';
+
 const PAGE_RULE_ID = 'kh-print-page';
 
 /** Wait for the attribute to have been laid out before anything reads the page. */
@@ -26,7 +29,7 @@ const nextPaint = () =>
 
 export type PrintOutcome = 'saved' | 'dialog' | 'failed';
 
-export async function printCards(studio: StudioName, filename: string): Promise<PrintOutcome> {
+export async function printCards(studio: PrintArea, filename: string): Promise<PrintOutcome> {
   const kh = bridge();
 
   if (!kh) {

@@ -366,10 +366,10 @@ async function collect() {
   // The English side of the string tables, so a missing translation is caught.
   await seed('en', photo);
   snapshot.englishTabLabels = await step('english labels', () => js(`[...document.querySelectorAll('button')]
-    .slice(2, 7).map(b => b.innerText.trim())`));
+    .slice(2, 8).map(b => b.innerText.trim())`));
   await seed('he', photo);
   snapshot.hebrewTabLabels = await step('hebrew labels', () => js(`[...document.querySelectorAll('button')]
-    .slice(2, 7).map(b => b.innerText.trim())`));
+    .slice(2, 8).map(b => b.innerText.trim())`));
 
   return snapshot;
 }

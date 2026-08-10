@@ -12,10 +12,11 @@ import { strings as stringsFor } from './i18n';
 import type { SavedFile } from './lib/desktop';
 import { bridge } from './lib/desktop';
 import type {
-  AttSettings, Child, ColorTarget, GradSettings, Lang, SavedState, StudioName, StudioSettings
+  AttSettings, Child, ColorTarget, GradSettings, Lang, MedalSettings,
+  SavedState, StudioName, StudioSettings
 } from './lib/types';
 
-export type TabKey = 'children' | 'large' | 'small' | 'att' | 'grad';
+export type TabKey = 'children' | 'large' | 'small' | 'att' | 'grad' | 'medals';
 
 export type BackupNote = 'backupDone' | 'backupRestored' | 'backupBad' | '';
 
@@ -157,6 +158,34 @@ export function useAppState() {
     setSavedState((s) => ({ ...s, grad: { ...s.grad, ...changes } }));
   }, []);
 
+  const updateMedals = useCallback((changes: Partial<MedalSettings>) => {
+    setSavedState((s) => ({ ...s, medals: { ...s.medals, ...changes } }));
+  }, []);
+
+  /** Same rule as the studios: uniform writes the studio, otherwise the child. */
+  const setMedalColor = useCallback((target: ColorTarget, color: string) => {
+    setSavedState((s) => {
+      const current = s.medals;
+      let next;
+      if (current.uniform || !current.selectedId) {
+        next = { ...current, [target]: color };
+      } else {
+        const forChild = { ...(current.overrides[current.selectedId] || {}), [target]: color };
+        next = { ...current, overrides: { ...current.overrides, [current.selectedId]: forChild } };
+      }
+      const history = [color, ...s.history.filter((c) => c.toLowerCase() !== color.toLowerCase())]
+        .slice(0, MAX_HISTORY);
+      return { ...s, medals: next, history };
+    });
+  }, []);
+
+  const selectMedal = useCallback((id: number) => {
+    setSavedState((s) => {
+      if (s.medals.uniform) return s;
+      return { ...s, medals: { ...s.medals, selectedId: s.medals.selectedId === id ? null : id } };
+    });
+  }, []);
+
   const updateAtt = useCallback((changes: Partial<AttSettings>) => {
     setSavedState((s) => ({ ...s, att: { ...s.att, ...changes } }));
   }, []);
@@ -182,6 +211,9 @@ export function useAppState() {
     toggleUniform,
     selectCard,
     updateGrad,
+    updateMedals,
+    setMedalColor,
+    selectMedal,
     updateAtt,
     replaceAll
   };

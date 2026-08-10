@@ -265,13 +265,15 @@
     "Drawer names",
     "Basket names",
     "Attendance",
-    "Graduation photo"
+    "Graduation photo",
+    "Medals"
   ],
   "hebrewTabLabels": [
     "ילדים",
     "שמות למגירות",
     "שמות לסלסלאות",
     "טבלת נוכחות",
-    "תמונת סיום"
+    "תמונת סיום",
+    "מדליות"
   ]
 }
