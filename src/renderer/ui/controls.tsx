@@ -5,6 +5,7 @@
 // keep each control's appearance next to its behaviour — which matters more
 // here than avoiding repetition.
 
+import { useEffect, useRef } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
 export const COLOURS = {
@@ -103,6 +104,73 @@ export function Swatches({
         />
       ))}
     </div>
+  );
+}
+
+/**
+ * The "any colour you like" control.
+ *
+ * A bare `<input type="color">` renders as a flat square that gives no hint it
+ * can be pressed, so the real input is laid transparently over a colour wheel,
+ * with the current colour as a dot in the middle.
+ *
+ * The two callbacks are not the same event. While the OS picker is open the
+ * input reports every shade the pointer crosses, which is worth showing on the
+ * cards but is not a colour anyone chose — so `onPreview` fires throughout and
+ * `onCommit` fires once, when the picker is dismissed.
+ */
+export function ColorWheel({
+  value, onPreview, onCommit, title, size = 44
+}: {
+  value: string;
+  onPreview: (colour: string) => void;
+  onCommit: (colour: string) => void;
+  title?: string;
+  size?: number;
+}) {
+  const ref = useRef<HTMLInputElement>(null);
+  const commit = useRef(onCommit);
+  commit.current = onCommit;
+
+  useEffect(() => {
+    const input = ref.current;
+    if (!input) return;
+    // React's onChange maps to the native `input` event, which fires on every
+    // movement. The native `change` event is the one that means "done".
+    const handler = () => commit.current(input.value);
+    input.addEventListener('change', handler);
+    return () => input.removeEventListener('change', handler);
+  }, []);
+
+  return (
+    <span
+      title={title}
+      style={{
+        position: 'relative', width: size, height: size, flex: 'none',
+        borderRadius: '50%', cursor: 'pointer',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        background: 'conic-gradient(#FF0000,#FFFF00,#00FF00,#00FFFF,#0000FF,#FF00FF,#FF0000)',
+        boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.12)'
+      }}
+    >
+      <input
+        ref={ref}
+        type="color"
+        value={value}
+        onChange={(e) => onPreview(e.target.value)}
+        aria-label={title}
+        style={{
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          opacity: 0, cursor: 'pointer', border: 'none', padding: 0
+        }}
+      />
+      {/* The current colour, sitting in the middle of the wheel. */}
+      <span style={{
+        width: Math.round(size * 0.45), height: Math.round(size * 0.45),
+        borderRadius: '50%', background: value, pointerEvents: 'none',
+        boxShadow: '0 0 0 3px #fff, 0 0 0 4px rgba(0,0,0,0.15)'
+      }} />
+    </span>
   );
 }
 

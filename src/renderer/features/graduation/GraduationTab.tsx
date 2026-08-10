@@ -11,7 +11,7 @@ import { canvasToPngBlob, renderGraduationCanvas, PREVIEW_WIDTH, SUBTITLE_RATIO 
 import { exportName } from '../../lib/filename';
 import { downloadBlob, bridge } from '../../lib/desktop';
 import {
-  COLOURS, FONT_CHOICES, Row, SavedNote, SectionTitle, Segmented, Slider, Swatches, card, primaryButton
+  COLOURS, ColorWheel, FONT_CHOICES, Row, SavedNote, SectionTitle, Segmented, Slider, Swatches, card, primaryButton
 } from '../../ui/controls';
 
 const TEXT_COLOURS = ['#FFFFFF', '#2B2723', '#F2C14E', '#E07A4B'];
@@ -142,11 +142,11 @@ export function GraduationTab({ api }: { api: AppApi }) {
           </Row>
 
           <Row label={s.textColor}>
-            <input
-              type="color"
+            <ColorWheel
               value={g.color}
-              onChange={(e) => updateGrad({ color: e.target.value })}
-              style={{ width: 40, height: 40 }}
+              title={s.textColor}
+              onPreview={(color) => updateGrad({ color })}
+              onCommit={(color) => updateGrad({ color })}
             />
             <Swatches colours={TEXT_COLOURS} current={g.color} onPick={(color) => updateGrad({ color })} size={34} />
           </Row>
