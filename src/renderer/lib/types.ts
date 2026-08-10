@@ -18,7 +18,15 @@ export interface Child {
   tz: string;
 }
 
+/** Physical size of a printed card, in centimetres. */
+export interface CardSize {
+  w: number;
+  h: number;
+}
+
 export interface StudioSettings {
+  /** What the printed card measures. Saved per design. */
+  cardSize: CardSize;
   /** One colour scheme for every card, rather than per child. */
   uniform: boolean;
   bg: string;

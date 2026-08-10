@@ -5,7 +5,10 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { renderCards, cardName, countFirstNames, CARD_SIZE_CM } from '../../src/renderer/lib/cards';
+import {
+  renderCards, cardName, countFirstNames,
+  DEFAULT_CARD_SIZE, clampCardSize, MIN_CARD_CM, MAX_CARD_CM
+} from '../../src/renderer/lib/cards';
 import type { Child, StudioSettings } from '../../src/renderer/lib/types';
 
 const golden = JSON.parse(
@@ -20,12 +23,14 @@ const CHILDREN: Child[] = [
 ];
 
 const LARGE: StudioSettings = {
+  cardSize: { w: 10, h: 5 },
   uniform: false, bg: '#FEF3D8', text: '#2B2723', border: '#E07A4B',
   font: 'Rubik', size: 80, borderStyle: 'dashed', borderWidth: 6, cornerRadius: 9,
   overrides: { 2: { bg: '#E3F0FB', text: '#4C7FB8' } }, selectedId: null
 };
 
 const SMALL: StudioSettings = {
+  cardSize: { w: 4.5, h: 2.5 },
   uniform: true, bg: '#E3F0FB', text: '#2B2723', border: '#2FA39B',
   font: 'Heebo', size: 120, borderStyle: 'solid', borderWidth: 3, cornerRadius: 4,
   overrides: {}, selectedId: null
@@ -127,13 +132,46 @@ describe('renderCards', () => {
   });
 });
 
-describe('CARD_SIZE_CM', () => {
-  it('is the physical size the print sheet promises', () => {
-    expect(CARD_SIZE_CM.large).toEqual({ width: 6, height: 4 });
-    expect(CARD_SIZE_CM.small).toEqual({ width: 4, height: 2 });
-    expect(golden.largePrintArea.cardWidth).toBe(CARD_SIZE_CM.large.width + 'cm');
-    expect(golden.largePrintArea.cardHeight).toBe(CARD_SIZE_CM.large.height + 'cm');
-    expect(golden.smallPrintArea.cardWidth).toBe(CARD_SIZE_CM.small.width + 'cm');
-    expect(golden.smallPrintArea.cardHeight).toBe(CARD_SIZE_CM.small.height + 'cm');
+describe('card size', () => {
+  it('defaults to the sizes phase 5 chose', () => {
+    expect(DEFAULT_CARD_SIZE.large).toEqual({ w: 10, h: 5 });
+    expect(DEFAULT_CARD_SIZE.small).toEqual({ w: 4.5, h: 2.5 });
+  });
+
+  it('matches what the print sheet lays out', () => {
+    expect(golden.largePrintArea.cardWidth).toBe(DEFAULT_CARD_SIZE.large.w + 'cm');
+    expect(golden.largePrintArea.cardHeight).toBe(DEFAULT_CARD_SIZE.large.h + 'cm');
+    expect(golden.smallPrintArea.cardWidth).toBe(DEFAULT_CARD_SIZE.small.w + 'cm');
+    expect(golden.smallPrintArea.cardHeight).toBe(DEFAULT_CARD_SIZE.small.h + 'cm');
+  });
+
+  it('keeps a sensible size as it is', () => {
+    expect(clampCardSize({ w: 7.5, h: 3.5 }, DEFAULT_CARD_SIZE.large)).toEqual({ w: 7.5, h: 3.5 });
+  });
+
+  it('refuses a card too small to read or too big to print', () => {
+    expect(clampCardSize({ w: 0.1, h: 900 }, DEFAULT_CARD_SIZE.large))
+      .toEqual({ w: MIN_CARD_CM, h: MAX_CARD_CM });
+  });
+
+  it('rounds to a tenth of a centimetre, which is all scissors manage', () => {
+    expect(clampCardSize({ w: 6.04999, h: 4.44 }, DEFAULT_CARD_SIZE.large)).toEqual({ w: 6, h: 4.4 });
+  });
+
+  it('falls back rather than accepting nonsense from a hand-edited backup', () => {
+    expect(clampCardSize({}, DEFAULT_CARD_SIZE.small)).toEqual(DEFAULT_CARD_SIZE.small);
+    expect(clampCardSize({ w: NaN, h: undefined as unknown as number }, DEFAULT_CARD_SIZE.small))
+      .toEqual(DEFAULT_CARD_SIZE.small);
+    expect(clampCardSize({ w: 'abc' as unknown as number, h: 3 }, DEFAULT_CARD_SIZE.large))
+      .toEqual({ w: DEFAULT_CARD_SIZE.large.w, h: 3 });
+  });
+
+  it('leaves the text a fixed share of the card, so it scales with the size', () => {
+    // The point of expressing sizes in container units: changing the card's
+    // dimensions must not change the text's proportion of it.
+    const atDefault = renderCards('large', LARGE, CHILDREN)[0];
+    const atDouble = renderCards('large', { ...LARGE, cardSize: { w: 20, h: 10 } }, CHILDREN)[0];
+    expect(atDouble.fontSize).toBe(atDefault.fontSize);
+    expect(atDouble.borderRadius).toBe(atDefault.borderRadius);
   });
 });

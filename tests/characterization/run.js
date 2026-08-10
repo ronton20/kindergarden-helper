@@ -261,6 +261,41 @@ async function captureGradPixels(buf) {
   })()`);
 }
 
+/**
+ * Type a new card size, reload, and see whether it stuck. The size is a
+ * setting, so "it persists across a restart" is the whole point of it — and a
+ * controlled React input needs the native setter to be driven from outside.
+ */
+async function captureSizePersists(widthLabel) {
+  return js(`(async () => {
+    const label = [...document.querySelectorAll('label')]
+      .find(l => l.textContent.trim().startsWith(${JSON.stringify(widthLabel)}));
+    if (!label) return { error: 'width input not found' };
+    const input = label.querySelector('input');
+
+    const setValue = (el, value) => {
+      const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+      setter.call(el, value);
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+
+    // React listens for delegated focusin/focusout, and calling focus()/blur()
+    // on a window that is not on screen does not reliably produce them — so
+    // dispatch the events the component actually hears.
+    input.dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
+    setValue(input, '7.5');
+    input.dispatchEvent(new FocusEvent('focusout', { bubbles: true }));
+    await new Promise(r => setTimeout(r, 400));
+
+    const saved = JSON.parse(localStorage.getItem('kh_v1') || '{}');
+    return {
+      shownAfterTyping: input.value,
+      savedWidth: saved.large && saved.large.cardSize && saved.large.cardSize.w,
+      savedHeight: saved.large && saved.large.cardSize && saved.large.cardSize.h
+    };
+  })()`);
+}
+
 // ── the run ───────────────────────────────────────────────────────────────
 // Announce each step, so a failure inside the page says which capture broke
 // rather than only that something threw.
@@ -291,6 +326,22 @@ async function collect() {
   snapshot.largeCards = await step('large cards', () => captureCards('large'));
   snapshot.largePrintArea = await step('large print area', () => capturePrintArea('large'));
 
+  snapshot.sizePersists = await step('card size persists', async () => {
+    const typed = await captureSizePersists('רוחב');
+    await win.webContents.reload();
+    await sleep(2200);
+    await openTab('שמות למגירות');
+    await sleep(500);
+    const after = await js(`(() => {
+      const label = [...document.querySelectorAll('label')]
+        .find(l => l.textContent.trim().startsWith('רוחב'));
+      return label ? label.querySelector('input').value : 'not found';
+    })()`);
+    return { ...typed, afterReload: after };
+  });
+
+  // Put the fixture back before anything else is measured.
+  await seed('he', photo);
   await openTab('שמות לסלסלאות');
   await sleep(600);
   snapshot.smallCards = await step('small cards', () => captureCards('small'));

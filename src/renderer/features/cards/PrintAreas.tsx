@@ -5,7 +5,7 @@
 // fit the window, while these are laid out in centimetres — the physical size
 // the cards are cut to, which is the app's whole promise.
 
-import { renderCards, CARD_SIZE_CM } from '../../lib/cards';
+import { renderCards } from '../../lib/cards';
 import { coverRect } from '../../lib/graduation';
 import type { SavedState, StudioName } from '../../lib/types';
 
@@ -13,7 +13,7 @@ const hidden = { display: 'none' } as const;
 
 function CardSheet({ studio, saved }: { studio: StudioName; saved: SavedState }) {
   const cards = renderCards(studio, saved[studio], saved.children);
-  const size = CARD_SIZE_CM[studio];
+  const size = saved[studio].cardSize;
   return (
     <div
       className="kh-print"
@@ -30,8 +30,8 @@ function CardSheet({ studio, saved }: { studio: StudioName; saved: SavedState })
         <div
           key={c.id}
           style={{
-            width: `${size.width}cm`,
-            height: `${size.height}cm`,
+            width: `${size.w}cm`,
+            height: `${size.h}cm`,
             containerType: 'size',
             breakInside: 'avoid',
             pageBreakInside: 'avoid'

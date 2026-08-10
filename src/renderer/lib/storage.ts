@@ -11,16 +11,19 @@
 
 import type { AttSettings, Child, GradSettings, Lang, SavedState, StudioSettings } from './types';
 import { detectLang } from '../i18n';
+import { DEFAULT_CARD_SIZE, clampCardSize } from './cards';
 
 export const STORAGE_KEY = 'kh_v1';
 
 export const DEFAULT_LARGE: StudioSettings = {
+  cardSize: { ...DEFAULT_CARD_SIZE.large },
   uniform: true, bg: '#FEF3D8', text: '#2B2723', border: '#E07A4B',
   font: 'Rubik', size: 100, borderStyle: 'solid', borderWidth: 4, cornerRadius: 6,
   overrides: {}, selectedId: null
 };
 
 export const DEFAULT_SMALL: StudioSettings = {
+  cardSize: { ...DEFAULT_CARD_SIZE.small },
   uniform: true, bg: '#E3F0FB', text: '#2B2723', border: '#2FA39B',
   font: 'Rubik', size: 100, borderStyle: 'solid', borderWidth: 3, cornerRadius: 6,
   overrides: {}, selectedId: null
@@ -75,7 +78,13 @@ const isObject = (v: unknown): v is Record<string, unknown> =>
 /** Merge a saved studio over the defaults, keeping anything unrecognised out. */
 function mergeStudio(base: StudioSettings, saved: unknown): StudioSettings {
   if (!isObject(saved)) return base;
-  return { ...base, ...(saved as Partial<StudioSettings>) };
+  const merged = { ...base, ...(saved as Partial<StudioSettings>) };
+  // Settings saved before the size was configurable have no cardSize, and get
+  // the new default rather than being pinned to the old hardcoded value — that
+  // value was never a deliberate choice. A saved size is clamped, so a hand-
+  // edited or corrupt backup cannot produce a card that will not print.
+  merged.cardSize = clampCardSize(merged.cardSize ?? {}, base.cardSize);
+  return merged;
 }
 
 export interface LoadResult {
