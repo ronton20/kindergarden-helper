@@ -42,6 +42,26 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      # The renderer is built from src/ now; every check below runs against
+      # that output, and electron-builder packages it.
+      - name: Build the renderer
+        run: npm run build
+
+      # app/index.html is committed, because the README promises you can save
+      # that one file anywhere and open it in a browser — a clone has to carry
+      # a working copy without anyone running a build first. So it must not
+      # drift from src/: if a change was made and not rebuilt, say so here
+      # rather than shipping a stale file to whoever clones next.
+      - name: The committed app must match the sources
+        shell: bash
+        run: |
+          if ! git diff --quiet -- app/; then
+            echo "app/index.html does not match a fresh build of src/."
+            echo "Run 'npm run build' and commit the result."
+            git diff --stat -- app/
+            exit 1
+          fi
+
       # The characterization suite drives the real bundle in a real Electron,
       # so it needs a window — hence running it here rather than anywhere
       # lighter. Deliberately skipped on tags: by then this exact code has

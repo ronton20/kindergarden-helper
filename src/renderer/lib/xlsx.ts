@@ -55,7 +55,7 @@ const cellStr = (ref: string, style: number, v: string) =>
   `<c r="${ref}" s="${style}" t="inlineStr"><is><t xml:space="preserve">${escapeXml(v)}</t></is></c>`;
 const cellEmpty = (ref: string, style: number) => `<c r="${ref}" s="${style}"/>`;
 
-export function buildAttendanceXlsx(input: AttendanceInput): Uint8Array {
+export function buildAttendanceXlsx(input: AttendanceInput): Uint8Array<ArrayBuffer> {
   const { children, rtl, strings: s } = input;
   const lastCol = columnName(NCOLS);
 

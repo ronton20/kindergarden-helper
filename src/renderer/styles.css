@@ -1,0 +1,32 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  -webkit-font-smoothing: antialiased;
+  font-family: Rubik, "Heebo", sans-serif;
+}
+a { color: #E07A4B; }
+a:hover { color: #c5643a; }
+input, select, button { font-family: Rubik, "Heebo", sans-serif; }
+
+input[type=color] {
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+input[type=color]::-webkit-color-swatch { border: 2px solid #E7E0D6; border-radius: 12px; }
+
+/* The print sheets. Hidden on screen by an inline style; revealed here, and
+   only here, when the body carries the matching data-print attribute. Setting
+   that attribute therefore changes nothing visible — which is what lets the
+   PDF be rendered without anything flashing on screen. */
+@media print {
+  html, body, body[data-print] .kh-root { background: #fff !important; }
+  body[data-print] .kh-screen { display: none !important; }
+  body[data-print="large"] [data-print-area="large"],
+  body[data-print="small"] [data-print-area="small"],
+  body[data-print="grad"] [data-print-area="grad"] { display: flex !important; }
+}

@@ -61,7 +61,16 @@ if (!gotLock) {
     // that failed to start. If `ready-to-show` hasn't fired by now, treat it as
     // ready anyway.
     setTimeout(markMainReady, 4000);
-    mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));
+
+    // `npm run dev` points this at the Vite dev server for hot reload. In every
+    // other case the renderer is loaded from a file, which is what keeps the
+    // origin `file://` — localStorage is keyed by origin, so serving the real
+    // app over http would orphan every saved list.
+    if (process.env.KH_DEV_SERVER) {
+      mainWindow.loadURL(process.env.KH_DEV_SERVER);
+    } else {
+      mainWindow.loadFile(path.join(__dirname, 'app', 'index.html'));
+    }
     mainWindow.on('closed', () => { mainWindow = null; });
   }
 

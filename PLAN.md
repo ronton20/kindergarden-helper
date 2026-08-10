@@ -31,9 +31,9 @@ children list, and the self-update all check out.
 after its tab, in the current language, with the year. This is the first release
 that should arrive by itself rather than being installed by hand.
 
-**Phase 4 — started. The safety net is in, the port is not.** The
-characterization suite described below now exists and passes against the current
-app; the stack has not been touched yet. See the phase for what remains.
+**Phase 4 — done.** The app is React and TypeScript built by Vite, ported under
+the characterization suite and verified against every harness from phases 1–3.
+No user-visible change, which is how we know it worked.
 
 **This changed what ships when.** The table below had phases 1–3 shipping
 together as one manual install. Phases 1 and 2 went out ahead of phase 3, so
@@ -422,12 +422,39 @@ recorded names and proportions. 43 unit tests, and the string tables were
 lifted mechanically rather than by hand, because 79 keys in two languages is
 exactly where transcription goes wrong.
 
-**Still to do, and it is the bulk of the phase:** the Vite + React scaffold and
-the port of the 830-line template and its logic class, the single-file browser
-build with the 17 embedded fonts, and then switching `app/index.html` over to
-the new output. Until that switch, everything above is additive — the shipped
-app is untouched, which is deliberate: a half-ported app on `main` is worse than
-none.
+**Step three — ported, switched over, and the old bundler retired.**
+`app/index.html` is now built by Vite from `src/renderer/`: React and
+TypeScript, a folder per feature, shared logic in `lib/`, shared controls in
+`ui/`. `tools/` is gone, along with the `{{ }}` / `sc-if` / `sc-for` dialect,
+the 570-line logic class, the generated-artifact runtime and the hand-rolled
+unpacker. `npm run dev` gives hot reload in an Electron window.
+
+**The whole characterization suite passed against the port on the first run**,
+and was checked against a deliberately altered build to confirm it was really
+looking at the new one. Then every harness from phases 1–3 was re-run against
+it: exports land in Documents with the right names in both languages, a second
+export is numbered, the card still measures **6.006 × 3.995 cm** in the produced
+PDF, background and border colours survive, the browser build still falls back
+to the print dialog, and backup export/restore still round-trips.
+
+The two things the plan said must not be lost are both intact. The single file
+still works offline by double-clicking, with the 17 woff2 subsets self-hosted
+inside it. The origin is still `file://` — `npm run dev` is the one exception,
+and it serves over localhost precisely so the dev app has its own storage and
+cannot touch the real list.
+
+**Size.** The built file is 2.2 MB against the old bundle's 1.35 MB. The
+difference is not the app, which is small; it is that assets are inlined as
+base64 rather than gzipped first. The HEIC decoder alone would have added
+2.8 MB that way, so it keeps the old trick — gzipped at build time, inflated
+the first time someone actually picks an iPhone photo. The fonts are left
+alone, because woff2 is already compressed and gzipping it again makes it
+bigger.
+
+**`app/index.html` stays committed even though it is now a build artefact**,
+because the README promises that one file can be saved anywhere and opened in a
+browser, and a clone has to carry a working copy. CI fails if it has drifted
+from `src/`, so it cannot go stale quietly.
 
 **A note on the tooling choice.** The plan says electron-vite. The main process
 here is four small files that are already clean, commented and covered, so
