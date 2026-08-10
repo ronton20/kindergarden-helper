@@ -34,6 +34,15 @@ jobs:
           v="${GITHUB_REF_NAME#v}"
           npm version "$v" --no-git-tag-version --allow-same-version
 
+      # The characterization suite drives the real bundle in a real Electron,
+      # so it needs a window — hence running it here rather than anywhere
+      # lighter. Deliberately skipped on tags: by then this exact code has
+      # already passed on the pull request, and a GUI test is one more way for
+      # a *release* to fail while telling us nothing new.
+      - name: Characterization tests
+        if: "!startsWith(github.ref, 'refs/tags/')"
+        run: npm run test:characterization
+
       # electron-builder does the publishing itself on a tag. It is the only
       # thing that knows the full set of files auto-update needs — the
       # installer, `latest.yml` (the manifest electron-updater reads, with the

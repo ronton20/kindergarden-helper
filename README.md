@@ -101,6 +101,32 @@ verification, and the update is refused. Turning the option off keeps `publisher
 `app-update.yml`, so that check is skipped while the sha512 check remains. **If a certificate is ever bought,
 remove that option** — signature verification is worth having once there is a signature to verify.
 
+### Characterization tests
+
+```bash
+npm run test:characterization              # compare against the golden file
+npx electron tests/characterization/run.js --update   # rewrite it
+```
+
+`tests/characterization/golden.json` records what the app does *today*: the `kh_v1` shape after a round trip,
+the rendered geometry of both card studios, the exact bytes of a generated `.xlsx`, and the exported
+graduation picture measured in pixels — where the text sits, how big it is, and which part of the photo
+survived the cover-crop.
+
+It exists for the source refactor. The plan is to port behaviour rather than code, and this is what "the same
+behaviour" means, written down before anything moves. The assertions describe *rendered output*, never the
+component or its methods, so they should hold on a rewritten stack without themselves being rewritten.
+
+Two things to know before trusting a green run:
+
+- It drives the real bundle in a real Electron, because half of what it pins down — container-query font
+  sizes, canvas text metrics, PNG output — does not exist in jsdom.
+- The window size is fixed at 1400 × 1000. Container-query units resolve against the layout, so the recorded
+  font sizes only reproduce at a known width.
+
+If a change to the app is *meant* to change behaviour, regenerate the golden file and review the diff. That
+diff is the change, stated plainly.
+
 ### Saved files
 
 `preload.js` is the only door between the app and the main process — three calls and one event, no paths and
@@ -188,6 +214,9 @@ kindergarten-helper/
 │                        — electron-builder's buildResources dir, not shipped inside the app
 ├─ package.json          Electron + electron-builder config
 ├─ package-lock.json     locked dependency versions (used by `npm ci`)
+├─ tests/characterization/
+│  ├─ run.js             drives the real bundle and records what it does
+│  └─ golden.json        the recording — the definition of "unchanged"
 ├─ .github/workflows/
 │  └─ release.yml        builds the .exe and publishes a Release
 └─ README.md
