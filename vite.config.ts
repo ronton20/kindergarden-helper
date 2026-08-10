@@ -2,27 +2,32 @@ import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 import { readFileSync } from 'node:fs';
-import { gzipSync } from 'node:zlib';
 import { resolve } from 'node:path';
 
 /**
- * `import x from './thing.js?gzip-base64'` gives you the file gzipped and
- * base64'd as a string, to be inflated at runtime.
+ * `import x from './thing?base64'` gives you the file's bytes as a base64
+ * string, inlined into the bundle.
  *
- * This exists for one file: the HEIC decoder, which is 2.1 MB of vendored
- * JavaScript. Inlined raw it would be ~2.8 MB of base64 in a single-file build
- * that is otherwise about half a megabyte. Gzipped first it is closer to
- * 950 KB, and it costs nothing at startup because it is only inflated the
- * first time someone actually picks an iPhone photo.
+ * This exists for one file: the HEIC decoder, 2.1 MB of vendored JavaScript,
+ * which is committed already gzipped (`libheif.js.gz`) and inflated at runtime
+ * the first time someone actually picks an iPhone photo. Inlining it raw would
+ * add ~2.8 MB of base64 to a single-file build that is otherwise about half a
+ * megabyte; compressed it is closer to 700 KB.
  *
- * The pre-refactor bundler did the same thing for every asset. Here only this
- * one file is big enough to be worth it — the fonts are woff2, which is
- * already compressed, and gzipping them again would make them larger.
+ * It is compressed *once, in the repository*, rather than at build time, and
+ * that is deliberate. zlib's output differs between versions and platforms, so
+ * gzipping during the build made `app/index.html` come out 916 bytes larger on
+ * a Windows runner than on a Mac — for byte-identical input. Since the file is
+ * committed and CI checks it has not drifted from the sources, the build has to
+ * be reproducible anywhere, which means no compression in it.
+ *
+ * The fonts are not compressed at all: woff2 already is, and gzipping it again
+ * makes it larger.
  */
-function gzipBase64(): Plugin {
-  const suffix = '?gzip-base64';
+function base64Asset(): Plugin {
+  const suffix = '?base64';
   return {
-    name: 'kh-gzip-base64',
+    name: 'kh-base64-asset',
     enforce: 'pre',
     resolveId(id, importer) {
       if (!id.endsWith(suffix)) return null;
@@ -33,8 +38,7 @@ function gzipBase64(): Plugin {
     load(id) {
       if (!id.endsWith(suffix)) return null;
       const file = id.slice(0, -suffix.length);
-      const packed = gzipSync(readFileSync(file), { level: 9 }).toString('base64');
-      return `export default ${JSON.stringify(packed)};`;
+      return `export default ${JSON.stringify(readFileSync(file).toString('base64'))};`;
     }
   };
 }
@@ -45,7 +49,7 @@ export default defineConfig(() => ({
   // packaged app and when someone saves it to the Desktop and double-clicks it.
   base: './',
   plugins: [
-    gzipBase64(),
+    base64Asset(),
     react(),
     // One HTML file with everything in it. The README's promise.
     viteSingleFile({ removeViteModuleLoader: true })

@@ -6,7 +6,7 @@
 // Everything else goes through the browser, which also applies the EXIF
 // rotation iPhone photos carry.
 
-import libheifGzipBase64 from '../assets/libheif.js?gzip-base64';
+import libheifGzipBase64 from '../assets/libheif.js.gz?base64';
 
 /** Capping the longest side keeps full print detail while fitting in localStorage. */
 const MAX_PHOTO_PX = 2600;
