@@ -27,10 +27,13 @@ Windows; see the checks listed under each phase.
 **Phase 1 and 2 confirmed on Windows** — installer, startup, the surviving
 children list, and the self-update all check out.
 
-**Phase 3 — code complete, shipping as `v2.0.2`.** Every tab now saves into
-Documents, named after its tab, in the current language, with the year. This is
-the first release that should arrive by itself rather than being installed by
-hand.
+**Phase 3 — released as `v2.0.2`.** Every tab now saves into Documents, named
+after its tab, in the current language, with the year. This is the first release
+that should arrive by itself rather than being installed by hand.
+
+**Phase 4 — started. The safety net is in, the port is not.** The
+characterization suite described below now exists and passes against the current
+app; the stack has not been touched yet. See the phase for what remains.
 
 **This changed what ships when.** The table below had phases 1–3 shipping
 together as one manual install. Phases 1 and 2 went out ahead of phase 3, so
@@ -374,6 +377,36 @@ class.
 
 **Done when:** every characterization test passes on the new stack, the app is
 byte-for-byte equivalent in behaviour, and `npm run dev` gives hot reload.
+
+**Status — step one of the migration method is done.** `tests/characterization/`
+drives the real bundle and records what it does today:
+
+- the `kh_v1` shape after a round trip of a populated state,
+- the rendered geometry of both studios — font size, radius, border, colours,
+  and the duplicate-first-name and empty-name rules,
+- the print sheet's card dimensions in cm, which are the physical-size promise,
+- the exact bytes of a generated `.xlsx`, plus its zip entries,
+- the graduation export measured in pixels: canvas size, where the text sits,
+  how big it is, and which part of the photo survived the cover-crop,
+- both string tables, so a missing translation is caught.
+
+It is deliberately written against *rendered output* rather than the component,
+so the same assertions should hold on the new stack without being rewritten —
+which is the whole point of porting behaviour rather than code.
+
+Three things learned building it, all of which would have made a silent mess
+later. The card's text size lives on the inner `span`, not the card box —
+measuring the box records a flat 16 px for every card and pins nothing. Font
+sizes use container-query units, so they only reproduce at a fixed window size;
+the runner sets one. And the suite was checked by *breaking* the app on purpose
+— changing the large studio's font ratio from 26 to 27 — to confirm it fails and
+names the right field, because a suite that cannot fail is worse than no suite.
+
+**Still to do, and it is the bulk of the phase:** the electron-vite + React +
+TypeScript scaffold, the port itself feature by feature, the single-file browser
+build via `vite-plugin-singlefile` with self-hosted fonts, and lifting the
+OOXML/zip writer out into `lib/xlsx.ts` with unit tests. The suite above is what
+makes each of those checkable rather than hopeful.
 
 **Decided:** TypeScript throughout. The state shape here — per-child colour
 overrides, studio settings, sizes — is exactly what types are good at, and the
