@@ -5,6 +5,7 @@ import { ChildrenTab } from './features/children/ChildrenTab';
 import { CardStudio } from './features/cards/CardStudio';
 import { AttendanceTab } from './features/attendance/AttendanceTab';
 import { GraduationTab } from './features/graduation/GraduationTab';
+import { MedalsTab } from './features/medals/MedalsTab';
 import { PrintAreas } from './features/cards/PrintAreas';
 import { COLOURS } from './ui/controls';
 
@@ -17,7 +18,8 @@ export function App() {
     { key: 'large', label: s.tabLarge },
     { key: 'small', label: s.tabSmall },
     { key: 'att', label: s.tabAtt },
-    { key: 'grad', label: s.tabGrad }
+    { key: 'grad', label: s.tabGrad },
+    { key: 'medals', label: s.tabMedals }
   ];
 
   const langButton = (lang: 'en' | 'he', label: string) => {
@@ -87,6 +89,7 @@ export function App() {
         {transient.activeTab === 'small' && <CardStudio api={api} studio="small" />}
         {transient.activeTab === 'att' && <AttendanceTab api={api} />}
         {transient.activeTab === 'grad' && <GraduationTab api={api} />}
+        {transient.activeTab === 'medals' && <MedalsTab api={api} />}
       </div>
 
       {/* Always mounted, always hidden on screen: printToPDF renders whichever

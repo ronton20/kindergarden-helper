@@ -57,6 +57,47 @@ export interface GradSettings {
   y: number;
 }
 
+/**
+ * Four, and no more. The point of a medal is a child's name on a circle; the
+ * decoration is there to make it feel like an award, not to be a design tool.
+ */
+export type Ornament = 'clear' | 'border' | 'ribbon' | 'frills';
+
+export interface MedalSettings {
+  /** Across, in centimetres. A circle needs one number, not two. */
+  diameter: number;
+  ornament: Ornament;
+  /** The send-off, editable so it can change year to year. */
+  phrase: string;
+  uniform: boolean;
+  bg: string;
+  text: string;
+  /**
+   * The ornament's colour. It reuses the "border" name the other studios use
+   * so the three colour slots — background, text, border — stay the same
+   * everywhere, and the shared swatches and history work unchanged.
+   */
+  border: string;
+  font: string;
+  size: number;
+  borderWidth: number;
+  overrides: Record<number, Partial<Record<ColorTarget, string>>>;
+  selectedId: number | null;
+}
+
+export interface RenderedMedal {
+  id: number;
+  name: string;
+  phrase: string;
+  bg: string;
+  text: string;
+  ornamentColour: string;
+  font: string;
+  nameSize: string;
+  phraseSize: string;
+  selected: boolean;
+}
+
 export interface AttSettings {
   cls: string;
   /** Comes from a number input, so it can arrive as a string. */
@@ -70,5 +111,6 @@ export interface SavedState {
   small: StudioSettings;
   history: string[];
   grad: GradSettings;
+  medals: MedalSettings;
   att: AttSettings;
 }

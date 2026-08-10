@@ -31,6 +31,10 @@ children list, and the self-update all check out.
 after its tab, in the current language, with the year. This is the first release
 that should arrive by itself rather than being installed by hand.
 
+**Phase 6 — released as `v2.2.0`.** A medals tab: a circle per child with
+their name and a send-off, four ornaments, and a PDF sheet with cut guides.
+That is the plan complete.
+
 **Phase 5 — released as `v2.1.0`.** Card size is a saved setting per design,
 defaulting to 10 × 5 cm for drawers and 4.5 × 2.5 cm for baskets.
 
@@ -564,6 +568,30 @@ Circular medal, **6 cm across**, with a child's name and a send-off line —
 
 **Done when:** medals print at the configured size, cut guides line up, and
 both languages read naturally.
+
+**Status — done.** The produced PDF holds a **6.006 × 6.006 cm** medal box, the
+medal and ribbon colours survive `printBackground`, and the dashed grey cut
+guide is drawn around each one. The file is named for its tab like every other
+export: `מדליות 2026.pdf` / `Medals 2026.pdf`.
+
+The ornament colour does reuse the border slot, as the plan proposed, and it
+needed no new machinery — the three colour targets, the shared swatches and the
+recent-colour history all work unchanged. The row is labelled "ornament colour"
+rather than "border", since that is what it colours here.
+
+**On the two shapes the plan wanted sketched first.** They were built and then
+looked at rather than agreed in advance, which is the wrong way round but the
+only way available. Both are SVG in a 0–100 viewBox, so they scale with the
+medal instead of being re-tuned per size. The ribbon is a notched banner across
+the lower third; it computes the chord it sits on so it cannot overhang the
+circle — the first version did, and the circular cut guide would have sliced its
+tails off. The frills are sixteen outward arcs whose radius follows the count.
+Both are a few lines in `lib/medals.ts` and cheap to change once seen on paper.
+
+**One bug found by the tests, worth recording.** The send-off defaulted from the
+machine's language rather than the saved one, so a Hebrew list opened on an
+English machine said "Good luck!" instead of "בהצלחה!". It now resolves from the
+language in the save.
 
 **Still to sketch before building:** the ribbon and frills shapes. Two SVG
 ornaments are quick to mock up and quicker to agree on visually than in prose.

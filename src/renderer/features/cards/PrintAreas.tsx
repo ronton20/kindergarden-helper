@@ -6,6 +6,8 @@
 // the cards are cut to, which is the app's whole promise.
 
 import { renderCards } from '../../lib/cards';
+import { renderMedals } from '../../lib/medals';
+import { Medal } from '../medals/Medal';
 import { coverRect } from '../../lib/graduation';
 import type { SavedState, StudioName } from '../../lib/types';
 
@@ -92,9 +94,33 @@ function GraduationSheet({ saved }: { saved: SavedState }) {
   );
 }
 
+function MedalSheet({ saved }: { saved: SavedState }) {
+  const settings = saved.medals;
+  const medals = renderMedals(settings, saved.children);
+  return (
+    <div
+      className="kh-print"
+      data-print-area="medals"
+      style={{ ...hidden, flexWrap: 'wrap', gap: '0.5cm', alignContent: 'flex-start', padding: 0 }}
+    >
+      {medals.map((medal) => (
+        <Medal
+          key={medal.id}
+          medal={medal}
+          ornament={settings.ornament}
+          borderWidth={settings.borderWidth}
+          diameterCm={settings.diameter}
+          showCutGuide
+        />
+      ))}
+    </div>
+  );
+}
+
 export function PrintAreas({ saved }: { saved: SavedState }) {
   return (
     <>
+      <MedalSheet saved={saved} />
       <CardSheet studio="large" saved={saved} />
       <CardSheet studio="small" saved={saved} />
       <GraduationSheet saved={saved} />

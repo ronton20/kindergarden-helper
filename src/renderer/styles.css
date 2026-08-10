@@ -28,5 +28,6 @@ input[type=color]::-webkit-color-swatch { border: 2px solid #E7E0D6; border-radi
   body[data-print] .kh-screen { display: none !important; }
   body[data-print="large"] [data-print-area="large"],
   body[data-print="small"] [data-print-area="small"],
-  body[data-print="grad"] [data-print-area="grad"] { display: flex !important; }
+  body[data-print="grad"] [data-print-area="grad"],
+  body[data-print="medals"] [data-print-area="medals"] { display: flex !important; }
 }
