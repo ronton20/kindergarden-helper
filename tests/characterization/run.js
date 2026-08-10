@@ -119,7 +119,19 @@ async function capturePersistence() {
   };
 }
 
-/** How a card actually renders, rather than which CSS produced it. */
+/**
+ * How a card actually renders, rather than which CSS produced it.
+ *
+ * Sizes are recorded as proportions of the card, not as pixels. The card's
+ * text and radius are declared in container-query units — `cqh` and `cqmin` —
+ * so in pixels they scale with however wide the grid happens to lay out, which
+ * depends on the window, the platform's window chrome and the display the test
+ * runs on. A CI machine with a small screen clamps the window and every number
+ * moves. The proportion is what the CSS actually says (20.8% of the card's
+ * height, 9% of its shorter side) and is the same everywhere.
+ *
+ * Border width stays in pixels because it is declared in pixels.
+ */
 async function captureCards(studio) {
   return js(`(() => {
     const cards = [...document.querySelectorAll('div[data-studio="' + ${JSON.stringify(studio)} + '"][data-id]')];
@@ -131,14 +143,19 @@ async function captureCards(studio) {
       // 16px for every card, which says nothing.
       const label = inner.querySelector('span') || inner;
       const ls = getComputedStyle(label);
-      const round = (v) => Math.round(parseFloat(v) * 100) / 100;
+      const box = outer.getBoundingClientRect();
+      const shorter = Math.min(box.width, box.height);
+      const px = (v) => parseFloat(v);
+      const pct = (v, of) => Math.round(px(v) / of * 1000) / 10;
+      const ratio = (a, b) => Math.round(a / b * 1000) / 1000;
       return {
         id: outer.getAttribute('data-id'),
         name: inner.textContent,
-        fontSizePx: round(ls.fontSize),
-        lineHeightPx: round(ls.lineHeight),
-        borderRadiusPx: round(cs.borderTopLeftRadius),
-        borderWidthPx: round(cs.borderTopWidth),
+        fontSizePctOfHeight: pct(ls.fontSize, box.height),
+        radiusPctOfShorterSide: pct(cs.borderTopLeftRadius, shorter),
+        lineHeightRatio: ratio(px(ls.lineHeight), px(ls.fontSize)),
+        aspectRatio: ratio(box.width, box.height),
+        borderWidthPx: px(cs.borderTopWidth),
         borderStyle: cs.borderTopStyle,
         borderColor: cs.borderTopColor,
         background: cs.backgroundColor,
@@ -302,8 +319,34 @@ async function collect() {
 }
 
 // ── comparison ────────────────────────────────────────────────────────────
+//
+// Almost everything is compared exactly — the saved shape, the colours, the
+// spreadsheet's bytes. A few measurements genuinely differ between machines by
+// a hair and are given a tolerance, chosen to be far smaller than any change
+// worth catching:
+//
+//   * proportions come from sub-pixel layout, which rounds differently across
+//     platforms — 0.2% of a card is invisible, a changed ratio is not;
+//   * the text block in the exported picture is found by scanning pixels, and
+//     glyph rasterisation differs between Windows and macOS by a pixel or two.
+//     8 px on a 2126 px canvas is under half a percent; a moved or resized
+//     title shifts it by far more.
+const TOLERANCES = [
+  { pattern: /^(large|small)Cards\.\d+\.(fontSizePctOfHeight|radiusPctOfShorterSide)$/, allow: 0.2 },
+  { pattern: /^(large|small)Cards\.\d+\.(lineHeightRatio|aspectRatio)$/, allow: 0.01 },
+  { pattern: /^graduationPng\.text\.(left|right|top|bottom|widthPx|heightPx)$/, allow: 8 },
+  { pattern: /^graduationPng\.text\.centreXpct$/, allow: 0.5 }
+];
+
+function withinTolerance(trail, actual, expected) {
+  if (typeof actual !== 'number' || typeof expected !== 'number') return false;
+  const rule = TOLERANCES.find(t => t.pattern.test(trail));
+  return !!rule && Math.abs(actual - expected) <= rule.allow;
+}
+
 function diff(actual, expected, trail = '', out = []) {
   if (JSON.stringify(actual) === JSON.stringify(expected)) return out;
+  if (withinTolerance(trail, actual, expected)) return out;
   const bothObjects = actual && expected &&
     typeof actual === 'object' && typeof expected === 'object' &&
     Array.isArray(actual) === Array.isArray(expected);
