@@ -6,7 +6,7 @@
 // on-screen preview or on the print sheet at its true physical size. That is
 // what lets the preview claim to be "actual size".
 
-import type { Child, StudioName, StudioSettings } from './types';
+import type { CardSize, Child, StudioName, StudioSettings } from './types';
 
 /**
  * Base text size, as a percentage of the card's height, before the studio's
@@ -88,8 +88,33 @@ export function renderCards(
   });
 }
 
-/** The physical size each studio's cards are cut to. */
-export const CARD_SIZE_CM: Record<StudioName, { width: number; height: number }> = {
-  large: { width: 6, height: 4 },
-  small: { width: 4, height: 2 }
+/**
+ * What each studio's cards measure unless the teacher says otherwise.
+ *
+ * These are larger than the sizes the app shipped with (6 × 4 and 4 × 2). The
+ * old values were never a deliberate choice, so saved settings from before the
+ * size was configurable move to these rather than being pinned to a number
+ * nobody picked.
+ */
+export const DEFAULT_CARD_SIZE: Record<StudioName, CardSize> = {
+  large: { w: 10, h: 5 },
+  small: { w: 4.5, h: 2.5 }
 };
+
+/**
+ * Bounds for the number inputs. The lower one is about the smallest a name
+ * stays readable at; the upper one is the short side of A4 minus its margins,
+ * beyond which a card cannot fit on the page at all.
+ */
+export const MIN_CARD_CM = 2;
+export const MAX_CARD_CM = 19;
+
+export function clampCardSize(size: Partial<CardSize>, fallback: CardSize): CardSize {
+  const clamp = (value: unknown, whenMissing: number) => {
+    const n = typeof value === 'number' ? value : parseFloat(String(value));
+    if (!isFinite(n)) return whenMissing;
+    // A tenth of a centimetre is as fine as a ruler and a pair of scissors get.
+    return Math.round(Math.min(MAX_CARD_CM, Math.max(MIN_CARD_CM, n)) * 10) / 10;
+  };
+  return { w: clamp(size?.w, fallback.w), h: clamp(size?.h, fallback.h) };
+}

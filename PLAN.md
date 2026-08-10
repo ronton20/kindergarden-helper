@@ -31,6 +31,9 @@ children list, and the self-update all check out.
 after its tab, in the current language, with the year. This is the first release
 that should arrive by itself rather than being installed by hand.
 
+**Phase 5 — released as `v2.1.0`.** Card size is a saved setting per design,
+defaulting to 10 × 5 cm for drawers and 4.5 × 2.5 cm for baskets.
+
 **Phase 4 — done.** The app is React and TypeScript built by Vite, ported under
 the characterization suite and verified against every harness from phases 1–3.
 No user-visible change, which is how we know it worked.
@@ -497,6 +500,28 @@ Physical size becomes a saved setting per design, with these defaults:
 
 **Done when:** sizes persist across restart, "actual size" preview measures
 correctly against a ruler, and a printed A4 sheet has correctly sized cards.
+
+**Status — done, all three checked.** Sizes persist: the characterization suite
+now types 7.5 into the width field, reloads, and confirms it comes back — and
+that it reached `localStorage`. The preview is laid out in centimetres rather
+than as an aspect-ratio in a grid, so it is the size the label claims and is
+the same layout the print sheet uses. And the produced PDF measures
+**10.001 × 5.001 cm**.
+
+**The container-unit hypothesis held.** The plan said font size should track
+the new dimensions for free and was worth verifying rather than assuming. It
+does: regenerating the golden recording changed exactly twelve values — four
+aspect ratios and two dimensions per studio — and left every
+`fontSizePctOfHeight` and `radiusPctOfShorterSide` untouched. The text is a
+fixed share of the card whatever the card measures.
+
+**Migration went the way the plan suggested:** settings saved before the size
+existed move to the new defaults rather than being pinned to 6 × 4, because
+that value was never a deliberate choice. A saved size is clamped on read to
+2–19 cm, so a hand-edited backup cannot produce a card that will not print.
+
+The studio also says how many fit on a page, which falls out of the size and
+answers the plan's question directly: five at 10 × 5, where 6 × 4 gave fifteen.
 
 ---
 

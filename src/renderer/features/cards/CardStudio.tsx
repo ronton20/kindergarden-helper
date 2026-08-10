@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import type { AppApi } from '../../state';
-import { renderCards, CARD_SIZE_CM } from '../../lib/cards';
+import { renderCards, clampCardSize, MIN_CARD_CM, MAX_CARD_CM } from '../../lib/cards';
 import { exportName } from '../../lib/filename';
 import { printCards } from '../../lib/print';
 import { isDesktop, bridge } from '../../lib/desktop';
@@ -13,11 +13,58 @@ import {
   Segmented, Slider, Swatches, card, primaryButton
 } from '../../ui/controls';
 
+/**
+ * A number input that only reports a value once the teacher has finished
+ * typing. Committing on every keystroke would clamp "1" to the minimum before
+ * the "0" of "10" arrived, and the field would fight back as it was typed.
+ */
+function SizeInput({
+  label, value, onCommit
+}: { label: string; value: number; onCommit: (value: number) => void }) {
+  const [draft, setDraft] = useState(String(value));
+  const [editing, setEditing] = useState(false);
+
+  return (
+    <label style={{ display: 'inline-flex', alignItems: 'center', gap: 8, font: '600 15px Rubik,sans-serif' }}>
+      {label}
+      <input
+        type="number"
+        min={MIN_CARD_CM}
+        max={MAX_CARD_CM}
+        step={0.5}
+        value={editing ? draft : String(value)}
+        onFocus={() => { setDraft(String(value)); setEditing(true); }}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={() => { setEditing(false); onCommit(parseFloat(draft)); }}
+        onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+        style={{
+          width: 80, height: 44, border: `2px solid ${COLOURS.line}`, borderRadius: 10,
+          padding: '0 10px', font: '500 17px Rubik,sans-serif',
+          background: COLOURS.white, color: COLOURS.ink
+        }}
+      />
+    </label>
+  );
+}
+
+/** A4 less the 1 cm margins the PDF is built with. */
+const PRINTABLE_CM = { w: 19, h: 27.7 };
+/** The gap between cards on the sheet, matching PrintAreas. */
+const GAP_CM = 0.5;
+
+/** How many cards fit on one sheet — worth knowing before printing thirty. */
+export function cardsPerPage(size: { w: number; h: number }): number {
+  const across = Math.max(0, Math.floor((PRINTABLE_CM.w + GAP_CM) / (size.w + GAP_CM)));
+  const down = Math.max(0, Math.floor((PRINTABLE_CM.h + GAP_CM) / (size.h + GAP_CM)));
+  return across * down;
+}
+
 export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName }) {
   const { saved, transient, strings: s, patch, updateStudio, setStudioColor, toggleUniform, selectCard } = api;
   const settings = saved[studio];
   const cards = renderCards(studio, settings, saved.children);
-  const size = CARD_SIZE_CM[studio];
+  const size = settings.cardSize;
+  const perPage = cardsPerPage(size);
 
   // Which of the three colour slots the palette is currently pointing at.
   const [target, setTarget] = useState<ColorTarget>('bg');
@@ -127,6 +174,24 @@ export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName })
               onChange={(value) => updateStudio(studio, { size: value })} />
           </Row>
 
+          {/* In centimetres, because that is what the teacher measures with
+              and what the scissors have to match. */}
+          <Row label={s.cardSize}>
+            <SizeInput
+              label={s.widthCm}
+              value={settings.cardSize.w}
+              onCommit={(w) => updateStudio(studio, { cardSize: clampCardSize({ ...settings.cardSize, w }, settings.cardSize) })}
+            />
+            <SizeInput
+              label={s.heightCm}
+              value={settings.cardSize.h}
+              onCommit={(h) => updateStudio(studio, { cardSize: clampCardSize({ ...settings.cardSize, h }, settings.cardSize) })}
+            />
+            <span style={{ font: '500 15px Rubik,sans-serif', color: COLOURS.muted }}>
+              {s.perPage}: {perPage}
+            </span>
+          </Row>
+
           <Row label={s.recentColors}>
             <Swatches
               colours={saved.history}
@@ -143,7 +208,7 @@ export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName })
             gap: 12, flexWrap: 'wrap', marginBottom: 14
           }}>
             <div style={{ font: '600 16px Rubik,sans-serif', color: COLOURS.muted }}>
-              {s.actualSize}: {size.width} × {size.height} cm · {s.clickToColor}
+              {s.actualSize}: {size.w} × {size.h} cm · {s.clickToColor}
             </div>
             <button type="button" onClick={doExport} style={primaryButton}>
               ⤓ {isDesktop() ? s.downloadPdf : s.exportPdf}
@@ -161,7 +226,7 @@ export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName })
           {saved.children.length === 0 ? (
             <div style={{ color: COLOURS.muted, font: '500 19px Rubik,sans-serif' }}>{s.addFirst}</div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(230px,1fr))', gap: 16 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5cm', alignContent: 'flex-start' }}>
               {cards.map((c) => (
                 <div
                   key={c.id}
@@ -170,7 +235,8 @@ export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName })
                   onClick={() => selectCard(studio, c.id)}
                   style={{
                     cursor: 'pointer',
-                    aspectRatio: `${size.width}/${size.height}`,
+                    width: `${size.w}cm`,
+                    height: `${size.h}cm`,
                     containerType: 'size',
                     borderRadius: c.borderRadius,
                     boxShadow: c.selected ? `0 0 0 4px ${COLOURS.accent}` : 'none'

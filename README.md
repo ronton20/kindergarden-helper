@@ -3,8 +3,11 @@
 A very simple, bilingual (עברית / English) desktop helper for a kindergarten teacher.
 Type the children's names once, and generate everything needed each year:
 
-- **שמות למגירות · Drawer name cards** — 6 × 4 cm, colours / border / font / size / roundness, several per A4 page.
-- **שמות לסלסלאות · Basket name cards** — 4 × 2 cm, same styling options.
+- **שמות למגירות · Drawer name cards** — 10 × 5 cm by default, colours / border / font / size / roundness, several per A4 page.
+- **שמות לסלסלאות · Basket name cards** — 4.5 × 2.5 cm by default, same styling options.
+
+Both card sizes are settings, in centimetres, saved per design. The preview is laid out at that size and the
+studio says how many will fit on a page.
 - **טבלת נוכחות · Attendance sheet** — a blank monthly sheet (31 days + ת״ז/ID) exported to Excel, landscape-A4 friendly.
 - **תמונת סיום · Graduation photo** — upload a photo (including iPhone `.HEIC` photos), add a title + subtitle, drag the text, save an 18 × 13 cm PNG.
 
