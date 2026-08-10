@@ -47,9 +47,9 @@ describe('string tables', () => {
   });
 
   it('matches the tab labels the shipped app renders', () => {
-    expect([en.tabChildren, en.tabLarge, en.tabSmall, en.tabAtt, en.tabGrad, en.tabMedals])
+    expect([en.tabChildren, en.tabLarge, en.tabSmall, en.tabMedals, en.tabAtt, en.tabGrad])
       .toEqual(golden.englishTabLabels);
-    expect([he.tabChildren, he.tabLarge, he.tabSmall, he.tabAtt, he.tabGrad, he.tabMedals])
+    expect([he.tabChildren, he.tabLarge, he.tabSmall, he.tabMedals, he.tabAtt, he.tabGrad])
       .toEqual(golden.hebrewTabLabels);
   });
 });

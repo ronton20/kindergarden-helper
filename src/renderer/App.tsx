@@ -17,9 +17,11 @@ export function App() {
     { key: 'children', label: s.tabChildren },
     { key: 'large', label: s.tabLarge },
     { key: 'small', label: s.tabSmall },
+    // Medals sit with the other things that get printed and cut out, rather
+    // than after the attendance sheet.
+    { key: 'medals', label: s.tabMedals },
     { key: 'att', label: s.tabAtt },
-    { key: 'grad', label: s.tabGrad },
-    { key: 'medals', label: s.tabMedals }
+    { key: 'grad', label: s.tabGrad }
   ];
 
   const langButton = (lang: 'en' | 'he', label: string) => {
