@@ -9,7 +9,7 @@ import { printCards } from '../../lib/print';
 import { isDesktop, bridge } from '../../lib/desktop';
 import type { BorderStyle, ColorTarget, StudioName } from '../../lib/types';
 import {
-  COLOURS, FONT_CHOICES, PALETTE, Row, SavedNote, SectionTitle,
+  COLOURS, ColorWheel, FONT_CHOICES, PALETTE, Row, SavedNote, SectionTitle,
   Segmented, Slider, Swatches, card, primaryButton
 } from '../../ui/controls';
 
@@ -99,10 +99,7 @@ export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName })
 
   return (
     <div>
-      <SectionTitle
-        title={studio === 'large' ? s.largeTitle : s.smallTitle}
-        help={studio === 'large' ? s.largeHelp : s.smallHelp}
-      />
+      <SectionTitle title={studio === 'large' ? s.largeTitle : s.smallTitle} />
 
       {/* Controls above, cards below — the same shape as before the refactor.
           The controls need the full width for a row of twelve swatches to sit
@@ -119,7 +116,7 @@ export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName })
             {s.colorAll}
           </label>
           <div style={{
-            marginTop: 10, display: 'inline-block', padding: '6px 12px', borderRadius: 999,
+            margin: '10px 0 16px', display: 'inline-block', padding: '6px 12px', borderRadius: 999,
             background: COLOURS.accentSoft, color: COLOURS.accent, font: '600 15px Rubik,sans-serif'
           }}>{editingLabel}</div>
 
@@ -128,13 +125,11 @@ export function CardStudio({ api, studio }: { api: AppApi; studio: StudioName })
               key={slot}
               label={slot === 'bg' ? s.bgLabel : slot === 'text' ? s.textLabel : s.borderLabel}
             >
-              <input
-                type="color"
+              <ColorWheel
                 value={active[slot]}
-                onFocus={() => setTarget(slot)}
-                onChange={(e) => setStudioColor(studio, slot, e.target.value)}
                 title={s.moreColours}
-                style={{ width: 40, height: 40 }}
+                onPreview={(colour) => { setTarget(slot); setStudioColor(studio, slot, colour, false); }}
+                onCommit={(colour) => setStudioColor(studio, slot, colour)}
               />
               <Swatches
                 colours={PALETTE}

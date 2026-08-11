@@ -121,7 +121,15 @@ export function useAppState() {
    * selected child's override when not. Either way the colour joins the
    * recently-used list, which is what makes a scheme reusable next year.
    */
-  const setStudioColor = useCallback((studio: StudioName, target: ColorTarget, color: string) => {
+  /**
+   * @param remember whether the colour joins the recently-used list. The native
+   *   colour picker reports every shade the pointer passes over, and putting
+   *   those in the history fills it with colours nobody chose — so dragging
+   *   only previews, and the history is written when the picker is closed.
+   */
+  const setStudioColor = useCallback((
+    studio: StudioName, target: ColorTarget, color: string, remember = true
+  ) => {
     setSavedState((s) => {
       const current = s[studio];
       let next: StudioSettings;
@@ -131,8 +139,9 @@ export function useAppState() {
         const forChild = { ...(current.overrides[current.selectedId] || {}), [target]: color };
         next = { ...current, overrides: { ...current.overrides, [current.selectedId]: forChild } };
       }
-      const history = [color, ...s.history.filter((c) => c.toLowerCase() !== color.toLowerCase())]
-        .slice(0, MAX_HISTORY);
+      const history = remember
+        ? [color, ...s.history.filter((c) => c.toLowerCase() !== color.toLowerCase())].slice(0, MAX_HISTORY)
+        : s.history;
       return { ...s, [studio]: next, history };
     });
   }, []);
@@ -163,7 +172,7 @@ export function useAppState() {
   }, []);
 
   /** Same rule as the studios: uniform writes the studio, otherwise the child. */
-  const setMedalColor = useCallback((target: ColorTarget, color: string) => {
+  const setMedalColor = useCallback((target: ColorTarget, color: string, remember = true) => {
     setSavedState((s) => {
       const current = s.medals;
       let next;
@@ -173,8 +182,9 @@ export function useAppState() {
         const forChild = { ...(current.overrides[current.selectedId] || {}), [target]: color };
         next = { ...current, overrides: { ...current.overrides, [current.selectedId]: forChild } };
       }
-      const history = [color, ...s.history.filter((c) => c.toLowerCase() !== color.toLowerCase())]
-        .slice(0, MAX_HISTORY);
+      const history = remember
+        ? [color, ...s.history.filter((c) => c.toLowerCase() !== color.toLowerCase())].slice(0, MAX_HISTORY)
+        : s.history;
       return { ...s, medals: next, history };
     });
   }, []);

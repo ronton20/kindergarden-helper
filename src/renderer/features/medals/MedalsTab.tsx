@@ -11,7 +11,7 @@ import { printCards } from '../../lib/print';
 import { isDesktop, bridge } from '../../lib/desktop';
 import type { ColorTarget, Ornament } from '../../lib/types';
 import {
-  COLOURS, FONT_CHOICES, PALETTE, Row, SavedNote, SectionTitle,
+  COLOURS, ColorWheel, FONT_CHOICES, PALETTE, Row, SavedNote, SectionTitle,
   Segmented, Slider, Swatches, card, primaryButton
 } from '../../ui/controls';
 import { Medal } from './Medal';
@@ -74,7 +74,7 @@ export function MedalsTab({ api }: { api: AppApi }) {
             {s.colorAll}
           </label>
           <div style={{
-            marginTop: 10, display: 'inline-block', padding: '6px 12px', borderRadius: 999,
+            margin: '10px 0 16px', display: 'inline-block', padding: '6px 12px', borderRadius: 999,
             background: COLOURS.accentSoft, color: COLOURS.accent, font: '600 15px Rubik,sans-serif'
           }}>{editingLabel}</div>
 
@@ -85,13 +85,11 @@ export function MedalsTab({ api }: { api: AppApi }) {
               // colours here rather than for the slot it happens to use.
               label={slot === 'bg' ? s.bgLabel : slot === 'text' ? s.textLabel : s.ornamentColour}
             >
-              <input
-                type="color"
+              <ColorWheel
                 value={active[slot]}
-                onFocus={() => setTarget(slot)}
-                onChange={(e) => setMedalColor(slot, e.target.value)}
                 title={s.moreColours}
-                style={{ width: 40, height: 40 }}
+                onPreview={(colour) => { setTarget(slot); setMedalColor(slot, colour, false); }}
+                onCommit={(colour) => setMedalColor(slot, colour)}
               />
               <Swatches
                 colours={PALETTE}

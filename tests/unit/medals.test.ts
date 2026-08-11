@@ -2,7 +2,7 @@
 
 import { describe, it, expect } from 'vitest';
 import {
-  renderMedals, clampDiameter, frillsPath, ribbonPath,
+  renderMedals, clampDiameter, ribbonShape, petalRing, darken, FRILLS,
   DEFAULT_MEDAL_CM, MIN_MEDAL_CM, MAX_MEDAL_CM
 } from '../../src/renderer/lib/medals';
 import { medalsPerPage } from '../../src/renderer/features/medals/MedalsTab';
@@ -86,35 +86,116 @@ describe('clampDiameter', () => {
   });
 });
 
+/**
+ * The points a path actually visits. Needed because an arc command carries its
+ * radii and flags before its endpoint, and a "number number" regex happily
+ * reads "47 47" and "0 0" as places the path goes.
+ */
+function pointsOf(d: string): Array<[number, number]> {
+  const points: Array<[number, number]> = [];
+  const tokens = d.match(/[A-Za-z]|-?[\d.]+/g) || [];
+  let i = 0;
+  while (i < tokens.length) {
+    const command = tokens[i++];
+    const take = (n: number) => tokens.slice(i, i + n).map(Number);
+    if (command === 'M' || command === 'L') {
+      const [x, y] = take(2); i += 2; points.push([x, y]);
+    } else if (command === 'A') {
+      const args = take(7); i += 7; points.push([args[5], args[6]]);
+    }
+    // Z carries nothing.
+  }
+  return points;
+}
+
 describe('the ornaments', () => {
-  it('draws a closed scalloped path with one arc per scallop', () => {
-    const d = frillsPath(16);
-    expect(d.startsWith('M ')).toBe(true);
-    expect(d.trim().endsWith('Z')).toBe(true);
-    expect((d.match(/ A /g) || [])).toHaveLength(16);
-    expect(d).not.toContain('NaN');
-  });
-
-  it('scales the scallops with the count rather than fixing their size', () => {
-    const few = frillsPath(6);
-    const many = frillsPath(24);
-    const radiusOf = (d: string) => parseFloat(/A ([\d.]+)/.exec(d)![1]);
-    expect(radiusOf(few)).toBeGreaterThan(radiusOf(many));
-  });
-
-  it('keeps the ribbon inside the circle, so the cut guide does not clip it', () => {
-    const d = ribbonPath();
-    const xs = [...d.matchAll(/(-?[\d.]+) (-?[\d.]+)/g)].map((m) => parseFloat(m[1]));
-    const ys = [...d.matchAll(/(-?[\d.]+) (-?[\d.]+)/g)].map((m) => parseFloat(m[2]));
-    for (let i = 0; i < xs.length; i++) {
-      const distance = Math.hypot(xs[i] - 50, ys[i] - 50);
-      expect(distance, `point ${xs[i]},${ys[i]}`).toBeLessThanOrEqual(50);
+  it('lays petals evenly around the medal', () => {
+    const ring = petalRing(11, 31, 8.5, 15);
+    expect(ring).toHaveLength(11);
+    const angles = ring.map((p) => p.angle);
+    // Evenly spaced, and starting where it says it does.
+    expect(angles[0]).toBe(0);
+    const step = 360 / 11;
+    for (let i = 1; i < angles.length; i++) {
+      expect(angles[i] - angles[i - 1]).toBeCloseTo(step, 1);
     }
   });
 
-  it('notches the ribbon ends rather than leaving them square', () => {
-    // Eight points: two corners at each end plus the notch that folds inward.
-    expect((ribbonPath().match(/L /g) || []).length).toBeGreaterThanOrEqual(6);
+  it('offsets the back ring by half a step, so petals overlap', () => {
+    const step = 360 / FRILLS.front.length;
+    expect(FRILLS.back[0].angle).toBeCloseTo(step / 2, 1);
+    // And the back petals are the larger ones.
+    expect(FRILLS.back[0].rx).toBeGreaterThan(FRILLS.front[0].rx);
+    expect(FRILLS.back[0].ry).toBeGreaterThan(FRILLS.front[0].ry);
+  });
+
+  it('leaves the face big enough for a name', () => {
+    // Over half the medal's width, or the name has nowhere to go.
+    expect(FRILLS.discRadius * 2).toBeGreaterThan(50);
+  });
+
+  it('keeps the petals within the medal box', () => {
+    for (const p of [...FRILLS.back, ...FRILLS.front]) {
+      expect(50 - p.cy + p.ry).toBeLessThanOrEqual(50);
+    }
+  });
+
+  it('draws the ribbon as a straight band with a fold at each end', () => {
+    const { band, folds } = ribbonShape();
+    expect(band).toMatch(/^M /);
+    // Straight, not arced: a band following the rim tapers at its ends and
+    // reads as a crescent rather than a ribbon.
+    expect(band).not.toContain(' A ');
+    expect(band.trim()).toMatch(/Z$/);
+    expect(folds).toHaveLength(2);
+    for (const d of folds) {
+      expect(d).toMatch(/^M /);
+      expect(d).not.toContain('NaN');
+    }
+  });
+
+  it('keeps the whole ribbon inside the rim', () => {
+    // The cut guide is a circle: anything outside it is scissored off, and
+    // tails on neighbouring medals meet in the gap and read as one long ribbon
+    // running through all of them.
+    const { band, folds } = ribbonShape();
+    for (const d of [band, ...folds]) {
+      for (const [x, y] of pointsOf(d)) {
+        expect(Math.hypot(x - 50, y - 50), `${x},${y}`).toBeLessThanOrEqual(50.01);
+      }
+    }
+  });
+
+  it('folds outwards at both ends, not inwards', () => {
+    const [left, right] = ribbonShape().folds.map(pointsOf);
+    // Each wedge reaches from its band end towards the rim on its own side.
+    // The first version took the direction from the argument order, and with
+    // 90 degrees at the bottom that folded both ends inwards.
+    expect(Math.min(...left.map(([x]) => x))).toBeLessThan(50);
+    expect(Math.max(...right.map(([x]) => x))).toBeGreaterThan(50);
+    expect(Math.max(...left.map(([x]) => x))).toBeLessThan(Math.min(...right.map(([x]) => x)));
+  });
+
+  it('spans the bottom of the medal symmetrically', () => {
+    const { band } = ribbonShape();
+    const xs = pointsOf(band).map(([x]) => x);
+    const ys = pointsOf(band).map(([, y]) => y);
+    expect(Math.min(...xs)).toBeLessThan(50);
+    expect(Math.max(...xs)).toBeGreaterThan(50);
+    // Entirely in the lower half.
+    expect(Math.min(...ys)).toBeGreaterThan(50);
+  });
+});
+
+describe('darken', () => {
+  it('shades a colour towards black without changing its hue much', () => {
+    expect(darken('#E07A4B', 0.5)).toBe('#703d26');
+    expect(darken('#FFFFFF', 0.2)).toBe('#cccccc');
+  });
+
+  it('leaves anything it does not understand alone', () => {
+    expect(darken('rebeccapurple')).toBe('rebeccapurple');
+    expect(darken('')).toBe('');
   });
 });
 
